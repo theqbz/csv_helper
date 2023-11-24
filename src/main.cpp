@@ -1,3 +1,4 @@
+#include "utils/FileHandler.h"
 #include "parser/IConsole.h"
 #include "parser/Console.h"
 #include "utils/ISettings.h"
@@ -13,16 +14,7 @@
 #include <utility>
 #include <vector>
 
-// Provide a file with the arguments
-// Opent the csv file and parse it line by line
-// The first line goning to be the label-list
-// The other lines have to fit to this label line
-// Count fields in every line and compare to the number of fields in the label-list
-// If there is difference, sing it in the begining of the line
-// Print the content of the lines to the screen with the following format:
-// label: value | label: value | etc...
-
-const std::string DEBUG_TEST_FILE = "d:\\temp\\csv-helper-test.csv";
+const std::string DEBUG_TEST_FILE = "d:\\temp\\csv-helper-tes.csv";
 
 typedef std::vector<std::string> Row;
 typedef std::vector<Row> Table;
@@ -80,7 +72,7 @@ FileLine parseLine(const std::string& p_line)
     return line;
 }
 
-FileContent parseFile(std::fstream p_file)
+FileContent parseFile(std::fstream& p_file)
 {
     if (p_file.peek() == std::char_traits<char>::eof()) {
         return {};
@@ -183,7 +175,8 @@ int main(int argc, const char* argv[])
     } else {
         fileToTest = argv[1];
     }
-    printResult(parseFile(openFile(fileToTest)));
+    csvhelper::utils::FileHandler file(fileToTest);
+    printResult(parseFile(file.get()));
     std::cin.get();
     return 0;
 }
