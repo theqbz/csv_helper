@@ -1,2 +1,4 @@
+conan/
 [Bb]uild/
 .cache/
+compile_commands.json
