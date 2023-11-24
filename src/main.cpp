@@ -1,3 +1,8 @@
+#include "parser/IConsole.h"
+#include "parser/Console.h"
+#include "utils/ISettings.h"
+#include "utils/Settings.h"
+
 #include <concepts>
 #include <fstream>
 #include <ios>
@@ -26,48 +31,6 @@ typedef std::vector<FileLine> FileContent;
 
 const char LINE_NUMBER_SPACING = ' ';
 const char DELIMITER           = ';';
-
-class Settings
-{
-public:
-    enum class LabelPosition
-    {
-        Top,
-        Inline
-    };
-
-    enum class DiffDetectMode
-    {
-        Off,
-        Auto,
-        Above,
-        Below
-    };
-
-    Settings()                = default;
-    Settings(const Settings&) = delete;
-    Settings(Settings&&)      = default;
-    inline void linesAroundErrors(const unsigned int p_value) { m_linesAroundErrors = p_value; }
-    inline unsigned int linesAroundErrors() const { return m_linesAroundErrors; }
-    inline void labelPosition(const LabelPosition p_position) { m_labelPosition = p_position; }
-    inline LabelPosition labelPosition() const { return m_labelPosition; }
-    inline void emptyFields(const unsigned char p_placeholder) { m_emptyFields = p_placeholder; }
-    inline unsigned char emptyFields() const { return m_emptyFields; }
-    inline void emptyLines(const unsigned char p_placeholder) { m_emptyLines = p_placeholder; }
-    inline unsigned char emptyLines() const { return m_emptyLines; }
-    inline void tableOutput(const bool p_value) { m_tableOutput = p_value; }
-    inline bool tableOutput() const { return m_tableOutput; }
-    inline void diffDetectMode(const DiffDetectMode p_mode) { m_diff = p_mode; }
-    inline DiffDetectMode diffDetectMode() const { return m_diff; }
-
-private:
-    unsigned int m_linesAroundErrors = 0;                   // sohw number of lines around errors (0: show all lines)
-    LabelPosition m_labelPosition    = LabelPosition::Top;  // top / inline (This option and TalbeOutput are mutually exclusive: if TableOutput is true, it inactivates this setting.)
-    unsigned char m_emptyFields      = '.';                 // placeholder for empty values (0: skip empty values)
-    unsigned char m_emptyLines       = 0;                   // placeholder for empty lines (0: skip empty lines / 1: show as error empty lines)
-    bool m_tableOutput               = false;               // show output in a table (This option and LabelPosiotion are mutually exclusive: if this is true, it inactivates LabelPosition setting.)
-    DiffDetectMode m_diff            = DiffDetectMode::Off; // off / auto / above / below
-};
 
 class Result
 {
@@ -140,10 +103,10 @@ FileContent parseFile(std::fstream p_file)
 void printErrors(const std::vector<std::string>& p_errors)
 {
     if (p_errors.empty()) {
-        std::cout << "\nNo p_errors found\n";
+        std::cout << "\nNo error found. :)\n";
         return;
     }
-    std::cout << "\nThe following p_errors found:\n";
+    std::cout << "\nThe following errors found:\n";
     for (const std::string& err : p_errors) {
         std::cout << err << "\n";
     }

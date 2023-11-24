@@ -1,6 +1,11 @@
 enable_testing()
 
 add_executable( csv_helper
+    "parser/IConsole.h"
+    "parser/Console.h"
+    "parser/Console.cpp"
+    "utils/ISettings.h"
+    "utils/Settings.h"
     "main.cpp"
 )
 
