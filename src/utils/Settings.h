@@ -13,6 +13,8 @@
 namespace csvhelper {
 namespace settings {
 
+typedef std::map<std::string, std::string> Tasks;
+
 class Settings : public ISettings
 {
 public:
@@ -66,6 +68,8 @@ private:
     unsigned char m_emptyLines;       // placeholder for empty lines (0: skip empty lines / 1: show as error empty lines)
     bool m_tableOutput;               // show output in a table (This option and LabelPosiotion are mutually exclusive: if this is true, it inactivates LabelPosition setting.)
     DiffDetectMode m_diff;            // off / auto / above / below
+
+    void storeSettings(const Tasks& p_tasks);
 };
 
 } // namespace settings
