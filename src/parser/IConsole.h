@@ -7,16 +7,13 @@
 
 #pragma once
 
-#include <map>
-#include <string>
-#include <vector>
+#include "../utils/datastructure/Arguments.h"
 
 namespace csvhelper {
 namespace parser {
 
-typedef std::vector<std::string> StrVec;
-typedef std::pair<std::string, std::string> Pair;
-typedef std::map<std::string, std::string> Tasks;
+typedef csvhelper::utils::console::Arguments Arguments;
+
 
 class IConsole
 {
@@ -24,7 +21,7 @@ public:
     IConsole()          = default;
     virtual ~IConsole() = default;
 
-    virtual inline const Tasks getTaskList() const = 0;
+    virtual inline const Arguments get() const = 0;
 };
 
 } // namespace parser

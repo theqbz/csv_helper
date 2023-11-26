@@ -7,8 +7,9 @@
 
 #pragma once
 
-#include "ISettings.h"
 #include "../parser/IConsole.h"
+#include "../parser/IIniFile.h"
+#include "ISettings.h"
 
 namespace csvhelper {
 namespace settings {
@@ -32,8 +33,10 @@ public:
         Below
     };
 
-    Settings(parser::IConsole& p_consoleParser) :
+    Settings(parser::IConsole& p_consoleParser,
+             parser::IIniFile& p_iniFileParser) :
         m_consoleParser(p_consoleParser),
+        m_iniFileParser(p_iniFileParser),
         m_linesAroundErrors(0),
         m_labelPosition(LabelPosition::Top),
         m_emptyFields('.'),
@@ -62,6 +65,7 @@ public:
 
 private:
     parser::IConsole& m_consoleParser;
+    parser::IIniFile& m_iniFileParser;
     unsigned int m_linesAroundErrors; // sohw number of lines around errors (0: show all lines)
     LabelPosition m_labelPosition;    // top / inline (This option and TalbeOutput are mutually exclusive: if TableOutput is true, it inactivates this setting.)
     unsigned char m_emptyFields;      // placeholder for empty values (0: skip empty values)

@@ -1,6 +1,10 @@
 enable_testing()
 
 add_executable( csv_helper
+    "utils/datastructure/Arguments.h"
+    "utils/datastructure/IniData.h"
+    "utils/datastructure/CsvData.h"
+    "utils/IFileHandler.h"
     "utils/FileHandler.h"
     "utils/FileHandler.cpp"
     "utils/ISettings.h"

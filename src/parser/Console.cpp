@@ -6,6 +6,7 @@
  *****************************************************************************/
 
 #include "Console.h"
+#include "../utils/datastructure/Arguments.h"
 #include <algorithm>
 #include <iostream>
 #include <map>
@@ -17,8 +18,8 @@ namespace csvhelper {
 namespace parser {
 
 typedef std::vector<std::string> StrVec;
-typedef std::pair<std::string, std::string> Pair;
-typedef std::map<std::string, std::string> Tasks;
+typedef csvhelper::utils::console::Argument Argument;
+typedef csvhelper::utils::console::Arguments Arguments;
 
 const char KEY_MARKER = '-';
 
@@ -31,9 +32,9 @@ const StrVec consoleArgs(const int p_argc, const char* const p_argv[])
     return rawData;
 }
 
-inline bool hasKey(const Pair& p_pair)
+inline bool hasKey(const Argument& p_argument)
 {
-    return !p_pair.first.empty();
+    return !p_argument.first.empty();
 }
 
 inline bool isKey(const std::string& p_text)
@@ -41,31 +42,31 @@ inline bool isKey(const std::string& p_text)
     return !p_text.empty() && *p_text.begin() == KEY_MARKER;
 }
 
-const Tasks parse(const StrVec& p_rawData)
+const Arguments parse(const StrVec& p_rawData)
 {
-    Tasks result {};
+    Arguments result {};
     StrVec::const_iterator it = p_rawData.begin();
     while (it < p_rawData.end()) {
-        Pair pair;
-        bool pairDone = false;
-        while (it < p_rawData.end() && !pairDone) {
-            if (!hasKey(pair)) {
-                pair.first = *it;
+        Argument argument;
+        bool argumentDone = false;
+        while (it < p_rawData.end() && !argumentDone) {
+            if (!hasKey(argument)) {
+                argument.first = *it;
                 if (!isKey(*it)) {
-                    pairDone = true;
+                    argumentDone = true;
                 }
                 ++it;
             } else {
                 if (!isKey(*it)) {
-                    pair.second = *it;
+                    argument.second = *it;
                     ++it;
                 }
-                pairDone = true;
+                argumentDone = true;
             }
         }
-        const auto [iterator, success] = result.insert(pair);
+        const auto [iterator, success] = result.insert(argument);
         if (!success) {
-            std::cout << "An error with console arguments: " << pair.first << ", " << pair.second << "\n";
+            std::cout << "An error with console argument: " << argument.first << ", " << argument.second << "\n";
         }
     }
     return result;

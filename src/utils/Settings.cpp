@@ -6,6 +6,8 @@
  *****************************************************************************/
 
 #include "Settings.h"
+#include "datastructure/Arguments.h"
+#include "datastructure/IniData.h"
 #include <exception>
 #include <fstream>
 #include <iostream>
@@ -14,26 +16,13 @@
 #include <string>
 #include <utility>
 
-namespace csvhelper::settings {
+namespace csvhelper {
+namespace settings {
 
-typedef std::pair<std::string, std::string> Pair;
 typedef std::map<std::string, std::string> Tasks;
 
 const std::string DEFAULT_INI_FILE    = "settings.ini";
 const std::string SETTING_WRITER_FLAG = "settings";
-const std::string COMMENT_SIGNS       = "#;";
-const std::string KEY_VALUE_DELIMITER = "=";
-const std::string WHITESPACE          = " \t\n";
-
-static std::fstream
-openFile(const std::string& p_fileName)
-{
-    std::fstream file(p_fileName);
-    if (!file.good()) {
-        return {};
-    }
-    return file;
-}
 
 [[noreturn]] static void
 storeNewDefaultSettings(const Tasks& p_tasks)
@@ -41,58 +30,6 @@ storeNewDefaultSettings(const Tasks& p_tasks)
     // TODO: 1) write new settings into .ini file
     //       2) exit program!
     exit(1);
-}
-
-const std::string
-trim(const std::string& p_text)
-{
-    const size_t firstChar = p_text.find_first_not_of(WHITESPACE);
-    if (firstChar == std::string::npos) {
-        return {};
-    }
-    const size_t lastChar = p_text.find_last_not_of(WHITESPACE, firstChar);
-    if (lastChar == std::string::npos) {
-        return {};
-    }
-    return p_text.substr(firstChar, lastChar - 1);
-}
-
-const Pair
-parseIniLine(const std::string& p_line)
-{
-    if (p_line.empty()) {
-        return {};
-    }
-    const size_t commentPos   = p_line.find_first_of(COMMENT_SIGNS);
-    const size_t delimiterPos = p_line.find(KEY_VALUE_DELIMITER, 0);
-    if (delimiterPos >= commentPos) {
-        return {};
-    }
-    Pair pair;
-    pair.first  = trim(p_line.substr(0, delimiterPos));
-    pair.second = trim(p_line.substr(delimiterPos + 1));
-    return pair;
-}
-
-const Tasks
-parseIniFile(std::fstream p_iniFile)
-{
-    if (p_iniFile.peek() == std::char_traits<char>::eof()) {
-        // TODO: create default .ini file
-        //       or not? -> only when user ask for it with SETTING_WRITER_FLAG?
-        return {};
-    }
-    Tasks tasks;
-    std::string line;
-    while (std::getline(p_iniFile, line)) {
-        if (!line.empty()) {
-            const auto [it, success] = tasks.insert(parseIniLine(line));
-            if (!success) {
-                std::cout << "Error in .ini file: " << line << "\n";
-            }
-        }
-    }
-    return tasks;
 }
 
 bool isNumber(const std::string& p_text)
@@ -158,13 +95,13 @@ convertToDiffMode(const std::string& p_text)
 
 void Settings::init()
 {
-    const Tasks tasksFromConsole = m_consoleParser.getTaskList();
+    const csvhelper::utils::console::Arguments tasksFromConsole = m_consoleParser.get();
     if (const auto search = tasksFromConsole.find(SETTING_WRITER_FLAG);
         search != tasksFromConsole.end()) {
         storeNewDefaultSettings(tasksFromConsole);
     }
-    const Tasks tasksFromIniFile = parseIniFile(openFile(DEFAULT_INI_FILE));
-    storeSettings(tasksFromIniFile);
+    const csvhelper::utils::ini::File tasksFromIniFile = m_iniFileParser.get();
+    storeSettings(tasksFromIniFile.m_content);
     storeSettings(tasksFromConsole);
     // TODO:
     // 1) store option's value from ini file
@@ -199,4 +136,5 @@ void Settings::storeSettings(const Tasks& p_tasks)
     }
 }
 
-} // namespace csvhelper::settings
+} // namespace settings
+} // namespace csvhelper

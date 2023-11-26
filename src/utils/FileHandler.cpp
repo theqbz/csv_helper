@@ -1,5 +1,8 @@
 #include "FileHandler.h"
+
+#include <fstream>
 #include <iostream>
+#include <string>
 
 namespace csvhelper::utils {
 
@@ -8,9 +11,9 @@ FileHandler::FileHandler(const std::string& p_fileName) :
 {
     if (!m_file.good()) {
         std::cout << "Failed to open file: " << p_fileName << "\n";
-        return;
+    } else {
+        std::cout << "File opened successfull: " << p_fileName << "\n";
     }
-    std::cout << "File opened successfull: " << p_fileName << "\n";
 }
 
 FileHandler::~FileHandler()
