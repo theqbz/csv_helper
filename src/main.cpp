@@ -1,3 +1,10 @@
+///
+/// CSV HELPER by QBZ
+/// ----------------------------------------------------------------------------
+/// @file  main.h
+/// @brief csvhelper
+///
+
 #include "utils/FileHandler.h"
 #include "parser/IConsole.h"
 #include "parser/Console.h"
@@ -14,7 +21,7 @@
 #include <utility>
 #include <vector>
 
-const std::string DEBUG_TEST_FILE = "d:\\temp\\csv-helper-tes.csv";
+const std::string DEBUG_TEST_FILE = "d:\\temp\\csv-helper-test.csv";
 
 typedef std::vector<std::string> Row;
 typedef std::vector<Row> Table;

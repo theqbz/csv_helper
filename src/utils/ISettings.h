@@ -1,15 +1,24 @@
-/******************************************************************************
- * CSV HELPER by QBZ
- ******************************************************************************
- * ISettings
- * Interface definition of Settings class
- *****************************************************************************/
+///
+/// CSV HELPER by QBZ
+/// ----------------------------------------------------------------------------
+/// @file  ISettings.h
+/// @brief Interface declaration of the settings class for csvhelper
+///
 
 #pragma once
 
+namespace csvhelper {
+namespace settings {
+
+///
+/// @brief Interface for Settings class
+///
 class ISettings
 {
 public:
     ISettings()          = default;
     virtual ~ISettings() = default;
 };
+
+} // namespace settings
+} // namespace csvhelper

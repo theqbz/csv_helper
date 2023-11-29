@@ -1,10 +1,18 @@
+///
+/// CSV HELPER by QBZ
+/// ----------------------------------------------------------------------------
+/// @file  FileHandler.cpp
+/// @brief Function sefinitions of the file handler class for csvhelper
+///
+
 #include "FileHandler.h"
 
 #include <fstream>
 #include <iostream>
 #include <string>
 
-namespace csvhelper::utils {
+namespace csvhelper {
+namespace utils {
 
 FileHandler::FileHandler(const std::string& p_fileName) :
     m_file(p_fileName)
@@ -24,4 +32,5 @@ FileHandler::~FileHandler()
     }
 }
 
-} // namespace csvhelper::utils
+} // namespace utils
+} // namespace csvhelper

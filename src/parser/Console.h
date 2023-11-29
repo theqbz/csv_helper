@@ -1,9 +1,9 @@
-/******************************************************************************
- * CSV HELPER by QBZ
- ******************************************************************************
- * Console
- * Create tasks from console arguments
- *****************************************************************************/
+///
+/// CSV HELPER by QBZ
+/// ----------------------------------------------------------------------------
+/// @file  Console.h
+/// @brief Declaration of the console argument parser class for csvhelper
+///
 
 #pragma once
 
@@ -23,6 +23,9 @@ typedef csvhelper::utils::console::Arguments Arguments;
 extern const StrVec consoleArgs(const int p_argc, const char* const p_argv[]);
 extern const Arguments parse(const StrVec& p_rawData);
 
+///
+/// @brief Store the parsed console arguments
+///
 class Console : public IConsole
 {
 public:
@@ -31,6 +34,11 @@ public:
     {
     }
 
+    ///
+    /// Get the stored console arguments
+    ///
+    /// @param (void)
+    /// @return console::Arguments datastructure
     inline const Arguments get() const final { return m_arguments; }
 
 private:

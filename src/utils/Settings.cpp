@@ -1,13 +1,16 @@
-/******************************************************************************
- * CSV HELPER by QBZ
- ******************************************************************************
- * Settings
- * implementation of Settings class
- *****************************************************************************/
+///
+/// CSV HELPER by QBZ
+/// ----------------------------------------------------------------------------
+/// @file  Settings.cpp
+/// @brief Implementation of the settings class for csvhelper
+/// 
+/// TODO: typedef refactor
+/// 
 
 #include "Settings.h"
 #include "datastructure/Arguments.h"
 #include "datastructure/IniData.h"
+
 #include <exception>
 #include <fstream>
 #include <iostream>
@@ -32,7 +35,8 @@ storeNewDefaultSettings(const Tasks& p_tasks)
     exit(1);
 }
 
-bool isNumber(const std::string& p_text)
+bool
+isNumber(const std::string& p_text)
 {
     if (p_text.empty()) {
         return false;
@@ -41,7 +45,8 @@ bool isNumber(const std::string& p_text)
     return true;
 }
 
-int convertToInt(const std::string& p_text)
+int
+convertToInt(const std::string& p_text)
 {
     if (p_text.empty() || !isNumber(p_text)) {
         return 0;
@@ -55,7 +60,8 @@ convertToChar(const std::string& p_text)
     return p_text.at(0);
 }
 
-bool convertToBool(const std::string& p_text)
+bool
+convertToBool(const std::string& p_text)
 {
     std::set<std::string> truePhraseSet { "true", "yes", "on", "1" };
     return truePhraseSet.contains(p_text);
@@ -93,7 +99,8 @@ convertToDiffMode(const std::string& p_text)
     return Settings::DiffDetectMode::Off;
 }
 
-void Settings::init()
+void
+Settings::init()
 {
     const csvhelper::utils::console::Arguments tasksFromConsole = m_consoleParser.get();
     if (const auto search = tasksFromConsole.find(SETTING_WRITER_FLAG);
@@ -108,7 +115,8 @@ void Settings::init()
     // 2) replace values at options which modified with console args
 }
 
-void Settings::storeSettings(const Tasks& p_tasks)
+void
+Settings::storeSettings(const Tasks& p_tasks)
 {
     if (const auto error_lines = p_tasks.find("errorLines");
         error_lines != p_tasks.end()) {

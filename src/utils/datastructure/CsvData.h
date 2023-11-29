@@ -1,9 +1,10 @@
-/**
- * CSV HELPER by QBZ
- *
- * @file  CsvData.h
- * @brief Definition of the .csv file content descriptor datastructure for csvhelper
- */
+///
+/// CSV HELPER by QBZ
+/// ----------------------------------------------------------------------------
+/// @file  CsvData.h
+/// @brief Definition of the datastructure, to describe and store labels and
+///        records from a .csv file for csvhelper
+///
 
 #pragma once
 
@@ -15,9 +16,9 @@
 namespace csvhelper::utils {
 namespace csv {
 
-/**
- * Contains the state of the record
- */
+///
+/// @brief Contains the state of the record
+///
 struct RecordHead
 {
     enum State
@@ -29,63 +30,63 @@ struct RecordHead
     State m_state { State::OK };
 };
 
-/**
- * Descriptor for a single value from a .csv file.
- */
+///
+/// @brief Descriptor for a single value from a .csv file.
+///
 struct Field
 {
-    /**
-     * The state of the field.
-     * Represent by { UNCHECKED | OK | DIFF }
-     */
+    ///
+    /// The state of the field.
+    /// Represent by [ UNCHECKED | OK | DIFF ]
+    ///
     enum State
     {
-        UNCHECKED, // The csv field has not been checked yet
-        OK,        // The csv field was checked and marked as no difference
-        DIFF       // The csv field was checked and marked as difference
+        UNCHECKED, /// The csv field has not been checked yet
+        OK,        /// The csv field was checked and marked as no difference
+        DIFF       /// The csv field was checked and marked as difference
     };
 
-    /**
-     * The content of the csv field.
-     * The content consists a pair of < key, value >
-     */
+    ///
+    /// The content of the csv field.
+    /// The content consists a pair of < key, value >
+    ///
     std::pair<std::string, std::string> m_content;
 
-    /**
-     * The state of the csv value
-     */
+    ///
+    /// The state of the csv value
+    ///
     State m_state { State::UNCHECKED };
 };
 
-/**
- * Container for fields from a record (row) of a .csv file.
- */
+///
+/// @brief Container for fields from a record (row) of a .csv file.
+///
 struct Fields : public std::vector<Field>
 { };
 
-/**
- * Container for a record (row) of a .csv file.
- * The Record consists a header and the content of the record,
- * represent by a pair of < RecordHead, Fields >
- */
+///
+/// @brief Container for a record (row) of a .csv file.
+/// The Record consists a header and the content of the record,
+/// represent by a pair of < RecordHead, Fields >
+///
 struct Record : public std::pair<RecordHead, Fields>
 { };
 
-/**
- * Container for the records of a .csv file
- */
+///
+/// @brief Container for the records of a .csv file
+///
 struct Content : public std::vector<Record>
 { };
 
-/**
- * Container for the labels of a .csv file
- */
+///
+/// @brief Container for the labels of a .csv file
+///
 struct Labels : public std::vector<std::string>
 { };
 
-/**
- * Container for a whole .csv file
- */
+///
+/// @brief Container for a whole .csv file
+///
 struct File
 {
     std::string m_fileName;

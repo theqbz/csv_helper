@@ -1,9 +1,10 @@
-/******************************************************************************
- * CSV HELPER by QBZ
- ******************************************************************************
- * IConsole
- * Interface definition of Console
- *****************************************************************************/
+///
+/// CSV HELPER by QBZ
+/// ----------------------------------------------------------------------------
+/// @file  IConsole.h
+/// @brief Interface declaration of the console argument parser class for
+///        csvhelper
+///
 
 #pragma once
 
@@ -14,13 +15,20 @@ namespace parser {
 
 typedef csvhelper::utils::console::Arguments Arguments;
 
-
+///
+/// @brief Interface for console argument parser
 class IConsole
 {
 public:
     IConsole()          = default;
     virtual ~IConsole() = default;
 
+    ///
+    /// Get the stored console arguments
+    ///
+    /// @param (void)
+    /// @return console::Arguments datastructure
+    ///
     virtual inline const Arguments get() const = 0;
 };
 

@@ -1,9 +1,9 @@
-/******************************************************************************
- * CSV HELPER by QBZ
- ******************************************************************************
- * Settings
- * Stores program settings
- *****************************************************************************/
+///
+/// CSV HELPER by QBZ
+/// ----------------------------------------------------------------------------
+/// @file  Settings.h
+/// @brief Declaration of the settings class for csvhelper
+///
 
 #pragma once
 
@@ -16,6 +16,9 @@ namespace settings {
 
 typedef std::map<std::string, std::string> Tasks;
 
+///
+/// @brief Store program settings in runtime
+///
 class Settings : public ISettings
 {
 public:

@@ -1,9 +1,9 @@
-/**
- * CSV HELPER by QBZ
- *
- * @file  IniFile.h
- * @brief Definition of .ini file parser class of csvhelper
- */
+///
+/// CSV HELPER by QBZ
+/// ----------------------------------------------------------------------------
+/// @file  IniFile.h
+/// @brief Definition of parsed .ini file handler class of csvhelper
+///
 
 #pragma once
 
@@ -14,8 +14,13 @@
 namespace csvhelper {
 namespace parser {
 
-extern const csvhelper::utils::ini::File read(std::fstream& p_iniFile);
+typedef csvhelper::utils::ini::File File;
 
+extern const File read(std::fstream& p_iniFile);
+
+///
+/// @brief Store a parsed data of a .ini file
+///
 class IniFile : public IIniFile
 {
 public:
@@ -23,10 +28,17 @@ public:
         m_iniFile(read(p_file.get()))
     {
     }
-    inline const csvhelper::utils::ini::File get() const final { return m_iniFile; }
+    
+    ///
+    /// Get the data, stored in a .ini file
+    ///
+    /// @param (void)
+    /// @return a ini::File datastructure, contains ini records
+    ///
+    inline const File get() const final { return m_iniFile; }
 
 private:
-    csvhelper::utils::ini::File m_iniFile;
+    File m_iniFile;
 };
 
 } // namespace parser

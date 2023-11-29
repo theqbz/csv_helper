@@ -1,9 +1,9 @@
-/**
- * CSV HELPER by QBZ
- *
- * @file  IniFile.cpp
- * @brief Logic implementation of parsing an .ini file for IniFile class of csvhelper
- */
+///
+/// CSV HELPER by QBZ
+/// ----------------------------------------------------------------------------
+/// @file  IniFile.cpp
+/// @brief Functions for .ini file parser of csvhelper
+///
 
 #include "../utils/IFileHandler.h"
 #include "../utils/datastructure/IniData.h"
@@ -20,6 +20,12 @@ const std::string COMMENT_SIGNS       = "#;";
 const std::string KEY_VALUE_DELIMITER = "=";
 const std::string WHITESPACE          = " \t\n";
 
+///
+/// Trim whitespaces from the edges of text
+///
+/// @param[in] - p_text : the text to trim
+/// @return the trimmed text
+///
 const std::string
 trim(const std::string& p_text)
 {
@@ -34,6 +40,12 @@ trim(const std::string& p_text)
     return p_text.substr(firstChar, lastChar - 1);
 }
 
+///
+/// Read record from a line of a .ini file
+///
+/// @param[in] - p_line : the line of the file
+/// @return a Record, contains a < key, value > pair
+///
 const Record
 iniLine(const std::string& p_line)
 {
@@ -51,6 +63,14 @@ iniLine(const std::string& p_line)
     return record;
 }
 
+///
+/// Create a ini::File data from a .ini file.
+/// Parse the file line by line and store the records. (If it find a second
+/// record with the same key, the first occurrence will be stored.)
+///
+/// @param[in] - p_iniFile : a filestream contains the .ini file
+/// @return a File, contains the records of the .ini file
+///
 const File
 read(std::fstream& p_iniFile)
 {
@@ -67,7 +87,7 @@ read(std::fstream& p_iniFile)
         if (!line.empty()) {
             const auto [it, success] = iniFile.m_content.insert(iniLine(line));
             if (!success) {
-                std::cout << "Error in .ini file: " << line << "\n";
+                std::cout << "Error in .ini record: " << line << "\n";
             }
         }
     }
