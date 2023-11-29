@@ -2,7 +2,7 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  Console.cpp
-/// @brief Functions for console parser of csvhelper
+/// @brief Functions for console parser
 ///
 
 #include "Console.h"

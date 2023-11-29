@@ -2,7 +2,7 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  Settings.cpp
-/// @brief Implementation of the settings class for csvhelper
+/// @brief Definition of the Settings class and helper functions to store settings
 /// 
 /// TODO: typedef refactor
 /// 

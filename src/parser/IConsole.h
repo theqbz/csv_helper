@@ -2,8 +2,7 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  IConsole.h
-/// @brief Interface declaration of the console argument parser class for
-///        csvhelper
+/// @brief Interface declaration of the Console class
 ///
 
 #pragma once

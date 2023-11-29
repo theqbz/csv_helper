@@ -3,7 +3,7 @@
 /// ----------------------------------------------------------------------------
 /// @file  IniData.h
 /// @brief Definition of the datastructure to descibe and store records from
-///        a .ini file for csvhelper
+///        a .ini file
 ///
 
 #pragma once

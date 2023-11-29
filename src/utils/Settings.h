@@ -2,7 +2,7 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  Settings.h
-/// @brief Declaration of the settings class for csvhelper
+/// @brief Declaration of the settings class
 ///
 
 #pragma once

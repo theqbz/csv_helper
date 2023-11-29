@@ -2,7 +2,7 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  Arguments.h
-/// @brief Definition of the datastructure of command line arguments for csvhelper
+/// @brief Definition of the datastructure of command line arguments
 ///
 
 #pragma once

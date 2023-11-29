@@ -2,7 +2,7 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  FileHandler.cpp
-/// @brief Function sefinitions of the file handler class for csvhelper
+/// @brief Function definitions of the FileHandler class
 ///
 
 #include "FileHandler.h"

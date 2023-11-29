@@ -2,7 +2,7 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  IniFile.cpp
-/// @brief Functions for .ini file parser of csvhelper
+/// @brief Functions for .ini file parser
 ///
 
 #include "../utils/IFileHandler.h"
@@ -21,7 +21,7 @@ const std::string KEY_VALUE_DELIMITER = "=";
 const std::string WHITESPACE          = " \t\n";
 
 ///
-/// Trim whitespaces from the edges of text
+/// Trim whitespaces from both ends of the text
 ///
 /// @param[in] - p_text : the text to trim
 /// @return the trimmed text

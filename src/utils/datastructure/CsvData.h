@@ -3,7 +3,7 @@
 /// ----------------------------------------------------------------------------
 /// @file  CsvData.h
 /// @brief Definition of the datastructure, to describe and store labels and
-///        records from a .csv file for csvhelper
+///        records from a .csv file
 ///
 
 #pragma once

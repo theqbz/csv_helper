@@ -2,7 +2,7 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  IIniFile.h
-/// @brief Interface declaration of parsed .ini file handler class of csvhelper
+/// @brief Interface declaration of IniFile class
 ///
 
 #pragma once
