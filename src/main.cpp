@@ -168,7 +168,7 @@ void printArgHelp(const char* p_programName)
 int main(int argc, const char* argv[])
 {
     std::string fileToTest { DEBUG_TEST_FILE };
-    std::cout << "* CSV-HELPER BY QBZ * version: 1.0b\n";
+    std::cout << "* CsvHelper by QBZ * version: 1.0b\n";
     if (argc < 2) {
         // printArgHelp(argv[0]);
         // return 0;

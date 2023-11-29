@@ -9,9 +9,13 @@ add_executable( csv_helper
     "utils/FileHandler.cpp"
     "utils/ISettings.h"
     "utils/Settings.h"
+    "utils/Settings.cpp"
     "parser/IConsole.h"
     "parser/Console.h"
     "parser/Console.cpp"
+    "parser/IIniFile.h"
+    "parser/IniFile.h"
+    "parser/IniFile.cpp"
     "main.cpp"
 )
 

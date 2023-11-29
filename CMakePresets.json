@@ -1,0 +1,134 @@
+{
+    "version": 6,
+    "configurePresets": [
+        {
+            "name": "defaults",
+            "description": "Default CMake settings and options",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": {
+                    "type": "string",
+                    "value": "Debug"
+                }
+            }
+        },
+        {
+            "name": "windows",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            },
+            "generator": "Visual Studio 17 2022",
+            "architecture": {
+                "value": "x64",
+                "strategy": "set"
+            },
+            "cmakeExecutable": "C:\\Program Files\\CMake\\bin\\"
+        },
+        {
+            "name": "linux",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            },
+            "generator": "Unix Makefiles",
+            "cmakeExecutable": "/usr/bin/cmake"
+        },
+        {
+            "name": "vs-debug",
+            "inherits": [
+                "defaults",
+                "windows"
+            ]
+        },
+        {
+            "name": "vs-release",
+            "inherits": [
+                "defaults",
+                "windows"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "gcc-debug",
+            "inherits": [
+                "defaults",
+                "linux"
+            ]
+        },
+        {
+            "name": "gcc-release",
+            "inherits": [
+                "defaults",
+                "linux"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "vs-debug",
+            "configurePreset": "vs-debug",
+            "configuration": "Debug"
+        },
+        {
+            "name": "vs-release",
+            "configurePreset": "vs-release",
+            "configuration": "Release"
+        },
+        {
+            "name": "gcc-debug",
+            "configurePreset": "vs-debug"
+        },
+        {
+            "name": "gcc-release",
+            "configurePreset": "vs-debug"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "vs-debug",
+            "configurePreset": "vs-debug",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "noTestsAction": "error",
+                "stopOnFailure": true
+            }
+        }
+    ],
+    "workflowPresets": [
+        {
+            "name": "vs-debug",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "vs-debug"
+                },
+                {
+                    "type": "build",
+                    "name": "vs-debug"
+                },
+                {
+                    "type": "test",
+                    "name": "vs-debug"
+                }
+            ]
+        }
+    ],
+    "vendor": {
+        "example.com/ExampleIDE/1.0": {
+            "autoFormat": false
+        }
+    }
+}

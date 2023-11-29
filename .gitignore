@@ -1,4 +1,12 @@
+.cache/
+.clion.source.upload.marker
+.cproject
+.idea/
+.project
+.settings/
+.vs/
+.vscode/
+
 conan/
 [Bb]uild/
-.cache/
 compile_commands.json
