@@ -16,7 +16,7 @@ namespace csvhelper {
 namespace utils {
 
 ///
-/// @brief FileHandler class for csvhelper.
+/// @brief FileHandler class.
 /// Opens, holds its stream and and manage the closing process to a given file.
 ///
 class FileHandler final : public IFileHandler

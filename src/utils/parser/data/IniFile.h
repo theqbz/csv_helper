@@ -1,19 +1,21 @@
 ///
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
-/// @file  IniData.h
+/// @file  IniFile.h
 /// @brief Definition of the datastructure to descibe and store records from
 ///        a .ini file
 ///
 
 #pragma once
 
+#include "SettingData.h"
+
 #include <map>
 #include <string>
 #include <utility>
 #include <vector>
 
-namespace csvhelper::utils {
+namespace csvhelper::utils::parser::data {
 namespace ini {
 
 ///
@@ -25,7 +27,7 @@ typedef std::pair<std::string, std::string> Record;
 /// @brief Container for the records (rows) of an .ini file.
 /// A Record consists a pair of < key, value >
 ///
-struct Records : public std::map<std::string, std::string>
+struct Records : public SettingData
 { };
 
 ///
@@ -38,4 +40,4 @@ struct File
 };
 
 } // namespace ini
-} // namespace csvhelper::utils
+} // namespace csvhelper::utils::parser::data

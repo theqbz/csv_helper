@@ -2,8 +2,8 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  CsvData.h
-/// @brief Definition of the datastructure, to describe and store labels and
-///        records from a .csv file
+/// @brief Definition of the datastructure which describes the structure of a
+///        .csv file and stores the data from it.
 ///
 
 #pragma once
@@ -13,7 +13,7 @@
 #include <utility>
 #include <vector>
 
-namespace csvhelper::utils {
+namespace csvhelper {
 namespace csv {
 
 ///
@@ -21,12 +21,19 @@ namespace csv {
 ///
 struct RecordHead
 {
+    ///
+    /// The state of the Record
+    /// Represent by [ OK | ERR | EMPTY ]
+    ///
     enum State
     {
-        OK,
-        ERR
+        OK,   ///< Line marked as alright
+        ERR,  ///< Line marked as error
+        EMPTY ///< Line marked as "not error" empty (to handle this differently when displaying the result)
     };
-    uint64_t m_fieldCount { 0 };
+
+    // TODO: rename m_fileLineCounter to m_fileLineNumber!
+    size_t m_fileLineCounter { 0 };
     State m_state { State::OK };
 };
 
@@ -41,9 +48,9 @@ struct Field
     ///
     enum State
     {
-        UNCHECKED, /// The csv field has not been checked yet
-        OK,        /// The csv field was checked and marked as no difference
-        DIFF       /// The csv field was checked and marked as difference
+        UNCHECKED, ///< The csv field has not been checked yet
+        OK,        ///< The csv field was checked and marked as no difference
+        DIFF       ///< The csv field was checked and marked as difference
     };
 
     ///
@@ -89,10 +96,10 @@ struct Labels : public std::vector<std::string>
 ///
 struct File
 {
-    std::string m_fileName;
-    Labels m_labels;
-    Content m_content;
+    std::string m_fileName; ///< the path and filename of the .csv file
+    Labels m_labels;        ///< container for the labels of .csv file (type: vector<string>)
+    Content m_content;      ///< container for Records of .csv file (type: vector<Record>)
 };
 
 } // namespace csv
-} // namespace csvhelper::utils
+} // namespace csvhelper

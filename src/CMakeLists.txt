@@ -1,21 +1,23 @@
 enable_testing()
 
 add_executable( csv_helper
-    "utils/datastructure/Arguments.h"
-    "utils/datastructure/IniData.h"
-    "utils/datastructure/CsvData.h"
+    "utils/parser/data/ConsoleArguments.h"
+    "utils/parser/data/IniFile.h"
+    "utils/parser/Console.h"
+    "utils/parser/Console.cpp"
+    "utils/parser/IniFile.h"
+    "utils/parser/IniFile.cpp"
     "utils/IFileHandler.h"
     "utils/FileHandler.h"
     "utils/FileHandler.cpp"
     "utils/ISettings.h"
     "utils/Settings.h"
     "utils/Settings.cpp"
-    "parser/IConsole.h"
-    "parser/Console.h"
-    "parser/Console.cpp"
-    "parser/IIniFile.h"
-    "parser/IniFile.h"
-    "parser/IniFile.cpp"
+    "csv/Data.h"
+    "csv/IParser.h"
+    "csv/Parser.h"
+    "csv/Parser.cpp"
+    "csv/Analyzer.h"
     "main.cpp"
 )
 

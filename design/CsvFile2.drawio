@@ -1,0 +1,65 @@
+<mxfile host="Electron" modified="2023-12-01T14:59:39.077Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.2.8 Chrome/112.0.5615.165 Electron/24.2.0 Safari/537.36" etag="Qiv8IptPF0uMYclqLPXf" version="21.2.8" type="device">
+  <diagram name="Page-1" id="bloeCuW-k2SkqoYwuxrO">
+    <mxGraphModel dx="1870" dy="910" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="SvTgfC43jSzVeKnuM5TM-2" value="csv::File" style="swimlane;whiteSpace=wrap;html=1;swimlaneFillColor=#666666;absoluteArcSize=0;rounded=0;swimlaneLine=1;glass=0;shadow=0;backgroundOutline=1;fillColor=default;gradientColor=#4D4D4D;gradientDirection=west;" parent="1" vertex="1">
+          <mxGeometry x="40" y="40" width="380" height="450" as="geometry">
+            <mxRectangle x="40" y="40" width="90" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SvTgfC43jSzVeKnuM5TM-3" value="csv::Labels&lt;span style=&quot;font-weight: normal;&quot;&gt; : vector&amp;lt;string&amp;gt;&lt;/span&gt;" style="swimlane;whiteSpace=wrap;html=1;horizontal=1;swimlaneBody=1;portConstraintRotation=0;enumerate=0;comic=0;treeMoving=0;treeFolding=0;swimlaneFillColor=#808080;gradientColor=#808080;gradientDirection=west;" parent="SvTgfC43jSzVeKnuM5TM-2" vertex="1">
+          <mxGeometry x="10" y="60" width="210" height="60" as="geometry">
+            <mxRectangle x="10" y="60" width="290" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SvTgfC43jSzVeKnuM5TM-8" value="string" style="rounded=0;whiteSpace=wrap;html=1;spacingLeft=4;align=left;" parent="SvTgfC43jSzVeKnuM5TM-3" vertex="1">
+          <mxGeometry x="10" y="30" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="SvTgfC43jSzVeKnuM5TM-9" value="..." style="rounded=0;whiteSpace=wrap;html=1;strokeColor=none;fillColor=default;fontStyle=1;gradientColor=#808080;gradientDirection=east;" parent="SvTgfC43jSzVeKnuM5TM-3" vertex="1">
+          <mxGeometry x="70" y="30" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="SvTgfC43jSzVeKnuM5TM-14" value="csv::Content&lt;span style=&quot;font-weight: normal;&quot;&gt; : vector&amp;lt;Record&amp;gt;&lt;/span&gt;" style="swimlane;whiteSpace=wrap;html=1;swimlaneFillColor=#808080;gradientColor=#808080;gradientDirection=west;" parent="SvTgfC43jSzVeKnuM5TM-2" vertex="1">
+          <mxGeometry x="10" y="130" width="320" height="310" as="geometry" />
+        </mxCell>
+        <mxCell id="SvTgfC43jSzVeKnuM5TM-16" value="csv::Record&lt;span style=&quot;font-weight: normal;&quot;&gt; : pair&amp;lt;RecordHead, Fields&amp;gt;&lt;/span&gt;" style="swimlane;whiteSpace=wrap;html=1;swimlaneFillColor=#B3B3B3;gradientColor=#B3B3B3;gradientDirection=west;" parent="SvTgfC43jSzVeKnuM5TM-14" vertex="1">
+          <mxGeometry x="10" y="30" width="270" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="SvTgfC43jSzVeKnuM5TM-27" value="csv::RecordHead" style="swimlane;whiteSpace=wrap;html=1;swimlaneFillColor=#999999;gradientColor=#999999;gradientDirection=west;" parent="SvTgfC43jSzVeKnuM5TM-16" vertex="1">
+          <mxGeometry x="10" y="30" width="160" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="SvTgfC43jSzVeKnuM5TM-28" value="m_fieldCount&amp;nbsp;&lt;span style=&quot;font-weight: normal;&quot;&gt;: uint64_t&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;spacingLeft=4;align=left;" parent="SvTgfC43jSzVeKnuM5TM-27" vertex="1">
+          <mxGeometry x="7.5" y="30" width="145" height="23" as="geometry" />
+        </mxCell>
+        <mxCell id="SvTgfC43jSzVeKnuM5TM-29" value="m_state&lt;span style=&quot;font-weight: normal;&quot;&gt;&amp;nbsp;: State&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;spacingLeft=4;align=left;" parent="SvTgfC43jSzVeKnuM5TM-27" vertex="1">
+          <mxGeometry x="7.5" y="60" width="145" height="23" as="geometry" />
+        </mxCell>
+        <mxCell id="SvTgfC43jSzVeKnuM5TM-17" value="csv::Fields&lt;span style=&quot;font-weight: normal;&quot;&gt; : vector&amp;lt;Field&amp;gt;&lt;/span&gt;" style="swimlane;whiteSpace=wrap;html=1;swimlaneFillColor=#999999;gradientColor=#999999;gradientDirection=west;" parent="SvTgfC43jSzVeKnuM5TM-16" vertex="1">
+          <mxGeometry x="10" y="127" width="250" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="SvTgfC43jSzVeKnuM5TM-18" value="csv::Field" style="swimlane;whiteSpace=wrap;html=1;swimlaneFillColor=#CCCCCC;gradientColor=#CCCCCC;gradientDirection=west;align=left;spacingLeft=16;" parent="SvTgfC43jSzVeKnuM5TM-17" vertex="1">
+          <mxGeometry x="10" y="30" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="SvTgfC43jSzVeKnuM5TM-19" value="m_content&lt;span style=&quot;font-weight: normal;&quot;&gt;&amp;nbsp;: pair&amp;lt;string, string&amp;gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;spacingLeft=4;align=left;" parent="SvTgfC43jSzVeKnuM5TM-18" vertex="1">
+          <mxGeometry x="7.5" y="30" width="185" height="23" as="geometry" />
+        </mxCell>
+        <mxCell id="SvTgfC43jSzVeKnuM5TM-20" value="m_state&lt;span style=&quot;font-weight: normal;&quot;&gt;&amp;nbsp;: State&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;spacingLeft=4;align=left;" parent="SvTgfC43jSzVeKnuM5TM-18" vertex="1">
+          <mxGeometry x="7.5" y="60" width="185" height="23" as="geometry" />
+        </mxCell>
+        <mxCell id="SvTgfC43jSzVeKnuM5TM-61" value="..." style="rounded=0;whiteSpace=wrap;html=1;strokeColor=none;fillColor=#CCCCCC;fontStyle=1;gradientColor=#999999;gradientDirection=east;" parent="SvTgfC43jSzVeKnuM5TM-17" vertex="1">
+          <mxGeometry x="210" y="30" width="30" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="SvTgfC43jSzVeKnuM5TM-62" value="..." style="rounded=0;whiteSpace=wrap;html=1;strokeColor=none;fillColor=#B3B3B3;fontStyle=1;gradientColor=#808080;gradientDirection=east;" parent="SvTgfC43jSzVeKnuM5TM-14" vertex="1">
+          <mxGeometry x="280" y="30" width="30" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="SvTgfC43jSzVeKnuM5TM-15" value="m_file&lt;span style=&quot;font-weight: normal;&quot;&gt; : string&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;align=left;spacingRight=0;spacingLeft=3;" parent="SvTgfC43jSzVeKnuM5TM-2" vertex="1">
+          <mxGeometry x="10" y="30" width="140" height="23" as="geometry" />
+        </mxCell>
+        <mxCell id="SvTgfC43jSzVeKnuM5TM-63" value="..." style="rounded=0;whiteSpace=wrap;html=1;strokeColor=none;fillColor=#808080;fontStyle=1;gradientColor=#666666;gradientDirection=east;" parent="SvTgfC43jSzVeKnuM5TM-2" vertex="1">
+          <mxGeometry x="330" y="130" width="30" height="310" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

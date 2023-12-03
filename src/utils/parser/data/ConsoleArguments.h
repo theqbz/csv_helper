@@ -1,17 +1,19 @@
 ///
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
-/// @file  Arguments.h
+/// @file  ConsoleArguments.h
 /// @brief Definition of the datastructure of command line arguments
 ///
 
 #pragma once
 
+#include "SettingData.h"
+
 #include <map>
 #include <string>
 #include <utility>
 
-namespace csvhelper::utils {
+namespace csvhelper::utils::parser::data {
 namespace console {
 
 ///
@@ -23,8 +25,8 @@ typedef std::pair<std::string, std::string> Argument;
 /// @brief Container for the argument list from commandline.
 /// The Argument consists a pair of < key, value >
 ///
-struct Arguments : public std::map<std::string, std::string>
+struct Arguments : public SettingData
 { };
 
 } // namespace console
-} // namespace csvhelper::utils
+} // namespace csvhelper::utils::parser::data

@@ -6,8 +6,7 @@
 ///
 
 #include "utils/FileHandler.h"
-#include "parser/IConsole.h"
-#include "parser/Console.h"
+#include "utils/parser/Console.h"
 #include "utils/ISettings.h"
 #include "utils/Settings.h"
 
