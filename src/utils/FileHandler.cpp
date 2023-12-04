@@ -15,6 +15,7 @@ namespace csvhelper {
 namespace utils {
 
 FileHandler::FileHandler(const std::string& p_fileName) :
+    m_fileName(p_fileName),
     m_file(p_fileName)
 {
     if (!m_file.good()) {

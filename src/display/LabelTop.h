@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "../csv/Data.h"
+#include "Table.h"
 #include "../utils/ISettings.h"
 
 namespace csvhelper {
@@ -21,7 +21,8 @@ public:
     {
     }
 
-    void print(const csv::File& p_csvFile);
+
+    void show(const Table& p_csvFile, const Table& p_result);
 
 private:
     const utils::ISettings& m_settings;

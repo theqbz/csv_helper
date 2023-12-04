@@ -44,7 +44,16 @@ public:
     ///
     std::fstream& get() final { return m_file; }
 
+    ///
+    /// Get the name of the file
+    /// 
+    /// @param (void)
+    /// @return the name of the file
+    /// 
+    const std::string fileName() const final { return m_fileName; }
+
 private:
+    const std::string m_fileName;
     std::fstream m_file;
 };
 

@@ -15,9 +15,6 @@
 namespace csvhelper {
 namespace csv {
 
-extern const csv::File process(std::fstream& p_file,
-                               const char p_delimiter);
-
 ///
 /// @brief Csv file parser class.
 /// Creates a csv::File from a .csv file
@@ -46,10 +43,7 @@ public:
     /// @param[in] csvFile : a handler that holds the .csv file
     /// @return a csv::File datastructure, contains the parsed .csv file
     ///
-    inline const csv::File parse(utils::IFileHandler& p_csvFile)
-    {
-        return process(p_csvFile.get(), m_settings.delimiter());
-    }
+    const csv::File process(utils::IFileHandler& p_csvFile);
 
 private:
     utils::ISettings& m_settings;

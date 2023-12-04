@@ -8,16 +8,29 @@
 
 #pragma once
 
+#include "../display/Table.h"
+#include "../utils/ISettings.h"
+
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace csvhelper {
 namespace csv {
 
 ///
-/// @brief Container for error messages
+/// @brief Container for error messages.
+/// An ErrorEntry consist the line number an the error message
+/// represented by a < int, string > pair
 ///
-struct ErrorMessages : public std::vector<std::string>
+struct ErrorEntry : public std::pair<size_t, std::string>
+{ };
+
+///
+/// @brief Container for error log.
+/// Error log is a vector of ErrorEntryes
+/// 
+struct ErrorLog : public std::vector<ErrorEntry>
 { };
 
 ///
@@ -25,8 +38,10 @@ struct ErrorMessages : public std::vector<std::string>
 ///
 struct Result
 {
-    ErrorMessages m_errors;        ///< vector of error messages
+    ErrorLog m_errors;             ///< vector of error entries
     unsigned int m_emptyLineCount; ///< counts the empty lines in a csv::File
+
+    const display::Table getTable(const utils::ISettings& p_settings);
 };
 
 } // namespace csv

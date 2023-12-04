@@ -19,7 +19,7 @@ public:
     IParser()          = default;
     virtual ~IParser() = default;
 
-    virtual inline const csv::File parse(utils::IFileHandler& p_csvFile) = 0;
+    virtual inline const csv::File process(utils::IFileHandler& p_csvFile) = 0;
 };
 
 } // namespace csv

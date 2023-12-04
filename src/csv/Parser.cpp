@@ -5,6 +5,8 @@
 /// @brief Functions for .csv file parser
 ///
 
+#include "Parser.h"
+#include "../utils/IFileHandler.h"
 #include "Data.h"
 
 #include <algorithm>
@@ -12,7 +14,7 @@
 #include <iostream>
 
 namespace csvhelper {
-namespace parser {
+namespace csv {
 
 const char DELIMITER            = ';';
 const std::string INVALID_LABEL = "<INVALID_LABEL>";
@@ -66,8 +68,8 @@ const csv::Labels getLabels(const std::string& p_line)
     return labels;
 }
 
-const csv::File process(std::fstream& p_file,
-                        const char p_delimiter)
+const csv::File parse(std::fstream& p_file,
+                      const unsigned char p_delimiter)
 {
     if (p_file.peek() == std::char_traits<char>::eof()) {
         return {};
@@ -79,17 +81,24 @@ const csv::File process(std::fstream& p_file,
     while (!firstNonEmptyLineFound && std::getline(p_file, line)) {
         ++fileLineCounter;
         if (!line.empty()) {
-            file.m_labels       = getLabels(line);
+            file.m_labels          = getLabels(line);
             firstNonEmptyLineFound = true;
         }
     }
     while (std::getline(p_file, line)) {
         ++fileLineCounter;
         file.m_content.push_back(getRecords(line, file.m_labels));
-        file.m_content.back().first.m_fileLineCounter = fileLineCounter;
+        file.m_content.back().first.m_fileLineNumber = fileLineCounter;
     }
     return file;
 }
 
-} // namespace parser
+const csv::File Parser::process(utils::IFileHandler& p_csvFile)
+{
+    csv::File csvFile  = parse(p_csvFile.get(), m_settings.delimiter());
+    csvFile.m_fileName = p_csvFile.fileName();
+    return csvFile;
+}
+
+} // namespace csv
 } // namespace csvhelper

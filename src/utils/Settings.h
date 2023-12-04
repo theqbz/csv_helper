@@ -52,7 +52,7 @@ public:
         m_consoleArguments(p_consoleArguments),
         m_iniFile(p_iniFile),
         m_delimiter(';'),
-        m_emptyLines(0),
+        m_emptyLines(EmptyLines::Skip),
         m_diff(DiffDetectMode::Off),
         m_emptyFields('.'),
         m_linesAroundErrors(0),
@@ -67,25 +67,25 @@ public:
     void init();
 
     inline void delimiter(const unsigned char p_delimiter) { m_delimiter = p_delimiter; }
-    inline unsigned char delimiter() const { return m_delimiter; }
-    inline void emptyLines(const unsigned char p_placeholder) { m_emptyLines = p_placeholder; }
-    inline unsigned char emptyLines() const { return m_emptyLines; }
+    inline const unsigned char delimiter() const { return m_delimiter; }
+    inline void emptyLines(const EmptyLines& p_placeholder) { m_emptyLines = p_placeholder; }
+    inline const EmptyLines emptyLines() const { return m_emptyLines; }
     inline void diffDetectMode(const DiffDetectMode p_mode) { m_diff = p_mode; }
-    inline DiffDetectMode diffDetectMode() const { return m_diff; }
+    inline const DiffDetectMode diffDetectMode() const { return m_diff; }
     inline void emptyFields(const unsigned char p_placeholder) { m_emptyFields = p_placeholder; }
-    inline unsigned char emptyFields() const { return m_emptyFields; }
+    inline const unsigned char emptyFields() const { return m_emptyFields; }
     inline void linesAroundErrors(const unsigned int p_value) { m_linesAroundErrors = p_value; }
-    inline unsigned int linesAroundErrors() const { return m_linesAroundErrors; }
+    inline const unsigned int linesAroundErrors() const { return m_linesAroundErrors; }
     inline void labelPosition(const LabelPosition p_position) { m_labelPosition = p_position; }
-    inline LabelPosition labelPosition() const { return m_labelPosition; }
+    inline const LabelPosition labelPosition() const { return m_labelPosition; }
     inline void tableOutput(const bool p_value) { m_tableOutput = p_value; }
-    inline bool tableOutput() const { return m_tableOutput; }
+    inline const bool tableOutput() const { return m_tableOutput; }
 
 private:
     parser::data::SettingData m_consoleArguments;
     parser::data::SettingData m_iniFile;
     unsigned char m_delimiter;
-    unsigned char m_emptyLines;
+    EmptyLines m_emptyLines;
     DiffDetectMode m_diff;
     unsigned char m_emptyFields;
     unsigned int m_linesAroundErrors;

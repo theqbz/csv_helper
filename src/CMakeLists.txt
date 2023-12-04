@@ -1,6 +1,18 @@
 enable_testing()
 
 add_executable( csv_helper
+    "csv/Data.h"
+    "csv/Data.cpp"
+    "csv/IParser.h"
+    "csv/Parser.h"
+    "csv/Parser.cpp"
+    "csv/Analyzer.h"
+    "csv/Analyzer.cpp"
+    "csv/Result.h"
+    "csv/Result.cpp"
+    "display/Table.h"
+    "display/LabelTop.h"
+    "display/LabelTop.cpp"
     "utils/parser/data/ConsoleArguments.h"
     "utils/parser/data/IniFile.h"
     "utils/parser/Console.h"
@@ -13,11 +25,6 @@ add_executable( csv_helper
     "utils/ISettings.h"
     "utils/Settings.h"
     "utils/Settings.cpp"
-    "csv/Data.h"
-    "csv/IParser.h"
-    "csv/Parser.h"
-    "csv/Parser.cpp"
-    "csv/Analyzer.h"
     "main.cpp"
 )
 

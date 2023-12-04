@@ -46,7 +46,7 @@ int convertToInt(const std::string& p_text)
     return stoi(p_text);
 }
 
-unsigned char convertToChar(const std::string& p_text)
+char convertToChar(const std::string& p_text)
 {
     return p_text.at(0);
 }
@@ -57,19 +57,34 @@ bool convertToBool(const std::string& p_text)
     return truePhrases.contains(p_text);
 }
 
-Settings::LabelPosition convertToLabelPosition(const std::string& p_text)
+ISettings::EmptyLines convertToEmptyLines(const std::string& p_text)
+{
+    if (p_text == "leave") {
+        return ISettings::EmptyLines::Leave;
+    }
+    if (p_text == "error") {
+        return ISettings::EmptyLines::Error;
+    }
+    if (p_text != "skip") {
+        std::cout << "Error with argument \"EmptyLines\". This option will be set to default.\n"
+                  << "( Possible values: -emptyLines [ skip | error | leave ] )";
+    }
+    return ISettings::EmptyLines::Skip;
+}
+
+ISettings::LabelPosition convertToLabelPosition(const std::string& p_text)
 {
     if (p_text == "inline") {
-        return Settings::LabelPosition::Inline;
+        return ISettings::LabelPosition::Inline;
     }
     if (p_text != "top") {
         std::cout << "Error with argument \"LabelPosition\". This option will be set to default.\n"
                   << "( Possible values: -labelPosition [ top | inline ] )";
     }
-    return Settings::LabelPosition::Top;
+    return ISettings::LabelPosition::Top;
 }
 
-Settings::DiffDetectMode convertToDiffMode(const std::string& p_text)
+ISettings::DiffDetectMode convertToDiffMode(const std::string& p_text)
 {
     if (p_text == "above") {
         return Settings::DiffDetectMode::Above;
@@ -121,7 +136,7 @@ void Settings::storeSettings(const parser::data::SettingData& p_settingsData)
     }
     if (const auto empty_lines = p_settingsData.find("emptyLines");
         empty_lines != p_settingsData.end()) {
-        m_emptyLines = convertToInt(empty_lines->second);
+        m_emptyLines = convertToEmptyLines(empty_lines->second);
     }
     if (const auto table_output = p_settingsData.find("table");
         table_output != p_settingsData.end()) {

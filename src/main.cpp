@@ -5,10 +5,15 @@
 /// @brief csvhelper
 ///
 
+#include "csv/Analyzer.h"
+#include "csv/Data.h"
+#include "csv/Parser.h"
+#include "csv/Result.h"
+#include "display/LabelTop.h"
 #include "utils/FileHandler.h"
-#include "utils/parser/Console.h"
-#include "utils/ISettings.h"
 #include "utils/Settings.h"
+#include "utils/parser/Console.h"
+#include "utils/parser/data/SettingData.h"
 
 #include <concepts>
 #include <fstream>
@@ -21,6 +26,19 @@
 #include <vector>
 
 const std::string DEBUG_TEST_FILE = "d:\\temp\\csv-helper-test.csv";
+
+void testRun(const std::string& p_file)
+{
+    csvhelper::utils::parser::data::SettingData consoleArgs, iniFile;
+    csvhelper::utils::Settings settings(consoleArgs, iniFile);
+    csvhelper::utils::FileHandler file(p_file);
+    csvhelper::csv::Parser csvParser(settings);
+    csvhelper::csv::Analyzer csvAnalyzer(settings);
+    csvhelper::csv::File csvFile = csvParser.process(file);
+    csvhelper::csv::Result analysisResult = csvAnalyzer.process(csvFile);
+    csvhelper::display::LabelTop display(settings);
+    display.show(csvFile.getTable(settings), analysisResult.getTable(settings));
+}
 
 typedef std::vector<std::string> Row;
 typedef std::vector<Row> Table;
@@ -181,8 +199,9 @@ int main(int argc, const char* argv[])
     } else {
         fileToTest = argv[1];
     }
-    csvhelper::utils::FileHandler file(fileToTest);
-    printResult(parseFile(file.get()));
+    testRun(fileToTest);
+    // csvhelper::utils::FileHandler file(fileToTest);
+    // printResult(parseFile(file.get()));
     std::cin.get();
     return 0;
 }

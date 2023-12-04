@@ -15,7 +15,7 @@ namespace data {
 
 ///
 /// @brief Container for the list of the options.
-/// SettingData consistd a list of unique < key, value > pairs
+/// SettingData consists a list of unique < key, value > pairs
 ///
 struct SettingData : public std::map<std::string, std::string>
 { };

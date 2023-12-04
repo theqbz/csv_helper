@@ -1,12 +1,15 @@
 ///
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
-/// @file  CsvData.h
+/// @file  Data.h
 /// @brief Definition of the datastructure which describes the structure of a
 ///        .csv file and stores the data from it.
 ///
 
 #pragma once
+
+#include "../display/Table.h"
+#include "../utils/ISettings.h"
 
 #include <stdint.h>
 #include <string>
@@ -27,13 +30,12 @@ struct RecordHead
     ///
     enum State
     {
-        OK,   ///< Line marked as alright
-        ERR,  ///< Line marked as error
-        EMPTY ///< Line marked as "not error" empty (to handle this differently when displaying the result)
+        OK,   ///< Line alright
+        ERR,  ///< Line error
+        EMPTY ///< Line empty but not error (to handle differently during displaying)
     };
 
-    // TODO: rename m_fileLineCounter to m_fileLineNumber!
-    size_t m_fileLineCounter { 0 };
+    size_t m_fileLineNumber { 0 };
     State m_state { State::OK };
 };
 
@@ -97,8 +99,11 @@ struct Labels : public std::vector<std::string>
 struct File
 {
     std::string m_fileName; ///< the path and filename of the .csv file
-    Labels m_labels;        ///< container for the labels of .csv file (type: vector<string>)
-    Content m_content;      ///< container for Records of .csv file (type: vector<Record>)
+    Labels m_labels;        ///< container for the labels of .csv file. Type: vector of strings
+    Content m_content;      ///< container for Records of .csv file. Type: vector of Records
+
+    const display::Table getTable(const utils::ISettings& p_settings);
+    //const display::Table getReport(const utils::ISettings& p_settings);
 };
 
 } // namespace csv
