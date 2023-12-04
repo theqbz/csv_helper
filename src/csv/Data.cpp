@@ -11,11 +11,14 @@
 #include "../utils/ISettings.h"
 
 #include <string>
+#include <string_view>
 
 namespace csvhelper {
 namespace csv {
 
 static const char LINE_NUMBER_SPACING = ' ';
+const std::string TABLE_HEADER_SIGN   = "H";
+const std::string PROMT_CLOSING_SIGN  = ">";
 
 inline const std::string fieldContent(const Field& p_field,
                                       const bool p_labelInline)
@@ -46,12 +49,12 @@ const std::string recordState(const RecordHead& p_recordHead)
     return result;
 }
 
-const std::string lineNumber(const size_t p_totalLines,
-                             const size_t p_currentLineNumer)
+const std::string placeholder(const std::string_view p_totalLineNumber,
+                              const std::string_view p_currentLineNumber)
 {
-    std::string prefix     = std::to_string(p_currentLineNumer);
-    const size_t spaceSize = std::to_string(p_totalLines).length() - prefix.length();
-    return prefix.insert(0, spaceSize, LINE_NUMBER_SPACING);
+    const size_t spaceAmount = p_totalLineNumber.length() - p_currentLineNumber.length();
+    std::string spaceing { "" };
+    return spaceing.insert(0, spaceAmount, LINE_NUMBER_SPACING);
 }
 
 inline const bool isEmptyRowAndSkipIt(const RecordHead::State& p_recordState,
@@ -67,12 +70,27 @@ inline const bool isLabelInline(const utils::ISettings& p_settings)
         && p_settings.labelPosition() == utils::ISettings::LabelPosition::Inline;
 }
 
+const std::string rowHead(const size_t p_totalLineCount,
+                          const std::string& p_currentLineSign)
+{
+    std::string_view totalLineCount { std::to_string(p_totalLineCount) };
+    return placeholder(totalLineCount, p_currentLineSign)
+        + p_currentLineSign
+        + PROMT_CLOSING_SIGN;
+}
+
+const std::string rowHead(const size_t p_totalLineCount,
+                          const size_t p_currentLineNumber)
+{
+    return rowHead(p_totalLineCount, std::to_string(p_currentLineNumber));
+}
+
 const display::Table File::getTable(const utils::ISettings& p_settings)
 {
     const size_t totalLines = m_content.back().first.m_fileLineNumber;
     display::Table table {};
     display::Row firstRow {};
-    firstRow.push_back("R>.");
+    firstRow.push_back(" " + rowHead(totalLines, TABLE_HEADER_SIGN));
     for (const std::string& label : m_labels) {
         firstRow.push_back(label);
     }
@@ -80,9 +98,7 @@ const display::Table File::getTable(const utils::ISettings& p_settings)
     for (const Record& record : m_content) {
         display::Row row {};
         if (!isEmptyRowAndSkipIt(record.first.m_state, p_settings.emptyLines())) {
-            row.push_back(recordState(record.first)
-                          + lineNumber(totalLines, record.first.m_fileLineNumber)
-                          + ".>");
+            row.push_back(recordState(record.first) + rowHead(totalLines, record.first.m_fileLineNumber));
         }
         for (const Field& field : record.second) {
             row.push_back(fieldContent(field, isLabelInline(p_settings)));
