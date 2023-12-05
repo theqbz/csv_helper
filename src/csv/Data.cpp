@@ -20,6 +20,12 @@ static const char LINE_NUMBER_SPACING = ' ';
 const std::string TABLE_HEADER_SIGN   = "H";
 const std::string PROMT_CLOSING_SIGN  = ">";
 
+inline const bool isLabelInline(const utils::ISettings& p_settings)
+{
+    return !p_settings.tableOutput()
+        && p_settings.labelPosition() == utils::ISettings::LabelPosition::Inline;
+}
+
 inline const std::string fieldContent(const Field& p_field,
                                       const bool p_labelInline)
 {
@@ -49,14 +55,6 @@ const std::string recordState(const RecordHead& p_recordHead)
     return result;
 }
 
-const std::string placeholder(const std::string_view p_totalLineNumber,
-                              const std::string_view p_currentLineNumber)
-{
-    const size_t spaceAmount = p_totalLineNumber.length() - p_currentLineNumber.length();
-    std::string spaceing { "" };
-    return spaceing.insert(0, spaceAmount, LINE_NUMBER_SPACING);
-}
-
 inline const bool isEmptyRowAndSkipIt(const RecordHead::State& p_recordState,
                                       const utils::ISettings::EmptyLines& p_emptyLineOption)
 {
@@ -64,10 +62,12 @@ inline const bool isEmptyRowAndSkipIt(const RecordHead::State& p_recordState,
         && p_emptyLineOption == utils::ISettings::EmptyLines::Skip;
 }
 
-inline const bool isLabelInline(const utils::ISettings& p_settings)
+const std::string placeholder(const std::string_view p_totalLineNumber,
+                              const std::string_view p_currentLineNumber)
 {
-    return !p_settings.tableOutput()
-        && p_settings.labelPosition() == utils::ISettings::LabelPosition::Inline;
+    const size_t spaceAmount = p_totalLineNumber.length() - p_currentLineNumber.length();
+    std::string spaceing { "" };
+    return spaceing.insert(0, spaceAmount, LINE_NUMBER_SPACING);
 }
 
 const std::string rowHead(const size_t p_totalLineCount,

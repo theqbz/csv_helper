@@ -4,6 +4,22 @@
 /// @file  Settings.h
 /// @brief Declaration of the settings class
 ///
+/// OPTION NAME         OPTION DETAILS
+/// -----------         --------------
+/// delimiter           delimiter between fields in .csv file
+/// emptyLines          error / leave / skip
+/// diff                off / auto / above / below
+/// emptyFields         placeholder for empty values
+///                     (0: skip empty values)
+/// linesAroundErrors   sohw number of lines around errors
+///                     (0: show all lines)
+/// labelPosition       top / inline
+///                     (This option and TalbeOutput are mutually exclusive:
+///                     if TableOutput enabled, inactivates this setting.)
+/// tableOutput         show output in a table
+///                     (This is mutually exclusive with LabelPosiotion: it
+///                     inactivates LabelPosition if enabled.)
+///
 
 #pragma once
 
@@ -17,23 +33,6 @@ namespace utils {
 
 ///
 /// @brief Store program settings in runtime
-///
-/// OPTION NAME         OPTION DETAILS
-/// -----------         --------------
-/// delimiter           delimiter between fields in .csv file
-/// emptyLines          placeholder for empty lines
-///                     (0: skip empty lines / 1: show empty lines as error)
-/// diff                off / auto / above / below
-/// emptyFields         placeholder for empty values
-///                     (0: skip empty values)
-/// linesAroundErrors   sohw number of lines around errors
-///                     (0: show all lines)
-/// labelPosition       top / inline
-///                     (This option and TalbeOutput are mutually exclusive:
-///                     if TableOutput enabled, inactivates this setting.)
-/// tableOutput         show output in a table
-///                     (This is mutually exclusive with LabelPosiotion: it
-///                     inactivates LabelPosition if enabled.)
 ///
 class Settings : public ISettings
 {

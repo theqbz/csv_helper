@@ -48,6 +48,9 @@ int convertToInt(const std::string& p_text)
 
 char convertToChar(const std::string& p_text)
 {
+    if (p_text.empty()) {
+        return 0;
+    }
     return p_text.at(0);
 }
 
@@ -118,31 +121,31 @@ void Settings::init()
 
 void Settings::storeSettings(const parser::data::SettingData& p_settingsData)
 {
-    if (const auto delimiter = p_settingsData.find("delimiter");
+    if (const auto delimiter = p_settingsData.find("-delimiter");
         delimiter != p_settingsData.end()) {
         m_delimiter = convertToChar(delimiter->second);
     }
-    if (const auto error_lines = p_settingsData.find("errorLines");
+    if (const auto error_lines = p_settingsData.find("-errorLines");
         error_lines != p_settingsData.end()) {
         m_linesAroundErrors = convertToInt(error_lines->second);
     }
-    if (const auto label_position = p_settingsData.find("labelPosition");
+    if (const auto label_position = p_settingsData.find("-labelPosition");
         label_position != p_settingsData.end()) {
         m_labelPosition = convertToLabelPosition(label_position->second);
     }
-    if (const auto empty_fields = p_settingsData.find("emptyFields");
+    if (const auto empty_fields = p_settingsData.find("-emptyFields");
         empty_fields != p_settingsData.end()) {
         m_emptyFields = convertToChar(empty_fields->second);
     }
-    if (const auto empty_lines = p_settingsData.find("emptyLines");
+    if (const auto empty_lines = p_settingsData.find("-emptyLines");
         empty_lines != p_settingsData.end()) {
         m_emptyLines = convertToEmptyLines(empty_lines->second);
     }
-    if (const auto table_output = p_settingsData.find("table");
+    if (const auto table_output = p_settingsData.find("-table");
         table_output != p_settingsData.end()) {
         m_tableOutput = convertToBool(table_output->second);
     }
-    if (const auto diff_detect_mode = p_settingsData.find("diffMode");
+    if (const auto diff_detect_mode = p_settingsData.find("-diffMode");
         diff_detect_mode != p_settingsData.end()) {
         m_diff = convertToDiffMode(diff_detect_mode->second);
     }

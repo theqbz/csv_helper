@@ -13,6 +13,7 @@
 #include "utils/FileHandler.h"
 #include "utils/Settings.h"
 #include "utils/parser/Console.h"
+#include "utils/parser/data/ConsoleArguments.h"
 #include "utils/parser/data/SettingData.h"
 
 #include <concepts>
@@ -27,14 +28,15 @@
 
 const std::string DEBUG_TEST_FILE = "d:\\temp\\csv-helper-test.csv";
 
-void testRun(const std::string& p_file)
+void testRun(const std::string& p_file, csvhelper::utils::parser::data::SettingData consoleArgs)
 {
-    csvhelper::utils::parser::data::SettingData consoleArgs, iniFile;
+    csvhelper::utils::parser::data::SettingData iniFile;
     csvhelper::utils::Settings settings(consoleArgs, iniFile);
+    settings.init();
     csvhelper::utils::FileHandler file(p_file);
     csvhelper::csv::Parser csvParser(settings);
     csvhelper::csv::Analyzer csvAnalyzer(settings);
-    csvhelper::csv::File csvFile = csvParser.process(file);
+    csvhelper::csv::File csvFile          = csvParser.process(file);
     csvhelper::csv::Result analysisResult = csvAnalyzer.process(csvFile);
     csvhelper::display::LabelTop display(settings);
     display.show(csvFile.getTable(settings), analysisResult.getTable(settings));
@@ -199,7 +201,10 @@ int main(int argc, const char* argv[])
     } else {
         fileToTest = argv[1];
     }
-    testRun(fileToTest);
+
+    csvhelper::utils::parser::Console consoleParser;
+    csvhelper::utils::parser::data::console::Arguments consoleArgs = consoleParser.parse(argc, argv);
+    testRun(fileToTest, consoleArgs);
     // csvhelper::utils::FileHandler file(fileToTest);
     // printResult(parseFile(file.get()));
     std::cin.get();
