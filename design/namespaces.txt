@@ -1,0 +1,33 @@
+csvhelper {
+    data {
+        csv {
+            File { // NEW NAME REQUIRED
+                RecordHead
+                Field
+                Fields
+                Record
+                Content
+                Labels
+                File
+            }
+            Result { // NEW NAME REQUIRED!
+                ErrorEntry
+                ErrorLog
+                Result
+            }
+        }
+        ini {
+            File
+            Records
+            ...
+        }
+        console {
+            Arguments
+            ...
+        }
+        display {
+            Table
+            Row
+        }
+    }
+}
