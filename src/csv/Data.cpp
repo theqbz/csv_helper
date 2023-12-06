@@ -29,6 +29,9 @@ inline const bool isLabelInline(const utils::ISettings& p_settings)
 inline const std::string fieldContent(const Field& p_field,
                                       const bool p_labelInline)
 {
+    if (p_field.m_content.second.empty() && p_labelInline) {
+        return {};
+    }
     return p_labelInline
         ? p_field.m_content.first + ": " + p_field.m_content.second
         : p_field.m_content.second;
@@ -75,7 +78,7 @@ const std::string rowHead(const size_t p_totalLineCount,
 {
     std::string_view totalLineCount { std::to_string(p_totalLineCount) };
     return placeholder(totalLineCount, p_currentLineSign)
-        + p_currentLineSign
+        + p_currentLineSign + "."
         + PROMT_CLOSING_SIGN;
 }
 

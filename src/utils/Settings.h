@@ -13,7 +13,7 @@
 ///                     (0: skip empty values)
 /// linesAroundErrors   sohw number of lines around errors
 ///                     (0: show all lines)
-/// labelPosition       top / inline
+/// label               top / inline
 ///                     (This option and TalbeOutput are mutually exclusive:
 ///                     if TableOutput enabled, inactivates this setting.)
 /// tableOutput         show output in a table
@@ -55,7 +55,7 @@ public:
         m_diff(DiffDetectMode::Off),
         m_emptyFields('.'),
         m_linesAroundErrors(0),
-        m_labelPosition(LabelPosition::Top),
+        m_label(LabelPosition::Top),
         m_tableOutput(false)
     {
     }
@@ -75,8 +75,8 @@ public:
     inline const unsigned char emptyFields() const { return m_emptyFields; }
     inline void linesAroundErrors(const unsigned int p_value) { m_linesAroundErrors = p_value; }
     inline const unsigned int linesAroundErrors() const { return m_linesAroundErrors; }
-    inline void labelPosition(const LabelPosition p_position) { m_labelPosition = p_position; }
-    inline const LabelPosition labelPosition() const { return m_labelPosition; }
+    inline void labelPosition(const LabelPosition p_label) { m_label = p_label; }
+    inline const LabelPosition labelPosition() const { return m_label; }
     inline void tableOutput(const bool p_value) { m_tableOutput = p_value; }
     inline const bool tableOutput() const { return m_tableOutput; }
 
@@ -88,7 +88,7 @@ private:
     DiffDetectMode m_diff;
     unsigned char m_emptyFields;
     unsigned int m_linesAroundErrors;
-    LabelPosition m_labelPosition;
+    LabelPosition m_label;
     bool m_tableOutput;
 
     void storeSettings(const parser::data::SettingData& p_tasks);

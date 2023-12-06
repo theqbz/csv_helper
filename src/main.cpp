@@ -9,7 +9,7 @@
 #include "csv/Data.h"
 #include "csv/Parser.h"
 #include "csv/Result.h"
-#include "display/LabelTop.h"
+#include "display/Lines.h"
 #include "utils/FileHandler.h"
 #include "utils/Settings.h"
 #include "utils/parser/Console.h"
@@ -38,8 +38,8 @@ void testRun(const std::string& p_file, csvhelper::utils::parser::data::SettingD
     csvhelper::csv::Analyzer csvAnalyzer(settings);
     csvhelper::csv::File csvFile          = csvParser.process(file);
     csvhelper::csv::Result analysisResult = csvAnalyzer.process(csvFile);
-    csvhelper::display::LabelTop display(settings);
-    display.show(csvFile.getTable(settings), analysisResult.getTable(settings));
+    csvhelper::display::Lines display(settings);
+    display.render(csvFile.getTable(settings), analysisResult.getTable(settings));
 }
 
 typedef std::vector<std::string> Row;

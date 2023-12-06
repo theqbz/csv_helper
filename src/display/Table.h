@@ -14,7 +14,7 @@ namespace csvhelper {
 namespace display {
 
 ///
-/// @brieg Container for a table row.
+/// @brief Container for a table row.
 /// Row consist a vector of strings
 ///
 struct Row : public std::vector<std::string>

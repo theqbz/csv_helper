@@ -1,11 +1,11 @@
 ///
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
-/// @file  LabelTop.cpp
-/// @brief Function definitions for the LabelTop class
+/// @file  Lines.cpp
+/// @brief Function definitions for the Lines class
 ///
 
-#include "LabelTop.h"
+#include "Lines.h"
 
 #include "../utils/ISettings.h"
 #include "Table.h"
@@ -43,7 +43,7 @@ const std::string cellSeparator(bool* p_previousCellWasEmpty,
     return separator;
 }
 
-void LabelTop::show(const Table& p_csvFile, const Table& p_result)
+void Lines::render(const Table& p_csvFile, const Table& p_result)
 {
     const bool skipEmptyRow { m_settings.emptyLines() == utils::ISettings::EmptyLines::Skip };
     const unsigned char emptyCellFiller { m_settings.emptyFields() };

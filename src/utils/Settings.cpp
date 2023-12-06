@@ -70,7 +70,7 @@ ISettings::EmptyLines convertToEmptyLines(const std::string& p_text)
     }
     if (p_text != "skip") {
         std::cout << "Error with argument \"EmptyLines\". This option will be set to default.\n"
-                  << "( Possible values: -emptyLines [ skip | error | leave ] )";
+                  << "( Possible values: -emptyLines [ skip | error | leave ] )\n";
     }
     return ISettings::EmptyLines::Skip;
 }
@@ -82,7 +82,7 @@ ISettings::LabelPosition convertToLabelPosition(const std::string& p_text)
     }
     if (p_text != "top") {
         std::cout << "Error with argument \"LabelPosition\". This option will be set to default.\n"
-                  << "( Possible values: -labelPosition [ top | inline ] )";
+                  << "( Possible values: -labelPosition [ top | inline ] )\n";
     }
     return ISettings::LabelPosition::Top;
 }
@@ -100,7 +100,7 @@ ISettings::DiffDetectMode convertToDiffMode(const std::string& p_text)
     }
     if (p_text != "off") {
         std::cout << "Error with argument \"DiffDetectMode\". This option will be set to default.\n"
-                  << "( Possible values: -diffMode [ off | auto | above | below ] )";
+                  << "( Possible values: -diffMode [ off | auto | above | below ] )\n";
     }
     return Settings::DiffDetectMode::Off;
 }
@@ -129,9 +129,9 @@ void Settings::storeSettings(const parser::data::SettingData& p_settingsData)
         error_lines != p_settingsData.end()) {
         m_linesAroundErrors = convertToInt(error_lines->second);
     }
-    if (const auto label_position = p_settingsData.find("-labelPosition");
-        label_position != p_settingsData.end()) {
-        m_labelPosition = convertToLabelPosition(label_position->second);
+    if (const auto label = p_settingsData.find("-label");
+        label != p_settingsData.end()) {
+        m_label = convertToLabelPosition(label->second);
     }
     if (const auto empty_fields = p_settingsData.find("-emptyFields");
         empty_fields != p_settingsData.end()) {
