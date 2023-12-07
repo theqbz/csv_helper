@@ -11,7 +11,7 @@
 #include <iostream>
 #include <string>
 
-namespace csvhelper {
+namespace csvvalidator {
 namespace utils {
 
 FileHandler::FileHandler(const std::string& p_fileName) :
@@ -34,4 +34,4 @@ FileHandler::~FileHandler()
 }
 
 } // namespace utils
-} // namespace csvhelper
+} // namespace csvvalidator

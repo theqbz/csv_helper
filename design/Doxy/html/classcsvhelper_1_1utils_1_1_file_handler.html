@@ -97,7 +97,7 @@ $(document).ready(function(){initNavTree('classcsvhelper_1_1utils_1_1_file_handl
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="classcsvhelper_1_1utils_1_1_file_handler.html" title="FileHandler class for csvhelper. Opens, holds its stream and and manage the closing process to a give...">FileHandler</a> class for csvhelper. Opens, holds its stream and and manage the closing process to a given file.  
+<p><a class="el" href="classcsvhelper_1_1utils_1_1_file_handler.html" title="FileHandler class. Opens, holds its stream and and manage the closing process to a given file.">FileHandler</a> class. Opens, holds its stream and and manage the closing process to a given file.  
  <a href="classcsvhelper_1_1utils_1_1_file_handler.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_file_handler_8h_source.html">FileHandler.h</a>&gt;</code></p>
@@ -119,11 +119,15 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1cc37d4e813aae640ee2a27660714533"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c02ca02e6ce1bda0d2b4dc783208161"><td class="memItemLeft" align="right" valign="top">std::fstream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcsvhelper_1_1utils_1_1_file_handler.html#a5c02ca02e6ce1bda0d2b4dc783208161">get</a> () final</td></tr>
 <tr class="separator:a5c02ca02e6ce1bda0d2b4dc783208161"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae17e553516369259cc96a25dd8fe66cd"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcsvhelper_1_1utils_1_1_file_handler.html#ae17e553516369259cc96a25dd8fe66cd">fileName</a> () const final</td></tr>
+<tr class="separator:ae17e553516369259cc96a25dd8fe66cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac77389d83729d83c35d30fbf0cf36b40"><td class="memItemLeft" align="right" valign="top">virtual std::fstream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcsvhelper_1_1utils_1_1_i_file_handler.html#ac77389d83729d83c35d30fbf0cf36b40">get</a> ()=0</td></tr>
 <tr class="separator:ac77389d83729d83c35d30fbf0cf36b40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ca44a0be0ee21c70fcec797d91c42e3"><td class="memItemLeft" align="right" valign="top">virtual const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcsvhelper_1_1utils_1_1_i_file_handler.html#a7ca44a0be0ee21c70fcec797d91c42e3">fileName</a> () const =0</td></tr>
+<tr class="separator:a7ca44a0be0ee21c70fcec797d91c42e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="classcsvhelper_1_1utils_1_1_file_handler.html" title="FileHandler class for csvhelper. Opens, holds its stream and and manage the closing process to a give...">FileHandler</a> class for csvhelper. Opens, holds its stream and and manage the closing process to a given file. </p>
+<div class="textblock"><p><a class="el" href="classcsvhelper_1_1utils_1_1_file_handler.html" title="FileHandler class. Opens, holds its stream and and manage the closing process to a given file.">FileHandler</a> class. Opens, holds its stream and and manage the closing process to a given file. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a2d4a336995b808349ba2e2403d6efd1e" name="a2d4a336995b808349ba2e2403d6efd1e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2d4a336995b808349ba2e2403d6efd1e">&#9670;&#160;</a></span>FileHandler()</h2>
@@ -148,7 +152,7 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Constructor for <a class="el" href="classcsvhelper_1_1utils_1_1_file_handler.html" title="FileHandler class for csvhelper. Opens, holds its stream and and manage the closing process to a give...">FileHandler</a>. Opens the file and check if this process was succesfull.</p>
+<p>Constructor for <a class="el" href="classcsvhelper_1_1utils_1_1_file_handler.html" title="FileHandler class. Opens, holds its stream and and manage the closing process to a given file.">FileHandler</a>. Opens the file and check if this process was succesfull.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_fileName</td><td>(required) : the path to file and filename </td></tr>
@@ -180,11 +184,46 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Destructor for <a class="el" href="classcsvhelper_1_1utils_1_1_file_handler.html" title="FileHandler class for csvhelper. Opens, holds its stream and and manage the closing process to a give...">FileHandler</a>. Close the file what the actual <a class="el" href="classcsvhelper_1_1utils_1_1_file_handler.html" title="FileHandler class for csvhelper. Opens, holds its stream and and manage the closing process to a give...">FileHandler</a> object was holded. </p>
+<p>Destructor for <a class="el" href="classcsvhelper_1_1utils_1_1_file_handler.html" title="FileHandler class. Opens, holds its stream and and manage the closing process to a given file.">FileHandler</a>. Close the file what the actual <a class="el" href="classcsvhelper_1_1utils_1_1_file_handler.html" title="FileHandler class. Opens, holds its stream and and manage the closing process to a given file.">FileHandler</a> object was holded. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="ae17e553516369259cc96a25dd8fe66cd" name="ae17e553516369259cc96a25dd8fe66cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae17e553516369259cc96a25dd8fe66cd">&#9670;&#160;</a></span>fileName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string csvhelper::utils::FileHandler::fileName </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">final</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get the name of the file</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">(void)</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the name of the file </dd></dl>
+
+<p>Implements <a class="el" href="classcsvhelper_1_1utils_1_1_i_file_handler.html#a7ca44a0be0ee21c70fcec797d91c42e3">csvhelper::utils::IFileHandler</a>.</p>
+
+</div>
+</div>
 <a id="a5c02ca02e6ce1bda0d2b4dc783208161" name="a5c02ca02e6ce1bda0d2b4dc783208161"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5c02ca02e6ce1bda0d2b4dc783208161">&#9670;&#160;</a></span>get()</h2>
 
@@ -221,8 +260,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/utils/<a class="el" href="_file_handler_8h_source.html">FileHandler.h</a></li>
-<li>src/utils/<a class="el" href="_file_handler_8cpp.html">FileHandler.cpp</a></li>
+<li>D:/repos/csvvalidator/src/utils/<a class="el" href="_file_handler_8h_source.html">FileHandler.h</a></li>
+<li>D:/repos/csvvalidator/src/utils/<a class="el" href="_file_handler_8cpp.html">FileHandler.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

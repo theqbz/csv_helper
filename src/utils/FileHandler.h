@@ -12,7 +12,7 @@
 #include <fstream>
 #include <string>
 
-namespace csvhelper {
+namespace csvvalidator {
 namespace utils {
 
 ///
@@ -58,4 +58,4 @@ private:
 };
 
 } // namespace utils
-} // namespace csvhelper
+} // namespace csvvalidator

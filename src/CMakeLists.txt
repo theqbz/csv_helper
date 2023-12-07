@@ -1,27 +1,28 @@
 enable_testing()
 
-add_executable( csv_helper
-    "csv/Data.h"
-    "csv/Data.cpp"
+add_executable( csv_validator
     "csv/IParser.h"
     "csv/Parser.h"
     "csv/Parser.cpp"
     "csv/Analyzer.h"
     "csv/Analyzer.cpp"
-    "csv/Result.h"
-    "csv/Result.cpp"
-    "display/Table.h"
+    "data/ConsoleArguments.h"
+    "data/CsvData.h"
+    "data/CsvData.cpp"
+    "data/IniFile.h"
+    "data/Result.h"
+    "data/Result.cpp"
+    "data/SettingData.h"
+    "data/DisplayTable.h"
     "display/IDisplay.h"
     "display/Lines.h"
     "display/Lines.cpp"
     "display/Grid.h"
     "display/Grid.cpp"
-    "utils/parser/data/ConsoleArguments.h"
-    "utils/parser/data/IniFile.h"
-    "utils/parser/Console.h"
-    "utils/parser/Console.cpp"
-    "utils/parser/IniFile.h"
-    "utils/parser/IniFile.cpp"
+    "parser/Console.h"
+    "parser/Console.cpp"
+    "parser/IniFile.h"
+    "parser/IniFile.cpp"
     "utils/IFileHandler.h"
     "utils/FileHandler.h"
     "utils/FileHandler.cpp"
@@ -31,9 +32,9 @@ add_executable( csv_helper
     "main.cpp"
 )
 
-set_property( TARGET csv_helper PROPERTY CXX_STANDARD 20 )
+set_property( TARGET csv_validator PROPERTY CXX_STANDARD 20 )
 
-target_link_libraries( csv_helper PUBLIC
+target_link_libraries( csv_validator PUBLIC
     CONAN_PKG::ftxui
     CONAN_PKG::gtest
 )

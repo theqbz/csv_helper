@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['iniline_0',['iniLine',['../_ini_file_8cpp.html#abb70a792c1cb1c3317910c32784b05e3',1,'csvhelper::parser']]],
-  ['iskey_1',['isKey',['../_console_8cpp.html#a74c3677a9fdbe67750708c80f024fda6',1,'csvhelper::parser']]]
+  ['read_0',['read',['../classcsvhelper_1_1utils_1_1parser_1_1_ini_file.html#ab68329dcd27934c7af6da3698c6a3d59',1,'csvhelper::utils::parser::IniFile']]]
 ];

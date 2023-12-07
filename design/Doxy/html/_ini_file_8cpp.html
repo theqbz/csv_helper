@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.7"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>csv helper by QBZ: src/parser/IniFile.cpp File Reference</title>
+<title>csv helper by QBZ: D:/repos/csvvalidator/src/utils/parser/IniFile.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -90,139 +90,25 @@ $(document).ready(function(){initNavTree('_ini_file_8cpp.html',''); initResizabl
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">IniFile.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>Functions for .ini file parser.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="_i_file_handler_8h_source.html">../utils/IFileHandler.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_ini_data_8h_source.html">../utils/datastructure/IniData.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="_ini_file_8h_source.html">IniFile.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="data_2_ini_file_8h_source.html">data/IniFile.h</a>&quot;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a58429da6b7dd97992a4cdc1f51a975ad"><td class="memItemLeft" align="right" valign="top"><a id="a58429da6b7dd97992a4cdc1f51a975ad" name="a58429da6b7dd97992a4cdc1f51a975ad"></a>
-typedef <a class="el" href="_ini_data_8h.html#a1dffd9bc39bdbef2a2107cd879f66de8">csvhelper::utils::ini::Record</a>&#160;</td><td class="memItemRight" valign="bottom"><b>csvhelper::parser::Record</b></td></tr>
-<tr class="separator:a58429da6b7dd97992a4cdc1f51a975ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa93c5321f3fd5ff07adc0db690bf962e"><td class="memItemLeft" align="right" valign="top"><a id="aa93c5321f3fd5ff07adc0db690bf962e" name="aa93c5321f3fd5ff07adc0db690bf962e"></a>
-typedef <a class="el" href="structcsvhelper_1_1utils_1_1ini_1_1_file.html">csvhelper::utils::ini::File</a>&#160;</td><td class="memItemRight" valign="bottom"><b>csvhelper::parser::File</b></td></tr>
-<tr class="separator:aa93c5321f3fd5ff07adc0db690bf962e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:af59f8f855e1f7055559694a3504fdc29"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_ini_file_8cpp.html#af59f8f855e1f7055559694a3504fdc29">csvhelper::parser::trim</a> (const std::string &amp;p_text)</td></tr>
-<tr class="separator:af59f8f855e1f7055559694a3504fdc29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb70a792c1cb1c3317910c32784b05e3"><td class="memItemLeft" align="right" valign="top">const Record&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_ini_file_8cpp.html#abb70a792c1cb1c3317910c32784b05e3">csvhelper::parser::iniLine</a> (const std::string &amp;p_line)</td></tr>
-<tr class="separator:abb70a792c1cb1c3317910c32784b05e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a763c1282d6b1c64f1dfc444924af8433"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structcsvhelper_1_1utils_1_1ini_1_1_file.html">File</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_ini_file_8cpp.html#a763c1282d6b1c64f1dfc444924af8433">csvhelper::parser::read</a> (std::fstream &amp;p_iniFile)</td></tr>
-<tr class="separator:a763c1282d6b1c64f1dfc444924af8433"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:accb61cc184d13345b9e506c6d1991505"><td class="memItemLeft" align="right" valign="top"><a id="accb61cc184d13345b9e506c6d1991505" name="accb61cc184d13345b9e506c6d1991505"></a>
-const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>csvhelper::parser::COMMENT_SIGNS</b> = &quot;#;&quot;</td></tr>
-<tr class="separator:accb61cc184d13345b9e506c6d1991505"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2dcbc29427d97fb1ab67cd279e5ec650"><td class="memItemLeft" align="right" valign="top"><a id="a2dcbc29427d97fb1ab67cd279e5ec650" name="a2dcbc29427d97fb1ab67cd279e5ec650"></a>
-const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>csvhelper::parser::KEY_VALUE_DELIMITER</b> = &quot;=&quot;</td></tr>
-<tr class="separator:a2dcbc29427d97fb1ab67cd279e5ec650"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe444da6d6d905af0e26a2ea76166ec1"><td class="memItemLeft" align="right" valign="top"><a id="afe444da6d6d905af0e26a2ea76166ec1" name="afe444da6d6d905af0e26a2ea76166ec1"></a>
-const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>csvhelper::parser::WHITESPACE</b> = &quot; \t\n&quot;</td></tr>
-<tr class="separator:afe444da6d6d905af0e26a2ea76166ec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Functions for .ini file parser. </p>
-<h2><a class="anchor" id="autotoc_md5"></a>
+<h2><a class="anchor" id="autotoc_md26"></a>
 CSV HELPER by QBZ</h2>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a id="abb70a792c1cb1c3317910c32784b05e3" name="abb70a792c1cb1c3317910c32784b05e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abb70a792c1cb1c3317910c32784b05e3">&#9670;&#160;</a></span>iniLine()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const Record csvhelper::parser::iniLine </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>p_line</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Read record from a line of a .ini file</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">-</td><td>p_line : the line of the file </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>a Record, contains a &lt; key, value &gt; pair </dd></dl>
-
-</div>
-</div>
-<a id="a763c1282d6b1c64f1dfc444924af8433" name="a763c1282d6b1c64f1dfc444924af8433"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a763c1282d6b1c64f1dfc444924af8433">&#9670;&#160;</a></span>read()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const File csvhelper::parser::read </td>
-          <td>(</td>
-          <td class="paramtype">std::fstream &amp;&#160;</td>
-          <td class="paramname"><em>p_iniFile</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Create a ini::File data from a .ini file. Parse the file line by line and store the records. (If it find a second record with the same key, the first occurrence will be stored.)</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">-</td><td>p_iniFile : a filestream contains the .ini file </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>a File, contains the records of the .ini file </dd></dl>
-
-</div>
-</div>
-<a id="af59f8f855e1f7055559694a3504fdc29" name="af59f8f855e1f7055559694a3504fdc29"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af59f8f855e1f7055559694a3504fdc29">&#9670;&#160;</a></span>trim()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string csvhelper::parser::trim </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>p_text</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Trim whitespaces from the edges of text</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">-</td><td>p_text : the text to trim </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>the trimmed text </dd></dl>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_6cd8491d143eb218b70983dbdb3c58bc.html">parser</a></li><li class="navelem"><a class="el" href="_ini_file_8cpp.html">IniFile.cpp</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_313caf1132e152dd9b58bea13a4052ca.html">utils</a></li><li class="navelem"><a class="el" href="dir_db307cbc54f963ccced18f8be216693a.html">parser</a></li><li class="navelem"><a class="el" href="_ini_file_8cpp.html">IniFile.cpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>

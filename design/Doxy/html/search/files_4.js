@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['settings_2ecpp_0',['Settings.cpp',['../_settings_8cpp.html',1,'']]],
-  ['settings_2eh_1',['Settings.h',['../_settings_8h.html',1,'']]]
+  ['grid_2ecpp_0',['Grid.cpp',['../_grid_8cpp.html',1,'']]],
+  ['grid_2eh_1',['Grid.h',['../_grid_8h.html',1,'']]]
 ];

@@ -10,7 +10,7 @@
 #include "IDisplay.h"
 #include "../utils/ISettings.h"
 
-namespace csvhelper {
+namespace csvvalidator {
 namespace display {
 
 class Grid : public IDisplay
@@ -28,4 +28,4 @@ private:
 };
 
 } // namespace display
-} // namespace csvhelper
+} // namespace csvvalidator

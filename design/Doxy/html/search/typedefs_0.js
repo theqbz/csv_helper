@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['argument_0',['Argument',['../_arguments_8h.html#ad165aba6b302ec0f21ae406e2fee36e8',1,'csvhelper::utils::console']]]
+  ['argument_0',['Argument',['../_console_arguments_8h.html#a935f2ff898e8b7c79bbd0951a3b16874',1,'csvhelper::utils::parser::data::console']]]
 ];

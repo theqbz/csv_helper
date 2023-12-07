@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['diff_0',['DIFF',['../structcsvhelper_1_1utils_1_1csv_1_1_field.html#acf288daa7606b17cc8077e192f57392ea803b7297bdb80c492b6035b965bfc88f',1,'csvhelper::utils::csv::Field']]]
+  ['diff_0',['DIFF',['../structcsvhelper_1_1csv_1_1_field.html#ae82c4f67400e9f0c4f66537c745ea7bda4bde158649a082697f9b1c318e1ef7ec',1,'csvhelper::csv::Field']]]
 ];

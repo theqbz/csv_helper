@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.7"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>csv helper by QBZ: src/parser/IniFile.h File Reference</title>
+<title>csv helper by QBZ: D:/repos/csvvalidator/src/utils/parser/IniFile.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -91,68 +91,34 @@ $(document).ready(function(){initNavTree('_ini_file_8h.html',''); initResizable(
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Classes</a>  </div>
   <div class="headertitle"><div class="title">IniFile.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>Definition of parsed .ini file handler class.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="_i_file_handler_8h_source.html">../utils/IFileHandler.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_ini_data_8h_source.html">../utils/datastructure/IniData.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_i_ini_file_8h_source.html">IIniFile.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="_i_file_handler_8h_source.html">../IFileHandler.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="data_2_ini_file_8h_source.html">data/IniFile.h</a>&quot;</code><br />
 </div>
 <p><a href="_ini_file_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcsvhelper_1_1parser_1_1_ini_file.html">csvhelper::parser::IniFile</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store a parsed data of a .ini file.  <a href="classcsvhelper_1_1parser_1_1_ini_file.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcsvhelper_1_1utils_1_1parser_1_1_ini_file.html">csvhelper::utils::parser::IniFile</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse data from .ini file.  <a href="classcsvhelper_1_1utils_1_1parser_1_1_ini_file.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a763c1282d6b1c64f1dfc444924af8433"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structcsvhelper_1_1utils_1_1ini_1_1_file.html">File</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_ini_file_8cpp.html#a763c1282d6b1c64f1dfc444924af8433">csvhelper::parser::read</a> (std::fstream &amp;p_iniFile)</td></tr>
-<tr class="separator:a763c1282d6b1c64f1dfc444924af8433"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Definition of parsed .ini file handler class. </p>
-<h2><a class="anchor" id="autotoc_md6"></a>
+<h2><a class="anchor" id="autotoc_md27"></a>
 CSV HELPER by QBZ</h2>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a id="a763c1282d6b1c64f1dfc444924af8433" name="a763c1282d6b1c64f1dfc444924af8433"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a763c1282d6b1c64f1dfc444924af8433">&#9670;&#160;</a></span>read()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const File csvhelper::parser::read </td>
-          <td>(</td>
-          <td class="paramtype">std::fstream &amp;&#160;</td>
-          <td class="paramname"><em>p_iniFile</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Create a ini::File data from a .ini file. Parse the file line by line and store the records. (If it find a second record with the same key, the first occurrence will be stored.)</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">-</td><td>p_iniFile : a filestream contains the .ini file </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>a File, contains the records of the .ini file </dd></dl>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_6cd8491d143eb218b70983dbdb3c58bc.html">parser</a></li><li class="navelem"><a class="el" href="_ini_file_8h.html">IniFile.h</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_313caf1132e152dd9b58bea13a4052ca.html">utils</a></li><li class="navelem"><a class="el" href="dir_db307cbc54f963ccced18f8be216693a.html">parser</a></li><li class="navelem"><a class="el" href="_ini_file_8h.html">IniFile.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>

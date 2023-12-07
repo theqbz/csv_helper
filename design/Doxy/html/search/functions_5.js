@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['parse_0',['parse',['../_console_8cpp.html#ac913f3b4a0bd417e4bcba70be94f15df',1,'csvhelper::parser']]]
+  ['settings_0',['Settings',['../classcsvhelper_1_1utils_1_1_settings.html#a22cca1ea6ba97f2098c171d7a41bcdd0',1,'csvhelper::utils::Settings']]]
 ];

@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['iconsole_0',['IConsole',['../classcsvhelper_1_1parser_1_1_i_console.html',1,'csvhelper::parser']]],
-  ['ifilehandler_1',['IFileHandler',['../classcsvhelper_1_1utils_1_1_i_file_handler.html',1,'csvhelper::utils']]],
-  ['iinifile_2',['IIniFile',['../classcsvhelper_1_1parser_1_1_i_ini_file.html',1,'csvhelper::parser']]],
-  ['inifile_3',['IniFile',['../classcsvhelper_1_1parser_1_1_ini_file.html',1,'csvhelper::parser']]],
-  ['isettings_4',['ISettings',['../classcsvhelper_1_1settings_1_1_i_settings.html',1,'csvhelper::settings']]]
+  ['field_0',['Field',['../structcsvhelper_1_1csv_1_1_field.html',1,'csvhelper::csv']]],
+  ['fields_1',['Fields',['../structcsvhelper_1_1csv_1_1_fields.html',1,'csvhelper::csv']]],
+  ['file_2',['File',['../structcsvhelper_1_1csv_1_1_file.html',1,'csvhelper::csv::File'],['../structcsvhelper_1_1utils_1_1parser_1_1data_1_1ini_1_1_file.html',1,'csvhelper::utils::parser::data::ini::File']]],
+  ['filehandler_3',['FileHandler',['../classcsvhelper_1_1utils_1_1_file_handler.html',1,'csvhelper::utils']]]
 ];

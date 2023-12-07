@@ -7,12 +7,12 @@
 
 #pragma once
 
-#include "../csv/Data.h"
-#include "../csv/Result.h"
+#include "../data/CsvData.h"
+#include "../data/Result.h"
 #include "../utils/ISettings.h"
-#include "Table.h"
+#include "../data/DisplayTable.h"
 
-namespace csvhelper {
+namespace csvvalidator {
 namespace display {
 
 class TableGenerator
@@ -32,4 +32,4 @@ private:
 };
 
 } // namespace display
-} // namespace csvhelper
+} // namespace csvvalidator

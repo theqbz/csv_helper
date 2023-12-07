@@ -7,8 +7,8 @@
 
 #include "Grid.h"
 
-namespace csvhelper {
+namespace csvvalidator {
 namespace display {
 
 }
-} // namespace csvhelper
+} // namespace csvvalidator

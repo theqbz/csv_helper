@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['read_0',['read',['../_ini_file_8cpp.html#a763c1282d6b1c64f1dfc444924af8433',1,'csvhelper::parser']]]
+  ['trim_0',['trim',['../classcsvhelper_1_1utils_1_1parser_1_1_ini_file.html#a711da86e15004960a471b5042a7d5652',1,'csvhelper::utils::parser::IniFile']]]
 ];

@@ -9,10 +9,10 @@
 
 #include "../utils/IFileHandler.h"
 #include "../utils/ISettings.h"
-#include "Data.h"
+#include "../data/CsvData.h"
 #include "IParser.h"
 
-namespace csvhelper {
+namespace csvvalidator {
 namespace csv {
 
 ///
@@ -43,11 +43,11 @@ public:
     /// @param[in] csvFile : a handler that holds the .csv file
     /// @return a csv::File datastructure, contains the parsed .csv file
     ///
-    const csv::File process(utils::IFileHandler& p_csvFile);
+    const data::csv::File process(utils::IFileHandler& p_csvFile);
 
 private:
     utils::ISettings& m_settings;
 };
 
 } // namespace csv
-} // namespace csvhelper
+} // namespace csvvalidator

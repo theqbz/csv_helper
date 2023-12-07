@@ -6,41 +6,41 @@
 ///
 
 #include "Parser.h"
+#include "../data/CsvData.h"
 #include "../utils/IFileHandler.h"
-#include "Data.h"
 
 #include <algorithm>
 #include <fstream>
 #include <iostream>
 
-namespace csvhelper {
+namespace csvvalidator {
 namespace csv {
 
 const char DELIMITER            = ';';
 const std::string INVALID_LABEL = "<INVALID_LABEL>";
 
-const std::string getLabel(const csv::Labels& p_labels,
+const std::string getLabel(const data::csv::Labels& p_labels,
                            const size_t p_fieldCounter)
 {
-    if (p_fieldCounter < 0 || p_fieldCounter > p_labels.size()) {
+    if (p_fieldCounter < 0 || p_fieldCounter > p_labels.size() - 1) {
         return INVALID_LABEL;
     }
     return p_labels.at(p_fieldCounter);
 }
 
-csv::Record getRecords(const std::string& p_line,
-                       const csv::Labels& p_labels)
+data::csv::Record getRecords(const std::string& p_line,
+                             const data::csv::Labels& p_labels)
 {
     if (p_line.length() == 0) {
         return {};
     }
-    csv::Record record {};
-    csv::Fields fields {};
+    data::csv::Record record {};
+    data::csv::Fields fields {};
     size_t offset { 0 };
     size_t semicolonPos { 0 };
     size_t fieldCounter { 0 };
     do {
-        csv::Field field {};
+        data::csv::Field field {};
         semicolonPos           = p_line.find(DELIMITER, offset);
         field.m_content.first  = getLabel(p_labels, fieldCounter);
         field.m_content.second = p_line.substr(offset, semicolonPos - offset);
@@ -52,12 +52,12 @@ csv::Record getRecords(const std::string& p_line,
     return record;
 }
 
-const csv::Labels getLabels(const std::string& p_line)
+const data::csv::Labels getLabels(const std::string& p_line)
 {
     if (p_line.empty()) {
         return {};
     }
-    csv::Labels labels {};
+    data::csv::Labels labels {};
     size_t offset { 0 };
     size_t semicolonPos { 0 };
     do {
@@ -68,13 +68,13 @@ const csv::Labels getLabels(const std::string& p_line)
     return labels;
 }
 
-const csv::File parse(std::fstream& p_file,
-                      const unsigned char p_delimiter)
+const data::csv::File parse(std::fstream& p_file,
+                            const unsigned char p_delimiter)
 {
     if (p_file.peek() == std::char_traits<char>::eof()) {
         return {};
     }
-    csv::File file {};
+    data::csv::File file {};
     std::string line {};
     bool firstNonEmptyLineFound { false };
     size_t fileLineCounter { 0 };
@@ -93,12 +93,12 @@ const csv::File parse(std::fstream& p_file,
     return file;
 }
 
-const csv::File Parser::process(utils::IFileHandler& p_csvFile)
+const data::csv::File Parser::process(utils::IFileHandler& p_csvFile)
 {
-    csv::File csvFile  = parse(p_csvFile.get(), m_settings.delimiter());
-    csvFile.m_fileName = p_csvFile.fileName();
+    data::csv::File csvFile = parse(p_csvFile.get(), m_settings.delimiter());
+    csvFile.m_fileName      = p_csvFile.fileName();
     return csvFile;
 }
 
 } // namespace csv
-} // namespace csvhelper
+} // namespace csvvalidator

@@ -9,7 +9,7 @@
 
 #include <string>
 
-namespace csvhelper {
+namespace csvvalidator {
 namespace utils {
 
 ///
@@ -59,4 +59,4 @@ public:
 };
 
 } // namespace utils
-} // namespace csvhelper
+} // namespace csvvalidator

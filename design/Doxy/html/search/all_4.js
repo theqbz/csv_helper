@@ -1,4 +1,10 @@
 var searchData=
 [
-  ['get_0',['get',['../classcsvhelper_1_1parser_1_1_console.html#aa15f47febf4b8111c509b8f73b0d5158',1,'csvhelper::parser::Console::get()'],['../classcsvhelper_1_1parser_1_1_i_console.html#af4b2d009ee9dfd1822476b8e67346894',1,'csvhelper::parser::IConsole::get()'],['../classcsvhelper_1_1parser_1_1_i_ini_file.html#a5e3cd9c2935a86ef03d3165449387ae0',1,'csvhelper::parser::IIniFile::get()'],['../classcsvhelper_1_1parser_1_1_ini_file.html#a5f68615b8c1313eb2cc8cf5b06f7e691',1,'csvhelper::parser::IniFile::get()'],['../classcsvhelper_1_1utils_1_1_file_handler.html#a5c02ca02e6ce1bda0d2b4dc783208161',1,'csvhelper::utils::FileHandler::get()'],['../classcsvhelper_1_1utils_1_1_i_file_handler.html#ac77389d83729d83c35d30fbf0cf36b40',1,'csvhelper::utils::IFileHandler::get()']]]
+  ['field_0',['Field',['../structcsvhelper_1_1csv_1_1_field.html',1,'csvhelper::csv']]],
+  ['fields_1',['Fields',['../structcsvhelper_1_1csv_1_1_fields.html',1,'csvhelper::csv']]],
+  ['file_2',['File',['../structcsvhelper_1_1csv_1_1_file.html',1,'csvhelper::csv::File'],['../structcsvhelper_1_1utils_1_1parser_1_1data_1_1ini_1_1_file.html',1,'csvhelper::utils::parser::data::ini::File']]],
+  ['filehandler_3',['FileHandler',['../classcsvhelper_1_1utils_1_1_file_handler.html',1,'csvhelper::utils::FileHandler'],['../classcsvhelper_1_1utils_1_1_file_handler.html#a2d4a336995b808349ba2e2403d6efd1e',1,'csvhelper::utils::FileHandler::FileHandler()']]],
+  ['filehandler_2ecpp_4',['FileHandler.cpp',['../_file_handler_8cpp.html',1,'']]],
+  ['filehandler_2eh_5',['FileHandler.h',['../_file_handler_8h.html',1,'']]],
+  ['filename_6',['fileName',['../classcsvhelper_1_1utils_1_1_file_handler.html#ae17e553516369259cc96a25dd8fe66cd',1,'csvhelper::utils::FileHandler::fileName()'],['../classcsvhelper_1_1utils_1_1_i_file_handler.html#a7ca44a0be0ee21c70fcec797d91c42e3',1,'csvhelper::utils::IFileHandler::fileName()']]]
 ];

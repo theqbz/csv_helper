@@ -7,11 +7,11 @@
 
 #pragma once
 
-#include "Table.h"
+#include "../data/DisplayTable.h"
 #include "IDisplay.h"
 #include "../utils/ISettings.h"
 
-namespace csvhelper {
+namespace csvvalidator {
 namespace display {
 
 class Lines
@@ -22,11 +22,11 @@ public:
     {
     }
 
-    void render(const Table& p_csvFile, const Table& p_result);
+    void render(const data::display::Table& p_csvFile, const data::display::Table& p_result);
 
 private:
     const utils::ISettings& m_settings;
 };
 
 } // namespace display
-} // namespace csvhelper
+} // namespace csvvalidator

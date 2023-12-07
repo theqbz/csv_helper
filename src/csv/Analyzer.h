@@ -7,11 +7,11 @@
 
 #pragma once
 
+#include "../data/CsvData.h"
+#include "../data/Result.h"
 #include "../utils/ISettings.h"
-#include "Data.h"
-#include "Result.h"
 
-namespace csvhelper {
+namespace csvvalidator {
 namespace csv {
 
 class Analyzer
@@ -29,11 +29,11 @@ public:
     /// @param[in,out] csvFile : the csv::File to analyze
     /// @return The result of the analysis
     ///
-    csv::Result process(csv::File& p_csvFile);
+    data::csv::Result process(data::csv::File& p_csvFile);
 
 private:
     const utils::ISettings& m_settings;
 };
 
 } // namespace csv
-} // namespace csvhelper
+} // namespace csvvalidator

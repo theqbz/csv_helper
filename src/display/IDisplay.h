@@ -7,7 +7,7 @@
 
 #pragma once
 
-namespace csvhelper {
+namespace csvvalidator {
 namespace display {
 
 ///
@@ -23,4 +23,4 @@ public:
 };
 
 } // namespace display
-} // namespace csvhelper
+} // namespace csvvalidator

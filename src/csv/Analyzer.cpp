@@ -6,10 +6,10 @@
 ///
 
 #include "Analyzer.h"
-#include "Data.h"
-#include "Result.h"
+#include "../data/CsvData.h"
+#include "../data/Result.h"
 
-namespace csvhelper {
+namespace csvvalidator {
 namespace csv {
 
 ///
@@ -26,8 +26,8 @@ namespace csv {
 ///                           empty line copunter
 /// @return (void)
 ///
-void markWrongLineLength(csv::Record* p_record,
-                         csv::Result* p_result,
+void markWrongLineLength(data::csv::Record* p_record,
+                         data::csv::Result* p_result,
                          const size_t p_labelCount,
                          const bool p_emptyLinesNotErrors)
 {
@@ -36,16 +36,16 @@ void markWrongLineLength(csv::Record* p_record,
     }
     const size_t recordSize = p_record->second.size();
     if (recordSize == p_labelCount) {
-        p_record->first.m_state = csv::RecordHead::State::OK;
+        p_record->first.m_state = data::csv::RecordHead::State::OK;
         return;
     }
     if (recordSize == 0 && p_emptyLinesNotErrors) {
-        p_record->first.m_state = csv::RecordHead::State::EMPTY;
+        p_record->first.m_state = data::csv::RecordHead::State::EMPTY;
         ++p_result->m_emptyLineCount;
         return;
     }
-    p_record->first.m_state = csv::RecordHead::State::ERR;
-    csv::ErrorEntry errorEntry {};
+    p_record->first.m_state = data::csv::RecordHead::State::ERR;
+    data::csv::ErrorEntry errorEntry {};
     errorEntry.first  = p_record->first.m_fileLineNumber;
     errorEntry.second = ("The line doesn't match to the label list. (records: "
                          + std::to_string(recordSize) + " / "
@@ -53,12 +53,12 @@ void markWrongLineLength(csv::Record* p_record,
     p_result->m_errors.push_back(errorEntry);
 }
 
-csv::Result Analyzer::process(csv::File& p_csvFile)
+data::csv::Result Analyzer::process(data::csv::File& p_csvFile)
 {
-    Result result {};
+    data::csv::Result result {};
     const bool emptyLinesNotErrors { m_settings.emptyLines() != utils::ISettings::EmptyLines::Error };
     const size_t labelCount { p_csvFile.m_labels.size() };
-    for (csv::Record& record : p_csvFile.m_content) {
+    for (data::csv::Record& record : p_csvFile.m_content) {
         markWrongLineLength(&record, &result, labelCount, emptyLinesNotErrors);
     }
     // TODO:
@@ -67,4 +67,4 @@ csv::Result Analyzer::process(csv::File& p_csvFile)
 }
 
 } // namespace csv
-} // namespace csvhelper
+} // namespace csvvalidator

@@ -7,12 +7,12 @@
 
 #include "Lines.h"
 
+#include "../data/DisplayTable.h"
 #include "../utils/ISettings.h"
-#include "Table.h"
 #include <iostream>
 #include <string>
 
-namespace csvhelper {
+namespace csvvalidator {
 namespace display {
 
 const std::string CELL_SEPARATOR = "|";
@@ -43,14 +43,14 @@ const std::string cellSeparator(bool* p_previousCellWasEmpty,
     return separator;
 }
 
-void Lines::render(const Table& p_csvFile, const Table& p_result)
+void Lines::render(const data::display::Table& p_csvFile, const data::display::Table& p_result)
 {
     const bool skipEmptyRow { m_settings.emptyLines() == utils::ISettings::EmptyLines::Skip };
     const unsigned char emptyCellFiller { m_settings.emptyFields() };
     const bool skipEmptyCell { emptyCellFiller == 0 };
     // TODO:
     // Print some data about file
-    for (const Row& row : p_csvFile) {
+    for (const data::display::Row& row : p_csvFile) {
         if (row.empty() && skipEmptyRow) {
             continue;
         }
@@ -70,7 +70,7 @@ void Lines::render(const Table& p_csvFile, const Table& p_result)
         }
         std::cout << "\n";
     }
-    for (const Row& row : p_result) {
+    for (const data::display::Row& row : p_result) {
         for (const std::string& cell : row) {
             std::cout << cell;
         }
@@ -79,4 +79,4 @@ void Lines::render(const Table& p_csvFile, const Table& p_result)
 }
 
 } // namespace display
-} // namespace csvhelper
+} // namespace csvvalidator

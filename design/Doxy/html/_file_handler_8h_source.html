@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.7"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>csv helper by QBZ: src/utils/FileHandler.h Source File</title>
+<title>csv helper by QBZ: D:/repos/csvvalidator/src/utils/FileHandler.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -114,16 +114,20 @@ $(document).ready(function(){initNavTree('_file_handler_8h_source.html',''); ini
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="classcsvhelper_1_1utils_1_1_file_handler.html#a5c02ca02e6ce1bda0d2b4dc783208161">   45</a></span>    std::fstream&amp; <a class="code hl_function" href="classcsvhelper_1_1utils_1_1_file_handler.html#a5c02ca02e6ce1bda0d2b4dc783208161">get</a>() final { <span class="keywordflow">return</span> m_file; }</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    std::fstream m_file;</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>};</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>} <span class="comment">// namespace utils</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>} <span class="comment">// namespace csvhelper</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="classcsvhelper_1_1utils_1_1_file_handler.html#ae17e553516369259cc96a25dd8fe66cd">   53</a></span>    <span class="keyword">const</span> std::string <a class="code hl_function" href="classcsvhelper_1_1utils_1_1_file_handler.html#ae17e553516369259cc96a25dd8fe66cd">fileName</a>() const final { <span class="keywordflow">return</span> m_fileName; }</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keyword">const</span> std::string m_fileName;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    std::fstream m_file;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>};</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>} <span class="comment">// namespace utils</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>} <span class="comment">// namespace csvhelper</span></div>
 <div class="ttc" id="a_i_file_handler_8h_html"><div class="ttname"><a href="_i_file_handler_8h.html">IFileHandler.h</a></div><div class="ttdoc">Interface declaration of the FileHandler class.</div></div>
-<div class="ttc" id="aclasscsvhelper_1_1utils_1_1_file_handler_html"><div class="ttname"><a href="classcsvhelper_1_1utils_1_1_file_handler.html">csvhelper::utils::FileHandler</a></div><div class="ttdoc">FileHandler class for csvhelper. Opens, holds its stream and and manage the closing process to a give...</div><div class="ttdef"><b>Definition</b> FileHandler.h:23</div></div>
-<div class="ttc" id="aclasscsvhelper_1_1utils_1_1_file_handler_html_a1cc37d4e813aae640ee2a27660714533"><div class="ttname"><a href="classcsvhelper_1_1utils_1_1_file_handler.html#a1cc37d4e813aae640ee2a27660714533">csvhelper::utils::FileHandler::~FileHandler</a></div><div class="ttdeci">~FileHandler() final</div><div class="ttdef"><b>Definition</b> FileHandler.cpp:27</div></div>
+<div class="ttc" id="aclasscsvhelper_1_1utils_1_1_file_handler_html"><div class="ttname"><a href="classcsvhelper_1_1utils_1_1_file_handler.html">csvhelper::utils::FileHandler</a></div><div class="ttdoc">FileHandler class. Opens, holds its stream and and manage the closing process to a given file.</div><div class="ttdef"><b>Definition</b> FileHandler.h:23</div></div>
+<div class="ttc" id="aclasscsvhelper_1_1utils_1_1_file_handler_html_a1cc37d4e813aae640ee2a27660714533"><div class="ttname"><a href="classcsvhelper_1_1utils_1_1_file_handler.html#a1cc37d4e813aae640ee2a27660714533">csvhelper::utils::FileHandler::~FileHandler</a></div><div class="ttdeci">~FileHandler() final</div><div class="ttdef"><b>Definition</b> FileHandler.cpp:28</div></div>
 <div class="ttc" id="aclasscsvhelper_1_1utils_1_1_file_handler_html_a5c02ca02e6ce1bda0d2b4dc783208161"><div class="ttname"><a href="classcsvhelper_1_1utils_1_1_file_handler.html#a5c02ca02e6ce1bda0d2b4dc783208161">csvhelper::utils::FileHandler::get</a></div><div class="ttdeci">std::fstream &amp; get() final</div><div class="ttdef"><b>Definition</b> FileHandler.h:45</div></div>
+<div class="ttc" id="aclasscsvhelper_1_1utils_1_1_file_handler_html_ae17e553516369259cc96a25dd8fe66cd"><div class="ttname"><a href="classcsvhelper_1_1utils_1_1_file_handler.html#ae17e553516369259cc96a25dd8fe66cd">csvhelper::utils::FileHandler::fileName</a></div><div class="ttdeci">const std::string fileName() const final</div><div class="ttdef"><b>Definition</b> FileHandler.h:53</div></div>
 <div class="ttc" id="aclasscsvhelper_1_1utils_1_1_i_file_handler_html"><div class="ttname"><a href="classcsvhelper_1_1utils_1_1_i_file_handler.html">csvhelper::utils::IFileHandler</a></div><div class="ttdoc">Interface for FileHandler class.</div><div class="ttdef"><b>Definition</b> IFileHandler.h:19</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

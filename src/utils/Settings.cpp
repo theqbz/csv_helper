@@ -6,7 +6,7 @@
 ///
 
 #include "Settings.h"
-#include "parser/data/SettingData.h"
+#include "../data/SettingData.h"
 
 #include <exception>
 #include <fstream>
@@ -16,7 +16,7 @@
 #include <string>
 #include <utility>
 
-namespace csvhelper {
+namespace csvvalidator {
 namespace utils {
 
 const std::string DEFAULT_INI_FILE    = "settings.ini";
@@ -24,7 +24,7 @@ const std::string SETTING_WRITER_FLAG = "settings";
 
 // TODO:
 // Do this storeNewDefaultSettings outside of the class!
-[[noreturn]] static void storeNewDefaultSettings(const parser::data::SettingData& p_tasks)
+[[noreturn]] static void storeNewDefaultSettings(const data::SettingData& p_tasks)
 {
     // TODO: 1) write new settings into .ini file
     //       2) exit program!
@@ -113,13 +113,13 @@ void Settings::init()
         search != m_consoleArguments.end()) {
         storeNewDefaultSettings(m_consoleArguments);
     }
-    parser::data::SettingData settingsToStore {};
+    data::SettingData settingsToStore {};
     settingsToStore.merge(m_consoleArguments);
     settingsToStore.merge(m_iniFile);
     storeSettings(settingsToStore);
 }
 
-void Settings::storeSettings(const parser::data::SettingData& p_settingsData)
+void Settings::storeSettings(const data::SettingData& p_settingsData)
 {
     if (const auto delimiter = p_settingsData.find("-delimiter");
         delimiter != p_settingsData.end()) {
@@ -152,4 +152,4 @@ void Settings::storeSettings(const parser::data::SettingData& p_settingsData)
 }
 
 } // namespace utils
-} // namespace csvhelper
+} // namespace csvvalidator

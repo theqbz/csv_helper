@@ -23,12 +23,12 @@
 
 #pragma once
 
+#include "../data/ConsoleArguments.h"
+#include "../data/IniFile.h"
+#include "../data/SettingData.h"
 #include "ISettings.h"
-#include "parser/data/ConsoleArguments.h"
-#include "parser/data/IniFile.h"
-#include "parser/data/SettingData.h"
 
-namespace csvhelper {
+namespace csvvalidator {
 namespace utils {
 
 ///
@@ -46,8 +46,8 @@ public:
     /// @param - consoleArguments : the ordered content of console args
     /// @param - iniFile          : the ordered content of records from .ini file
     ///
-    Settings(const parser::data::SettingData& p_consoleArguments,
-             const parser::data::SettingData& p_iniFile) :
+    Settings(const data::SettingData& p_consoleArguments,
+             const data::SettingData& p_iniFile) :
         m_consoleArguments(p_consoleArguments),
         m_iniFile(p_iniFile),
         m_delimiter(';'),
@@ -81,8 +81,8 @@ public:
     inline const bool tableOutput() const { return m_tableOutput; }
 
 private:
-    parser::data::SettingData m_consoleArguments;
-    parser::data::SettingData m_iniFile;
+    data::SettingData m_consoleArguments;
+    data::SettingData m_iniFile;
     unsigned char m_delimiter;
     EmptyLines m_emptyLines;
     DiffDetectMode m_diff;
@@ -91,8 +91,8 @@ private:
     LabelPosition m_label;
     bool m_tableOutput;
 
-    void storeSettings(const parser::data::SettingData& p_tasks);
+    void storeSettings(const data::SettingData& p_tasks);
 };
 
 } // namespace utils
-} // namespace csvhelper
+} // namespace csvvalidator
