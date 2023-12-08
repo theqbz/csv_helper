@@ -30,13 +30,20 @@ struct RecordHead
     ///
     enum State
     {
-        OK,   ///< Line alright
-        ERR,  ///< Line error
-        EMPTY ///< Line empty but not error (to handle differently during displaying)
+        OK,        ///< Line alright
+        ERR,       ///< Line error
+        EMPTY,     ///< Line empty but not error (to handle differently during displaying)
     };
 
     size_t m_fileLineNumber { 0 };
     State m_state { State::OK };
+    bool m_duplicated { false };
+
+    inline bool operator==(const RecordHead& p_other) const
+    {
+        return this->m_fileLineNumber == p_other.m_fileLineNumber
+            && this->m_state == p_other.m_state;
+    }
 };
 
 ///
@@ -65,6 +72,13 @@ struct Field
     /// The state of the csv value
     ///
     State m_state { State::UNCHECKED };
+
+    inline bool operator==(const Field& p_other) const { return this->m_content == p_other.m_content; }
+    inline bool theSame(const Field& p_other) const
+    {
+        return this->m_content == p_other.m_content
+            && this->m_state == p_other.m_state;
+    }
 };
 
 ///
@@ -79,7 +93,14 @@ struct Fields : public std::vector<Field>
 /// represent by a pair of < RecordHead, Fields >
 ///
 struct Record : public std::pair<RecordHead, Fields>
-{ };
+{
+    inline bool operator==(const Record& p_other) const { return this->second == p_other.second; }
+    inline bool theSame(const Record& p_other) const
+    {
+        return this->first == p_other.first
+            && this->second == p_other.second;
+    }
+};
 
 ///
 /// @brief Container for the records of a .csv file

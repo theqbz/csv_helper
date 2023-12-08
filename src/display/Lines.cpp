@@ -70,6 +70,7 @@ void Lines::render(const data::display::Table& p_csvFile, const data::display::T
         }
         std::cout << "\n";
     }
+    std::cout << "\n";
     for (const data::display::Row& row : p_result) {
         for (const std::string& cell : row) {
             std::cout << cell;

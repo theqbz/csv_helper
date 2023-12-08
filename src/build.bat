@@ -12,7 +12,7 @@ ninja
 
 :run
 @ECHO start program
-@start cmd /c bin\csv_helper.exe
+@start cmd /c bin\csv_validator.exe
 
 :end
 @cd d:\repos\csvvalidator\src\

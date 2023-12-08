@@ -22,10 +22,20 @@ namespace parser {
 typedef std::vector<std::string> StrVec;
 
 static const char KEY_MARKER = '-';
-static const std::set<std::string> HELP_ARGS { "-h", "--h", "-help", "--help" };
+static const std::set<std::string> HELP_FLAGS { "-h", "--h", "-help", "--help" };
 
 static inline bool hasKey(const data::console::Argument& p_argument);
 static inline bool isKey(const std::string& p_text);
+static void findHelp(data::console::Arguments p_arguments);
+static void printHelp();
+
+const data::console::Arguments Console::parse(const int p_argc,
+                                     const char* const p_argv[])
+{
+    data::console::Arguments arguments = Console::createArguments(Console::convert(p_argc, p_argv));
+    findHelp(arguments);
+    return arguments;
+}
 
 const data::console::Arguments Console::createArguments(const StrVec& p_rawData)
 {
@@ -74,6 +84,35 @@ static inline bool hasKey(const data::console::Argument& p_argument)
 static inline bool isKey(const std::string& p_text)
 {
     return !p_text.empty() && *p_text.begin() == KEY_MARKER;
+}
+
+void findHelp(data::console::Arguments p_arguments)
+{
+    for (const std::string& helpFlag : HELP_FLAGS) {
+        if (p_arguments.find(helpFlag) != p_arguments.end()) {
+            printHelp();
+        }
+    }
+}
+
+[[noreturn]] void printHelp()
+{
+    std::cout << "\n\tThis program can analyze the provided .csv files, seeking for errors.\n"
+              << "\tIt can detect if a Record contains more or less Fileds than the number\n"
+              << "\tof Labels. The Analyzer identifies Label list in the first non empty row\n"
+              << "\tof the file!\n\n"
+              << "\tTo parse a file start the program with a filename:\n\n"
+              << "\t\t>  csv_validator.exe  path/to/file.csv  [settings]\n\n"
+              << "\tSettings:\n\n"
+              << "\t-delimiter (char)  -  default value: \";\"\n"
+              << "\tthe delimiter between Fields in .csv file\n\n"
+              << "\t-emptyLines (string) [ skip | error | leave ]  -  default value: \"skip\"\n"
+              << "\tdefines what to do with empty lines\n\n"
+              << "\t-emptyFields (char) <empty>: skip empty values  -  default value: \".\"\n"
+              << "\tplaceholder for empty values\n\n"
+              << "\t-label (string) [ top | inline ]  -  default value: \"top\"\n"
+              << "\tdefines where to put the labels\n\n";
+    exit(0);
 }
 
 } // namespace parser

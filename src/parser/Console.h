@@ -31,12 +31,7 @@ public:
     /// @param[in] - p_argv : an array of the console arguments
     /// @return console::Arguments datastructure
     ///
-    static inline const data::console::Arguments parse(const int p_argc,
-                                                       const char* const p_argv[])
-    {
-        return createArguments(convert(p_argc, p_argv));
-    }
-
+    static const data::console::Arguments parse(const int p_argc, const char* const p_argv[]);
     static const data::console::Arguments createArguments(const StrVec& p_rawData);
     static const StrVec convert(const int p_argc, const char* const p_argv[]);
 };
