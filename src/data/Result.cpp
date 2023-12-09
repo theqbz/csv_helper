@@ -8,7 +8,7 @@
 
 #include "Result.h"
 #include "../utils/ISettings.h"
-#include "DisplayTable.h"
+#include "Report.h"
 
 #include <string>
 #include <vector>

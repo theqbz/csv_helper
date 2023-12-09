@@ -9,7 +9,7 @@
 #pragma once
 
 #include "../utils/ISettings.h"
-#include "DisplayTable.h"
+#include "Report.h"
 
 #include <stdint.h>
 #include <string>
@@ -123,6 +123,8 @@ struct File
     Labels m_labels;        ///< container for the labels of .csv file. Type: vector of strings
     Content m_content;      ///< container for Records of .csv file. Type: vector of Records
 
+    // TODO:
+    // Delete this function and put it in the Reporter class!
     const display::Table getTable(const utils::ISettings& p_settings);
     // const display::Table getReport(const utils::ISettings& p_settings);
 };

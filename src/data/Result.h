@@ -9,7 +9,7 @@
 #pragma once
 
 #include "../utils/ISettings.h"
-#include "DisplayTable.h"
+#include "Report.h"
 
 #include <string>
 #include <utility>
@@ -41,6 +41,8 @@ struct Result
     ErrorLog m_errors;             ///< vector of error entries
     unsigned int m_emptyLineCount; ///< counts the empty lines in a csv::File
 
+    // TODO:
+    // Delete this function from here and put it to the Reporter class!
     const display::Table getTable(const utils::ISettings& p_settings);
 };
 

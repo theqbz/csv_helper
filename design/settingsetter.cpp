@@ -10,30 +10,36 @@
 class Settings
 { };
 
-///
-/// Container for setting data to set settings
-/// Consists of a < key, value > pair
-/// Key: the name of setting
-/// Value: the value of the setting
-///
-struct SettingData : public std::map<std::string, std::string>
-{ };
 
-int func()
+// Settings-transfer storage example
+// To store the setting data and transfer it between objects
 {
-    SettingData burnedInDefault;
-    burnedInDefault.emplace({ ("emptyLines", "0"),
-                              ("emptyFields", "0"),
-                              ("label", "inline") });
+    ///
+    /// Container for setting data to set settings
+    /// Consists of a < key, value > pair
+    /// Key: the name of setting
+    /// Value: the value of the setting
+    ///
+    struct SettingData : public std::map<std::string, std::string>
+    { };
+
+    // examples:
+
+    const SettingData burnedInDefault { ("emptyLines", "0"),
+                                        ("emptyFields", "0"),
+                                        ("label", "inline") };
+
+    const SettingData fromIniFile { /* ... */ };
+
+    const SettingData fromConsole { /* ... */ };
 }
-
-const SettingData fromIniFile { /* ... */ };
-
-const SettingData fromConsole { /* ... */ };
 
 //
 
 struct IOption
+{ };
+
+struct OptionData : public std::map<std::string, IOption>
 { };
 
 enum class LabelPosition
@@ -51,9 +57,6 @@ struct LabelPosOption : public IOption
 
 const LabelPosOption label_top { LabelPosition::Top };
 const LabelPosOption label_inline { LabelPosition::Inline };
-
-struct OptionData : public std::map<std::string, IOption>
-{ };
 
 const OptionData label_position { { "top", label_top },
                                   { "inline", label_inline } };

@@ -8,6 +8,7 @@
 #include "Analyzer.h"
 #include "../data/CsvData.h"
 #include "../data/Result.h"
+
 #include <algorithm>
 #include <string>
 #include <vector>

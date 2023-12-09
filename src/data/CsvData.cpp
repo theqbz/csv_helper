@@ -8,7 +8,7 @@
 
 #include "CsvData.h"
 #include "../utils/ISettings.h"
-#include "DisplayTable.h"
+#include "Report.h"
 
 #include <string>
 #include <string_view>

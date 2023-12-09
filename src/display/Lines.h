@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "../data/DisplayTable.h"
+#include "../data/Report.h"
 #include "IDisplay.h"
 #include "../utils/ISettings.h"
 

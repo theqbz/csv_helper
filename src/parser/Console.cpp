@@ -27,7 +27,7 @@ static const std::set<std::string> HELP_FLAGS { "-h", "--h", "-help", "--help" }
 static inline bool hasKey(const data::console::Argument& p_argument);
 static inline bool isKey(const std::string& p_text);
 static void findHelp(data::console::Arguments p_arguments);
-static void printHelp();
+[[noreturn]] static void printHelp();
 
 const data::console::Arguments Console::parse(const int p_argc,
                                      const char* const p_argv[])
@@ -95,7 +95,7 @@ void findHelp(data::console::Arguments p_arguments)
     }
 }
 
-[[noreturn]] void printHelp()
+void printHelp()
 {
     std::cout << "\n\tThis program can analyze the provided .csv files, seeking for errors.\n"
               << "\tIt can detect if a Record contains more or less Fileds than the number\n"
@@ -104,14 +104,10 @@ void findHelp(data::console::Arguments p_arguments)
               << "\tTo parse a file start the program with a filename:\n\n"
               << "\t\t>  csv_validator.exe  path/to/file.csv  [settings]\n\n"
               << "\tSettings:\n\n"
-              << "\t-delimiter (char)  -  default value: \";\"\n"
-              << "\tthe delimiter between Fields in .csv file\n\n"
-              << "\t-emptyLines (string) [ skip | error | leave ]  -  default value: \"skip\"\n"
-              << "\tdefines what to do with empty lines\n\n"
-              << "\t-emptyFields (char) <empty>: skip empty values  -  default value: \".\"\n"
-              << "\tplaceholder for empty values\n\n"
-              << "\t-label (string) [ top | inline ]  -  default value: \"top\"\n"
-              << "\tdefines where to put the labels\n\n";
+              << "\t-delimiter (char)  -  default value: \";\" (the delimiter between Fields in .csv file)\n\n"
+              << "\t-emptyLines (string) [ skip | error | leave ]  -  default value: \"skip\" (defines what to do with empty lines)\n\n"
+              << "\t-emptyFields (char) <empty>: skip empty values  -  default value: \".\" (placeholder for empty values)\n\n"
+              << "\t-label (string) [ top | inline ]  -  default value: \"top\" (defines where to put the labels)\n\n";
     exit(0);
 }
 

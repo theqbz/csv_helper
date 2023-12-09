@@ -1,8 +1,8 @@
 ///
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
-/// @file  Table.h
-/// @brief Definition of datastructure of displaying data
+/// @file  Report.h
+/// @brief Definition of datastructure of Report
 ///
 
 #pragma once
@@ -27,5 +27,18 @@ struct Row : public std::vector<std::string>
 struct Table : public std::vector<Row>
 { };
 
+///
+/// @brief Container for the information to display.
+/// Report contains information about the file and processes performed, the
+/// neccessary details from the file content and the list of errors
+///
+struct Report
+{
+    Table m_fileInfo;
+    Table m_file;
+    Table m_errors;
+};
+
 } // namespace display
 } // namespace csvvalidator::data
+

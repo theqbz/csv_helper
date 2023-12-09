@@ -7,7 +7,7 @@
 
 #include "Lines.h"
 
-#include "../data/DisplayTable.h"
+#include "../data/Report.h"
 #include "../utils/ISettings.h"
 #include <iostream>
 #include <string>
