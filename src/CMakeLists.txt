@@ -13,6 +13,7 @@ add_executable( csv_validator
     "data/Result.h"
     "data/Result.cpp"
     "data/SettingData.h"
+    "data/Ranges.h"
     "data/Report.h"
     "display/Reporter.h"
     "display/Reporter.cpp"

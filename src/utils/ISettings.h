@@ -44,8 +44,8 @@ public:
 
     virtual inline void delimiter(const unsigned char p_delimiter)     = 0;
     virtual inline const unsigned char delimiter() const               = 0;
-    virtual inline void linesAroundErrors(const unsigned int p_value)  = 0;
-    virtual inline const unsigned int linesAroundErrors() const        = 0;
+    virtual inline void linesAroundErrors(const size_t p_value)        = 0;
+    virtual inline const size_t linesAroundErrors() const              = 0;
     virtual inline void labelPosition(const LabelPosition p_position)  = 0;
     virtual inline const LabelPosition labelPosition() const           = 0;
     virtual inline void emptyFields(const unsigned char p_placeholder) = 0;

@@ -11,6 +11,7 @@
 #include <exception>
 #include <fstream>
 #include <iostream>
+#include <limits>
 #include <map>
 #include <set>
 #include <string>
@@ -38,10 +39,10 @@ bool isNumber(const std::string& p_text)
     return it == p_text.end();
 }
 
-int convertToInt(const std::string& p_text)
+size_t convertToSizeT(const std::string& p_text)
 {
     if (p_text.empty() || !isNumber(p_text)) {
-        return 0;
+        return std::numeric_limits<size_t>::max();
     }
     return stoi(p_text);
 }
@@ -121,31 +122,32 @@ void Settings::init()
 
 void Settings::storeSettings(const data::SettingData& p_settingsData)
 {
-    if (const auto delimiter = p_settingsData.find("-delimiter");
+    typedef data::SettingData::const_iterator it;
+    if (it delimiter = p_settingsData.find("-delimiter");
         delimiter != p_settingsData.end()) {
         m_delimiter = convertToChar(delimiter->second);
     }
-    if (const auto error_lines = p_settingsData.find("-errorLines");
+    if (it error_lines = p_settingsData.find("-errorLines");
         error_lines != p_settingsData.end()) {
-        m_linesAroundErrors = convertToInt(error_lines->second);
+        m_linesAroundErrors = convertToSizeT(error_lines->second);
     }
-    if (const auto label = p_settingsData.find("-label");
+    if (it label = p_settingsData.find("-label");
         label != p_settingsData.end()) {
         m_label = convertToLabelPosition(label->second);
     }
-    if (const auto empty_fields = p_settingsData.find("-emptyFields");
+    if (it empty_fields = p_settingsData.find("-emptyFields");
         empty_fields != p_settingsData.end()) {
         m_emptyFields = convertToChar(empty_fields->second);
     }
-    if (const auto empty_lines = p_settingsData.find("-emptyLines");
+    if (it empty_lines = p_settingsData.find("-emptyLines");
         empty_lines != p_settingsData.end()) {
         m_emptyLines = convertToEmptyLines(empty_lines->second);
     }
-    if (const auto table_output = p_settingsData.find("-table");
+    if (it table_output = p_settingsData.find("-table");
         table_output != p_settingsData.end()) {
         m_tableOutput = convertToBool(table_output->second);
     }
-    if (const auto diff_detect_mode = p_settingsData.find("-diffMode");
+    if (it diff_detect_mode = p_settingsData.find("-diffMode");
         diff_detect_mode != p_settingsData.end()) {
         m_diff = convertToDiffMode(diff_detect_mode->second);
     }

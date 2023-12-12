@@ -73,8 +73,8 @@ public:
     inline const DiffDetectMode diffDetectMode() const { return m_diff; }
     inline void emptyFields(const unsigned char p_placeholder) { m_emptyFields = p_placeholder; }
     inline const unsigned char emptyFields() const { return m_emptyFields; }
-    inline void linesAroundErrors(const unsigned int p_value) { m_linesAroundErrors = p_value; }
-    inline const unsigned int linesAroundErrors() const { return m_linesAroundErrors; }
+    inline void linesAroundErrors(const size_t p_value) { m_linesAroundErrors = p_value; }
+    inline const size_t linesAroundErrors() const { return m_linesAroundErrors; }
     inline void labelPosition(const LabelPosition p_label) { m_label = p_label; }
     inline const LabelPosition labelPosition() const { return m_label; }
     inline void tableOutput(const bool p_value) { m_tableOutput = p_value; }
@@ -87,7 +87,7 @@ private:
     EmptyLines m_emptyLines;
     DiffDetectMode m_diff;
     unsigned char m_emptyFields;
-    unsigned int m_linesAroundErrors;
+    size_t m_linesAroundErrors;
     LabelPosition m_label;
     bool m_tableOutput;
 

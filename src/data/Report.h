@@ -34,7 +34,7 @@ struct Table : public std::vector<Row>
 ///
 struct Report
 {
-    Table m_fileInfo;
+    Table m_info;
     Table m_file;
     Table m_errors;
 };
