@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.7"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>csv helper by QBZ: D:/repos/csvvalidator/src/utils/parser/data/IniFile.h Source File</title>
+<title>csv helper by QBZ: D:/repos/csvvalidator/src/data/IniFile.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -104,33 +104,33 @@ $(document).ready(function(){initNavTree('data_2_ini_file_8h_source.html',''); i
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;utility&gt;</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">namespace </span>csvhelper::utils::parser::data {</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">namespace </span>csvvalidator::data {</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">namespace </span>ini {</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="data_2_ini_file_8h.html#a04027834ae1bf8b85156adaaf8617206">   24</a></span><span class="keyword">typedef</span> std::pair&lt;std::string, std::string&gt; <a class="code hl_typedef" href="data_2_ini_file_8h.html#a04027834ae1bf8b85156adaaf8617206">Record</a>;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="data_2_ini_file_8h.html#a921cbaef3a6d559bf5b0d259e45cef2f">   24</a></span><span class="keyword">typedef</span> std::pair&lt;std::string, std::string&gt; <a class="code hl_typedef" href="data_2_ini_file_8h.html#a921cbaef3a6d559bf5b0d259e45cef2f">Record</a>;</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="structcsvhelper_1_1utils_1_1parser_1_1data_1_1ini_1_1_records.html">   30</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structcsvhelper_1_1utils_1_1parser_1_1data_1_1ini_1_1_records.html">Records</a> : <span class="keyword">public</span> <a class="code hl_struct" href="structcsvhelper_1_1utils_1_1parser_1_1data_1_1_setting_data.html">SettingData</a></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="structcsvvalidator_1_1data_1_1ini_1_1_records.html">   30</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structcsvvalidator_1_1data_1_1ini_1_1_records.html">Records</a> : <span class="keyword">public</span> <a class="code hl_struct" href="structcsvvalidator_1_1data_1_1_setting_data.html">SettingData</a></div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>{ };</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="structcsvhelper_1_1utils_1_1parser_1_1data_1_1ini_1_1_file.html">   36</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structcsvhelper_1_1utils_1_1parser_1_1data_1_1ini_1_1_file.html">File</a></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="structcsvvalidator_1_1data_1_1ini_1_1_file.html">   36</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structcsvvalidator_1_1data_1_1ini_1_1_file.html">File</a></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>{</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    std::string m_fileName;</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <a class="code hl_struct" href="structcsvhelper_1_1utils_1_1parser_1_1data_1_1ini_1_1_records.html">Records</a> m_content;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <a class="code hl_struct" href="structcsvvalidator_1_1data_1_1ini_1_1_records.html">Records</a> m_content;</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>};</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>} <span class="comment">// namespace ini</span></div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>} <span class="comment">// namespace csvhelper::utils::parser::data</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>} <span class="comment">// namespace csvvalidator::data</span></div>
 <div class="ttc" id="a_setting_data_8h_html"><div class="ttname"><a href="_setting_data_8h.html">SettingData.h</a></div><div class="ttdoc">Definition of the datastructure to transport settings data.</div></div>
-<div class="ttc" id="adata_2_ini_file_8h_html_a04027834ae1bf8b85156adaaf8617206"><div class="ttname"><a href="data_2_ini_file_8h.html#a04027834ae1bf8b85156adaaf8617206">csvhelper::utils::parser::data::ini::Record</a></div><div class="ttdeci">std::pair&lt; std::string, std::string &gt; Record</div><div class="ttdef"><b>Definition</b> IniFile.h:24</div></div>
-<div class="ttc" id="astructcsvhelper_1_1utils_1_1parser_1_1data_1_1_setting_data_html"><div class="ttname"><a href="structcsvhelper_1_1utils_1_1parser_1_1data_1_1_setting_data.html">csvhelper::utils::parser::data::SettingData</a></div><div class="ttdoc">Container for the list of the options. SettingData consists a list of unique &lt; key,...</div><div class="ttdef"><b>Definition</b> SettingData.h:21</div></div>
-<div class="ttc" id="astructcsvhelper_1_1utils_1_1parser_1_1data_1_1ini_1_1_file_html"><div class="ttname"><a href="structcsvhelper_1_1utils_1_1parser_1_1data_1_1ini_1_1_file.html">csvhelper::utils::parser::data::ini::File</a></div><div class="ttdoc">Container for a whole .csv file.</div><div class="ttdef"><b>Definition</b> IniFile.h:37</div></div>
-<div class="ttc" id="astructcsvhelper_1_1utils_1_1parser_1_1data_1_1ini_1_1_records_html"><div class="ttname"><a href="structcsvhelper_1_1utils_1_1parser_1_1data_1_1ini_1_1_records.html">csvhelper::utils::parser::data::ini::Records</a></div><div class="ttdoc">Container for the records (rows) of an .ini file. A Record consists a pair of &lt; key,...</div><div class="ttdef"><b>Definition</b> IniFile.h:31</div></div>
+<div class="ttc" id="adata_2_ini_file_8h_html_a921cbaef3a6d559bf5b0d259e45cef2f"><div class="ttname"><a href="data_2_ini_file_8h.html#a921cbaef3a6d559bf5b0d259e45cef2f">csvvalidator::data::ini::Record</a></div><div class="ttdeci">std::pair&lt; std::string, std::string &gt; Record</div><div class="ttdef"><b>Definition</b> IniFile.h:24</div></div>
+<div class="ttc" id="astructcsvvalidator_1_1data_1_1_setting_data_html"><div class="ttname"><a href="structcsvvalidator_1_1data_1_1_setting_data.html">csvvalidator::data::SettingData</a></div><div class="ttdoc">Container for the list of the options. SettingData consists a list of unique &lt; key,...</div><div class="ttdef"><b>Definition</b> SettingData.h:21</div></div>
+<div class="ttc" id="astructcsvvalidator_1_1data_1_1ini_1_1_file_html"><div class="ttname"><a href="structcsvvalidator_1_1data_1_1ini_1_1_file.html">csvvalidator::data::ini::File</a></div><div class="ttdoc">Container for a whole .csv file.</div><div class="ttdef"><b>Definition</b> IniFile.h:37</div></div>
+<div class="ttc" id="astructcsvvalidator_1_1data_1_1ini_1_1_records_html"><div class="ttname"><a href="structcsvvalidator_1_1data_1_1ini_1_1_records.html">csvvalidator::data::ini::Records</a></div><div class="ttdoc">Container for the records (rows) of an .ini file. A Record consists a pair of &lt; key,...</div><div class="ttdef"><b>Definition</b> IniFile.h:31</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_313caf1132e152dd9b58bea13a4052ca.html">utils</a></li><li class="navelem"><a class="el" href="dir_db307cbc54f963ccced18f8be216693a.html">parser</a></li><li class="navelem"><a class="el" href="dir_4cac0e85b1adb4c3542b0397a31f7247.html">data</a></li><li class="navelem"><a class="el" href="data_2_ini_file_8h.html">IniFile.h</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_c1be8d27e7f84178e95f152701110b19.html">data</a></li><li class="navelem"><a class="el" href="data_2_ini_file_8h.html">IniFile.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>

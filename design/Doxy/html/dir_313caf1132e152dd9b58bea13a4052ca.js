@@ -1,6 +1,5 @@
 var dir_313caf1132e152dd9b58bea13a4052ca =
 [
-    [ "parser", "dir_db307cbc54f963ccced18f8be216693a.html", "dir_db307cbc54f963ccced18f8be216693a" ],
     [ "FileHandler.cpp", "_file_handler_8cpp.html", null ],
     [ "FileHandler.h", "_file_handler_8h.html", "_file_handler_8h" ],
     [ "IFileHandler.h", "_i_file_handler_8h.html", "_i_file_handler_8h" ],

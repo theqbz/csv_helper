@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ok_0',['OK',['../structcsvhelper_1_1csv_1_1_record_head.html#ad63b5794a72775cd88fea28d273e3da3a1b766aecb5952024c6155c62d56f0bb9',1,'csvhelper::csv::RecordHead::OK'],['../structcsvhelper_1_1csv_1_1_field.html#ae82c4f67400e9f0c4f66537c745ea7bda61b4e0b073951898b05aa616590c9321',1,'csvhelper::csv::Field::OK']]]
+  ['ok_0',['OK',['../structcsvvalidator_1_1data_1_1csv_1_1_record_head.html#a5f9c132a3ff0f5c91304f9b1c508dbdfaed35463a386d26ce84a5cd39b167fb7b',1,'csvvalidator::data::csv::RecordHead::OK'],['../structcsvvalidator_1_1data_1_1csv_1_1_field.html#a7261d3e99d92906ddc2cbd73ef1f2ae4a34b49c14ccc084db4986cd60e73b1cd3',1,'csvvalidator::data::csv::Field::OK']]]
 ];

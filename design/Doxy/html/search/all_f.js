@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['_7efilehandler_0',['~FileHandler',['../classcsvhelper_1_1utils_1_1_file_handler.html#a1cc37d4e813aae640ee2a27660714533',1,'csvhelper::utils::FileHandler']]]
+  ['table_0',['Table',['../structcsvvalidator_1_1data_1_1display_1_1_table.html',1,'csvvalidator::data::display']]],
+  ['trim_1',['trim',['../classcsvvalidator_1_1parser_1_1_ini_file.html#ab9c78951c91d55ca57abd336e81b75a4',1,'csvvalidator::parser::IniFile']]],
+  ['type_2',['Type',['../structcsvvalidator_1_1data_1_1csv_1_1_error_entry.html#aedcdc8fd2054b5adc9e0933923304a86',1,'csvvalidator::data::csv::ErrorEntry']]]
 ];

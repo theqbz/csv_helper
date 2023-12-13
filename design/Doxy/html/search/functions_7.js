@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['_7efilehandler_0',['~FileHandler',['../classcsvhelper_1_1utils_1_1_file_handler.html#a1cc37d4e813aae640ee2a27660714533',1,'csvhelper::utils::FileHandler']]]
+  ['trim_0',['trim',['../classcsvvalidator_1_1parser_1_1_ini_file.html#ab9c78951c91d55ca57abd336e81b75a4',1,'csvvalidator::parser::IniFile']]]
 ];

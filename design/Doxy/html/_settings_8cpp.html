@@ -100,10 +100,11 @@ $(document).ready(function(){initNavTree('_settings_8cpp.html',''); initResizabl
 <p>Definition of the Settings class and helper functions to store settings.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="_settings_8h_source.html">Settings.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_setting_data_8h_source.html">parser/data/SettingData.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_setting_data_8h_source.html">../data/SettingData.h</a>&quot;</code><br />
 <code>#include &lt;exception&gt;</code><br />
 <code>#include &lt;fstream&gt;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;limits&gt;</code><br />
 <code>#include &lt;map&gt;</code><br />
 <code>#include &lt;set&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
@@ -111,36 +112,36 @@ $(document).ready(function(){initNavTree('_settings_8cpp.html',''); initResizabl
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a3a28159ad7ee66715654cf53f3163134"><td class="memItemLeft" align="right" valign="top"><a id="a3a28159ad7ee66715654cf53f3163134" name="a3a28159ad7ee66715654cf53f3163134"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>csvhelper::utils::isNumber</b> (const std::string &amp;p_text)</td></tr>
-<tr class="separator:a3a28159ad7ee66715654cf53f3163134"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad69a582db2cef74daec3b2f07386d092"><td class="memItemLeft" align="right" valign="top"><a id="ad69a582db2cef74daec3b2f07386d092" name="ad69a582db2cef74daec3b2f07386d092"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>csvhelper::utils::convertToInt</b> (const std::string &amp;p_text)</td></tr>
-<tr class="separator:ad69a582db2cef74daec3b2f07386d092"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb66edf3aedb49bb961b4652b3acd35b"><td class="memItemLeft" align="right" valign="top"><a id="afb66edf3aedb49bb961b4652b3acd35b" name="afb66edf3aedb49bb961b4652b3acd35b"></a>
-char&#160;</td><td class="memItemRight" valign="bottom"><b>csvhelper::utils::convertToChar</b> (const std::string &amp;p_text)</td></tr>
-<tr class="separator:afb66edf3aedb49bb961b4652b3acd35b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18e2be4b3d91b083a594a2ea187fa5c9"><td class="memItemLeft" align="right" valign="top"><a id="a18e2be4b3d91b083a594a2ea187fa5c9" name="a18e2be4b3d91b083a594a2ea187fa5c9"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>csvhelper::utils::convertToBool</b> (const std::string &amp;p_text)</td></tr>
-<tr class="separator:a18e2be4b3d91b083a594a2ea187fa5c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf89b5f11ca858cd6b99a47a04def304"><td class="memItemLeft" align="right" valign="top"><a id="abf89b5f11ca858cd6b99a47a04def304" name="abf89b5f11ca858cd6b99a47a04def304"></a>
-<a class="el" href="classcsvhelper_1_1utils_1_1_i_settings.html#a96878811ca322b35cd0f9c58260a5863">ISettings::EmptyLines</a>&#160;</td><td class="memItemRight" valign="bottom"><b>csvhelper::utils::convertToEmptyLines</b> (const std::string &amp;p_text)</td></tr>
-<tr class="separator:abf89b5f11ca858cd6b99a47a04def304"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeff8c4193280a70a2fd51d2745d3760b"><td class="memItemLeft" align="right" valign="top"><a id="aeff8c4193280a70a2fd51d2745d3760b" name="aeff8c4193280a70a2fd51d2745d3760b"></a>
-ISettings::LabelPosition&#160;</td><td class="memItemRight" valign="bottom"><b>csvhelper::utils::convertToLabelPosition</b> (const std::string &amp;p_text)</td></tr>
-<tr class="separator:aeff8c4193280a70a2fd51d2745d3760b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad484afdd7edaf06fa34b7dd0b5d2ad16"><td class="memItemLeft" align="right" valign="top"><a id="ad484afdd7edaf06fa34b7dd0b5d2ad16" name="ad484afdd7edaf06fa34b7dd0b5d2ad16"></a>
-ISettings::DiffDetectMode&#160;</td><td class="memItemRight" valign="bottom"><b>csvhelper::utils::convertToDiffMode</b> (const std::string &amp;p_text)</td></tr>
-<tr class="separator:ad484afdd7edaf06fa34b7dd0b5d2ad16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72701df5e74e370822ed9ec761a889ff"><td class="memItemLeft" align="right" valign="top"><a id="a72701df5e74e370822ed9ec761a889ff" name="a72701df5e74e370822ed9ec761a889ff"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>csvvalidator::utils::isNumber</b> (const std::string &amp;p_text)</td></tr>
+<tr class="separator:a72701df5e74e370822ed9ec761a889ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ec4a655960a38ce577458f18e955fa3"><td class="memItemLeft" align="right" valign="top"><a id="a4ec4a655960a38ce577458f18e955fa3" name="a4ec4a655960a38ce577458f18e955fa3"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>csvvalidator::utils::convertToSizeT</b> (const std::string &amp;p_text)</td></tr>
+<tr class="separator:a4ec4a655960a38ce577458f18e955fa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6603833d4ff75f0491625352e586a37"><td class="memItemLeft" align="right" valign="top"><a id="ae6603833d4ff75f0491625352e586a37" name="ae6603833d4ff75f0491625352e586a37"></a>
+char&#160;</td><td class="memItemRight" valign="bottom"><b>csvvalidator::utils::convertToChar</b> (const std::string &amp;p_text)</td></tr>
+<tr class="separator:ae6603833d4ff75f0491625352e586a37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2995dd81e1ec1c3d15889c3960bd0f38"><td class="memItemLeft" align="right" valign="top"><a id="a2995dd81e1ec1c3d15889c3960bd0f38" name="a2995dd81e1ec1c3d15889c3960bd0f38"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>csvvalidator::utils::convertToBool</b> (const std::string &amp;p_text)</td></tr>
+<tr class="separator:a2995dd81e1ec1c3d15889c3960bd0f38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a783eac4fb94c8c8be33f4669fc83eaeb"><td class="memItemLeft" align="right" valign="top"><a id="a783eac4fb94c8c8be33f4669fc83eaeb" name="a783eac4fb94c8c8be33f4669fc83eaeb"></a>
+<a class="el" href="classcsvvalidator_1_1utils_1_1_i_settings.html#a46fc1ffaae67028cada15e5c6a970548">ISettings::EmptyLines</a>&#160;</td><td class="memItemRight" valign="bottom"><b>csvvalidator::utils::convertToEmptyLines</b> (const std::string &amp;p_text)</td></tr>
+<tr class="separator:a783eac4fb94c8c8be33f4669fc83eaeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bbda2a47674a06f42ca2b0104178ee3"><td class="memItemLeft" align="right" valign="top"><a id="a7bbda2a47674a06f42ca2b0104178ee3" name="a7bbda2a47674a06f42ca2b0104178ee3"></a>
+ISettings::LabelPosition&#160;</td><td class="memItemRight" valign="bottom"><b>csvvalidator::utils::convertToLabelPosition</b> (const std::string &amp;p_text)</td></tr>
+<tr class="separator:a7bbda2a47674a06f42ca2b0104178ee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abca00f834e79478924919fd84a15f2cb"><td class="memItemLeft" align="right" valign="top"><a id="abca00f834e79478924919fd84a15f2cb" name="abca00f834e79478924919fd84a15f2cb"></a>
+ISettings::DiffDetectMode&#160;</td><td class="memItemRight" valign="bottom"><b>csvvalidator::utils::convertToDiffMode</b> (const std::string &amp;p_text)</td></tr>
+<tr class="separator:abca00f834e79478924919fd84a15f2cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ac5e9f477560480fcffb91bf94b81632c"><td class="memItemLeft" align="right" valign="top"><a id="ac5e9f477560480fcffb91bf94b81632c" name="ac5e9f477560480fcffb91bf94b81632c"></a>
-const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>csvhelper::utils::DEFAULT_INI_FILE</b> = &quot;settings.ini&quot;</td></tr>
-<tr class="separator:ac5e9f477560480fcffb91bf94b81632c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94c16403a74c56f3ef7dc9a6d78c8026"><td class="memItemLeft" align="right" valign="top"><a id="a94c16403a74c56f3ef7dc9a6d78c8026" name="a94c16403a74c56f3ef7dc9a6d78c8026"></a>
-const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>csvhelper::utils::SETTING_WRITER_FLAG</b> = &quot;settings&quot;</td></tr>
-<tr class="separator:a94c16403a74c56f3ef7dc9a6d78c8026"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a741e738f45b31c45ee39209e6afae1e9"><td class="memItemLeft" align="right" valign="top"><a id="a741e738f45b31c45ee39209e6afae1e9" name="a741e738f45b31c45ee39209e6afae1e9"></a>
+const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>csvvalidator::utils::DEFAULT_INI_FILE</b> = &quot;settings.ini&quot;</td></tr>
+<tr class="separator:a741e738f45b31c45ee39209e6afae1e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e1592279539f44eeaf59d9bac986c91"><td class="memItemLeft" align="right" valign="top"><a id="a3e1592279539f44eeaf59d9bac986c91" name="a3e1592279539f44eeaf59d9bac986c91"></a>
+const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>csvvalidator::utils::SETTING_WRITER_FLAG</b> = &quot;settings&quot;</td></tr>
+<tr class="separator:a3e1592279539f44eeaf59d9bac986c91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Definition of the Settings class and helper functions to store settings. </p>

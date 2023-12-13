@@ -1,4 +1,4 @@
 var _i_settings_8h =
 [
-    [ "csvhelper::utils::ISettings", "classcsvhelper_1_1utils_1_1_i_settings.html", "classcsvhelper_1_1utils_1_1_i_settings" ]
+    [ "csvvalidator::utils::ISettings", "classcsvvalidator_1_1utils_1_1_i_settings.html", "classcsvvalidator_1_1utils_1_1_i_settings" ]
 ];

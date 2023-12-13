@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.7"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>csv helper by QBZ: D:/repos/csvvalidator/src/csv/Result.h File Reference</title>
+<title>csv helper by QBZ: D:/repos/csvvalidator/src/data/Result.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,8 +98,8 @@ $(document).ready(function(){initNavTree('_result_8h.html',''); initResizable();
 
 <p>Definition of the datastructure which stores the result of the analysis of a csv::File.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="_table_8h_source.html">../display/Table.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_i_settings_8h_source.html">../utils/ISettings.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="_i_settings_8h_source.html">../utils/ISettings.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_report_8h_source.html">Report.h</a>&quot;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;utility&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
@@ -108,26 +108,26 @@ $(document).ready(function(){initNavTree('_result_8h.html',''); initResizable();
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcsvhelper_1_1csv_1_1_error_entry.html">csvhelper::csv::ErrorEntry</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Container for error messages. An <a class="el" href="structcsvhelper_1_1csv_1_1_error_entry.html" title="Container for error messages. An ErrorEntry consist the line number an the error message represented ...">ErrorEntry</a> consist the line number an the error message represented by a &lt; int, string &gt; pair.  <a href="structcsvhelper_1_1csv_1_1_error_entry.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcsvvalidator_1_1data_1_1csv_1_1_error_entry.html">csvvalidator::data::csv::ErrorEntry</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Container for error messages. An <a class="el" href="structcsvvalidator_1_1data_1_1csv_1_1_error_entry.html" title="Container for error messages. An ErrorEntry consist the line number and the error message represented...">ErrorEntry</a> consist the line number and the error message represented by a &lt; size_t, string &gt; pair, and the type of the message.  <a href="structcsvvalidator_1_1data_1_1csv_1_1_error_entry.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcsvhelper_1_1csv_1_1_error_log.html">csvhelper::csv::ErrorLog</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Container for error log. Error log is a vector of ErrorEntryes.  <a href="structcsvhelper_1_1csv_1_1_error_log.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcsvvalidator_1_1data_1_1csv_1_1_error_list.html">csvvalidator::data::csv::ErrorList</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Container for error log. Error log is a vector of ErrorEntryes.  <a href="structcsvvalidator_1_1data_1_1csv_1_1_error_list.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcsvhelper_1_1csv_1_1_result.html">csvhelper::csv::Result</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conainer for the result of the analysis of a <a class="el" href="structcsvhelper_1_1csv_1_1_file.html" title="Container for a whole .csv file.">csv::File</a>.  <a href="structcsvhelper_1_1csv_1_1_result.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcsvvalidator_1_1data_1_1csv_1_1_result.html">csvvalidator::data::csv::Result</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conainer for the result of the analysis of a <a class="el" href="structcsvvalidator_1_1data_1_1csv_1_1_file.html" title="Container for a whole .csv file.">csv::File</a>.  <a href="structcsvvalidator_1_1data_1_1csv_1_1_result.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Definition of the datastructure which stores the result of the analysis of a csv::File. </p>
-<h2><a class="anchor" id="autotoc_md8"></a>
+<h2><a class="anchor" id="autotoc_md10"></a>
 CSV HELPER by QBZ</h2>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_763910316706fe02bde815a184ca308d.html">csv</a></li><li class="navelem"><a class="el" href="_result_8h.html">Result.h</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_c1be8d27e7f84178e95f152701110b19.html">data</a></li><li class="navelem"><a class="el" href="_result_8h.html">Result.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>

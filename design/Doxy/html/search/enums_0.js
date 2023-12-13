@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['emptylines_0',['EmptyLines',['../classcsvhelper_1_1utils_1_1_i_settings.html#a96878811ca322b35cd0f9c58260a5863',1,'csvhelper::utils::ISettings']]]
+  ['emptylines_0',['EmptyLines',['../classcsvvalidator_1_1utils_1_1_i_settings.html#a46fc1ffaae67028cada15e5c6a970548',1,'csvvalidator::utils::ISettings']]]
 ];

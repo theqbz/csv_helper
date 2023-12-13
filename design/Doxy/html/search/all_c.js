@@ -1,10 +1,7 @@
 var searchData=
 [
-  ['settingdata_0',['SettingData',['../structcsvhelper_1_1utils_1_1parser_1_1data_1_1_setting_data.html',1,'csvhelper::utils::parser::data']]],
-  ['settingdata_2eh_1',['SettingData.h',['../_setting_data_8h.html',1,'']]],
-  ['settings_2',['Settings',['../classcsvhelper_1_1utils_1_1_settings.html',1,'csvhelper::utils::Settings'],['../classcsvhelper_1_1utils_1_1_settings.html#a22cca1ea6ba97f2098c171d7a41bcdd0',1,'csvhelper::utils::Settings::Settings()']]],
-  ['settings_2ecpp_3',['Settings.cpp',['../_settings_8cpp.html',1,'']]],
-  ['settings_2eh_4',['Settings.h',['../_settings_8h.html',1,'']]],
-  ['skip_5',['Skip',['../classcsvhelper_1_1utils_1_1_i_settings.html#a96878811ca322b35cd0f9c58260a5863a72ef2b9b6965d078e3c7f95487a82d1c',1,'csvhelper::utils::ISettings']]],
-  ['state_6',['State',['../structcsvhelper_1_1csv_1_1_record_head.html#ad63b5794a72775cd88fea28d273e3da3',1,'csvhelper::csv::RecordHead::State'],['../structcsvhelper_1_1csv_1_1_field.html#ae82c4f67400e9f0c4f66537c745ea7bd',1,'csvhelper::csv::Field::State']]]
+  ['parse_0',['parse',['../classcsvvalidator_1_1parser_1_1_console.html#aeb8ebcb3cc926fb2e2fd3bd9a141c3c3',1,'csvvalidator::parser::Console::parse()'],['../classcsvvalidator_1_1parser_1_1_ini_file.html#a50226edc616136617559d2cfd933cf4b',1,'csvvalidator::parser::IniFile::parse()']]],
+  ['parser_1',['Parser',['../classcsvvalidator_1_1csv_1_1_parser.html',1,'csvvalidator::csv::Parser'],['../classcsvvalidator_1_1csv_1_1_parser.html#a8516d311edace7af98dfc99ba93c5ce1',1,'csvvalidator::csv::Parser::Parser()']]],
+  ['parser_2eh_2',['Parser.h',['../_parser_8h.html',1,'']]],
+  ['process_3',['process',['../classcsvvalidator_1_1csv_1_1_analyzer.html#a5fcab18dc6a98b23ccfe539cf396e5f2',1,'csvvalidator::csv::Analyzer::process()'],['../classcsvvalidator_1_1csv_1_1_parser.html#aa5da51e35866f85cdbca527d0570d705',1,'csvvalidator::csv::Parser::process()'],['../classcsvvalidator_1_1display_1_1_reporter.html#ae31e00dd524e90ce30c1bc5bc358269d',1,'csvvalidator::display::Reporter::process()']]]
 ];

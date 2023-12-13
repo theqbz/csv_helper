@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['trim_0',['trim',['../classcsvhelper_1_1utils_1_1parser_1_1_ini_file.html#a711da86e15004960a471b5042a7d5652',1,'csvhelper::utils::parser::IniFile']]]
+  ['settings_0',['Settings',['../classcsvvalidator_1_1utils_1_1_settings.html#a0a7e294b49b3f7282715915347dce078',1,'csvvalidator::utils::Settings']]]
 ];

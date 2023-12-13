@@ -1,6 +1,6 @@
 var _result_8h =
 [
-    [ "csvhelper::csv::ErrorEntry", "structcsvhelper_1_1csv_1_1_error_entry.html", null ],
-    [ "csvhelper::csv::ErrorLog", "structcsvhelper_1_1csv_1_1_error_log.html", null ],
-    [ "csvhelper::csv::Result", "structcsvhelper_1_1csv_1_1_result.html", "structcsvhelper_1_1csv_1_1_result" ]
+    [ "csvvalidator::data::csv::ErrorEntry", "structcsvvalidator_1_1data_1_1csv_1_1_error_entry.html", "structcsvvalidator_1_1data_1_1csv_1_1_error_entry" ],
+    [ "csvvalidator::data::csv::ErrorList", "structcsvvalidator_1_1data_1_1csv_1_1_error_list.html", null ],
+    [ "csvvalidator::data::csv::Result", "structcsvvalidator_1_1data_1_1csv_1_1_result.html", "structcsvvalidator_1_1data_1_1csv_1_1_result" ]
 ];

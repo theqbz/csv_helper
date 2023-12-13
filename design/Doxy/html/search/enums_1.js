@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['state_0',['State',['../structcsvhelper_1_1csv_1_1_record_head.html#ad63b5794a72775cd88fea28d273e3da3',1,'csvhelper::csv::RecordHead::State'],['../structcsvhelper_1_1csv_1_1_field.html#ae82c4f67400e9f0c4f66537c745ea7bd',1,'csvhelper::csv::Field::State']]]
+  ['state_0',['State',['../structcsvvalidator_1_1data_1_1csv_1_1_record_head.html#a5f9c132a3ff0f5c91304f9b1c508dbdf',1,'csvvalidator::data::csv::RecordHead::State'],['../structcsvvalidator_1_1data_1_1csv_1_1_field.html#a7261d3e99d92906ddc2cbd73ef1f2ae4',1,'csvvalidator::data::csv::Field::State']]]
 ];

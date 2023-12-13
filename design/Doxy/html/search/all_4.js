@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['field_0',['Field',['../structcsvhelper_1_1csv_1_1_field.html',1,'csvhelper::csv']]],
-  ['fields_1',['Fields',['../structcsvhelper_1_1csv_1_1_fields.html',1,'csvhelper::csv']]],
-  ['file_2',['File',['../structcsvhelper_1_1csv_1_1_file.html',1,'csvhelper::csv::File'],['../structcsvhelper_1_1utils_1_1parser_1_1data_1_1ini_1_1_file.html',1,'csvhelper::utils::parser::data::ini::File']]],
-  ['filehandler_3',['FileHandler',['../classcsvhelper_1_1utils_1_1_file_handler.html',1,'csvhelper::utils::FileHandler'],['../classcsvhelper_1_1utils_1_1_file_handler.html#a2d4a336995b808349ba2e2403d6efd1e',1,'csvhelper::utils::FileHandler::FileHandler()']]],
+  ['field_0',['Field',['../structcsvvalidator_1_1data_1_1csv_1_1_field.html',1,'csvvalidator::data::csv']]],
+  ['fields_1',['Fields',['../structcsvvalidator_1_1data_1_1csv_1_1_fields.html',1,'csvvalidator::data::csv']]],
+  ['file_2',['File',['../structcsvvalidator_1_1data_1_1csv_1_1_file.html',1,'csvvalidator::data::csv::File'],['../structcsvvalidator_1_1data_1_1ini_1_1_file.html',1,'csvvalidator::data::ini::File']]],
+  ['filehandler_3',['FileHandler',['../classcsvvalidator_1_1utils_1_1_file_handler.html',1,'csvvalidator::utils::FileHandler'],['../classcsvvalidator_1_1utils_1_1_file_handler.html#a1b8fe371c85bff2216a748d03278f5b1',1,'csvvalidator::utils::FileHandler::FileHandler()']]],
   ['filehandler_2ecpp_4',['FileHandler.cpp',['../_file_handler_8cpp.html',1,'']]],
   ['filehandler_2eh_5',['FileHandler.h',['../_file_handler_8h.html',1,'']]],
-  ['filename_6',['fileName',['../classcsvhelper_1_1utils_1_1_file_handler.html#ae17e553516369259cc96a25dd8fe66cd',1,'csvhelper::utils::FileHandler::fileName()'],['../classcsvhelper_1_1utils_1_1_i_file_handler.html#a7ca44a0be0ee21c70fcec797d91c42e3',1,'csvhelper::utils::IFileHandler::fileName()']]]
+  ['filename_6',['fileName',['../classcsvvalidator_1_1utils_1_1_file_handler.html#a8fa1b9b46e8adc73890cc1732c4a9c58',1,'csvvalidator::utils::FileHandler::fileName()'],['../classcsvvalidator_1_1utils_1_1_i_file_handler.html#a4a5778b8faea457c931d4e9c1633fcfe',1,'csvvalidator::utils::IFileHandler::fileName()']]]
 ];
