@@ -22,7 +22,7 @@ public:
     {
         Skip,  ///< Skip empty lines in result
         Error, ///< Display enmpty lines as error in result
-        Leave  ///< Display empty lines as empty lines in result
+        Keep  ///< Display empty lines as empty lines in result
     };
 
     enum class LabelPosition

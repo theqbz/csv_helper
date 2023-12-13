@@ -8,8 +8,8 @@
 #pragma once
 
 #include "../data/Report.h"
-#include "IDisplay.h"
 #include "../utils/ISettings.h"
+#include "IDisplay.h"
 
 namespace csvvalidator {
 namespace display {
@@ -22,7 +22,10 @@ public:
     {
     }
 
-    void render(const data::display::Table& p_csvFile, const data::display::Table& p_result);
+    void render(const data::display::Report& p_report) const;
+
+    void printSimpleTable(const data::display::Table& p_table) const;
+    void printFileTable(const data::display::Table& p_table) const;
 
 private:
     const utils::ISettings& m_settings;

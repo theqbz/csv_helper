@@ -86,7 +86,7 @@ static inline bool isKey(const std::string& p_text)
     return !p_text.empty() && *p_text.begin() == KEY_MARKER;
 }
 
-void findHelp(data::console::Arguments p_arguments)
+static void findHelp(data::console::Arguments p_arguments)
 {
     for (const std::string& helpFlag : HELP_FLAGS) {
         if (p_arguments.find(helpFlag) != p_arguments.end()) {
@@ -95,7 +95,7 @@ void findHelp(data::console::Arguments p_arguments)
     }
 }
 
-void printHelp()
+static void printHelp()
 {
     std::cout << "\n\tThis program can analyze the provided .csv files, seeking for errors.\n"
               << "\tIt can detect if a Record contains more or less Fileds than the number\n"

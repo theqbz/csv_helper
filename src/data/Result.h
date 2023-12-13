@@ -20,17 +20,33 @@ namespace csv {
 
 ///
 /// @brief Container for error messages.
-/// An ErrorEntry consist the line number an the error message
-/// represented by a < int, string > pair
+/// An ErrorEntry consist the line number and the error message represented
+/// by a < size_t, string > pair, and the type of the message
 ///
 struct ErrorEntry : public std::pair<size_t, std::string>
-{ };
+{
+    ///
+    /// @brief The type of the entry.
+    /// ErrorEntry type can be [ info | warning | err(or) ]
+    ///
+    enum class Type
+    {
+        INFO,    ///> information
+        WARNING, ///> warning
+        ERR      ///> error
+    };
+
+    ///
+    /// The type of the error entry
+    ///
+    Type m_type { Type::INFO };
+};
 
 ///
 /// @brief Container for error log.
 /// Error log is a vector of ErrorEntryes
 ///
-struct ErrorLog : public std::vector<ErrorEntry>
+struct ErrorList : public std::vector<ErrorEntry>
 { };
 
 ///
@@ -38,12 +54,9 @@ struct ErrorLog : public std::vector<ErrorEntry>
 ///
 struct Result
 {
-    ErrorLog m_errors;             ///< vector of error entries
-    unsigned int m_emptyLineCount; ///< counts the empty lines in a csv::File
-
-    // TODO:
-    // Delete this function from here and put it to the Reporter class!
-    const display::Table getTable(const utils::ISettings& p_settings);
+    ErrorList m_errorList;   ///< vector of error entries
+    size_t m_lastLineNumber; ///< number of the last line of the .csv file
+    size_t m_emptyLineCount; ///< counts the empty lines in the csv::File
 };
 
 } // namespace csv

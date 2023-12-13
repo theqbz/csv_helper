@@ -43,14 +43,32 @@ const std::string cellSeparator(bool* p_previousCellWasEmpty,
     return separator;
 }
 
-void Lines::render(const data::display::Table& p_csvFile, const data::display::Table& p_result)
+void Lines::printSimpleTable(const data::display::Table& p_table) const
+{
+    for (const data::display::Row& row : p_table) {
+        if (row.empty()) {
+            continue;
+        }
+        bool firstCell { true };
+        for (const std::string& cell : row) {
+            if (firstCell) {
+                std::cout << cell;
+                firstCell = false;
+            } else {
+                std::cout << " " << cell;
+            }
+        }
+        std::cout << "\n";
+    }
+    std::cout << "\n";
+}
+
+void Lines::printFileTable(const data::display::Table& p_table) const
 {
     const bool skipEmptyRow { m_settings.emptyLines() == utils::ISettings::EmptyLines::Skip };
     const unsigned char emptyCellFiller { m_settings.emptyFields() };
     const bool skipEmptyCell { emptyCellFiller == 0 };
-    // TODO:
-    // Print some data about file
-    for (const data::display::Row& row : p_csvFile) {
+    for (const data::display::Row& row : p_table) {
         if (row.empty() && skipEmptyRow) {
             continue;
         }
@@ -71,12 +89,13 @@ void Lines::render(const data::display::Table& p_csvFile, const data::display::T
         std::cout << "\n";
     }
     std::cout << "\n";
-    for (const data::display::Row& row : p_result) {
-        for (const std::string& cell : row) {
-            std::cout << cell;
-        }
-        std::cout << "\n";
-    }
+}
+
+void Lines::render(const data::display::Report& p_report) const
+{
+    printSimpleTable(p_report.m_info);
+    printFileTable(p_report.m_file);
+    printSimpleTable(p_report.m_errors);
 }
 
 } // namespace display

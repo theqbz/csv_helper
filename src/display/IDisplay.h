@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include "../data/Report.h"
+
 namespace csvvalidator {
 namespace display {
 
@@ -19,7 +21,7 @@ public:
     IDisplay()          = default;
     virtual ~IDisplay() = default;
 
-    virtual void render(/* const Report& p_report */) = 0;
+    virtual void render(const data::display::Report& p_report) const = 0;
 };
 
 } // namespace display

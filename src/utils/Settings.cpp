@@ -63,15 +63,15 @@ bool convertToBool(const std::string& p_text)
 
 ISettings::EmptyLines convertToEmptyLines(const std::string& p_text)
 {
-    if (p_text == "leave") {
-        return ISettings::EmptyLines::Leave;
+    if (p_text == "keep") {
+        return ISettings::EmptyLines::Keep;
     }
     if (p_text == "error") {
         return ISettings::EmptyLines::Error;
     }
     if (p_text != "skip") {
-        std::cout << "Error with argument \"EmptyLines\". This option will be set to default.\n"
-                  << "( Possible values: -emptyLines [ skip | error | leave ] )\n";
+        std::cout << "Error with argument \"EmptyLines\". This option will be set to default (skip).\n"
+                  << "( Possible values: -emptyLines [ skip | error | keep ] )\n";
     }
     return ISettings::EmptyLines::Skip;
 }
@@ -82,7 +82,7 @@ ISettings::LabelPosition convertToLabelPosition(const std::string& p_text)
         return ISettings::LabelPosition::Inline;
     }
     if (p_text != "top") {
-        std::cout << "Error with argument \"LabelPosition\". This option will be set to default.\n"
+        std::cout << "Error with argument \"LabelPosition\". This option will be set to default (top).\n"
                   << "( Possible values: -labelPosition [ top | inline ] )\n";
     }
     return ISettings::LabelPosition::Top;
@@ -100,7 +100,7 @@ ISettings::DiffDetectMode convertToDiffMode(const std::string& p_text)
         return Settings::DiffDetectMode::Auto;
     }
     if (p_text != "off") {
-        std::cout << "Error with argument \"DiffDetectMode\". This option will be set to default.\n"
+        std::cout << "Error with argument \"DiffDetectMode\". This option will be set to default (off).\n"
                   << "( Possible values: -diffMode [ off | auto | above | below ] )\n";
     }
     return Settings::DiffDetectMode::Off;
@@ -131,9 +131,9 @@ void Settings::storeSettings(const data::SettingData& p_settingsData)
         error_lines != p_settingsData.end()) {
         m_linesAroundErrors = convertToSizeT(error_lines->second);
     }
-    if (it label = p_settingsData.find("-label");
-        label != p_settingsData.end()) {
-        m_label = convertToLabelPosition(label->second);
+    if (it labels = p_settingsData.find("-labels");
+        labels != p_settingsData.end()) {
+        m_labels = convertToLabelPosition(labels->second);
     }
     if (it empty_fields = p_settingsData.find("-emptyFields");
         empty_fields != p_settingsData.end()) {

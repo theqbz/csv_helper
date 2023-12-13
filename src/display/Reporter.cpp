@@ -7,6 +7,7 @@
 
 #include "Reporter.h"
 #include "../data/Ranges.h"
+#include "../data/Result.h"
 
 #include <iostream>
 #include <iterator>
@@ -29,10 +30,11 @@ static const std::string getPlaceholder(const std::string_view p_totalLineNumber
 static const std::string getRowHead(const size_t p_totalLineCount, const std::string& p_currentLineSign);
 static const std::string getRowHead(const size_t p_totalLineCount, const size_t p_currentLineNumber);
 static const data::display::Row addLabels(const data::csv::Labels& p_labels, const size_t p_lastLineNumber);
-static const std::vector<size_t> getNumbersOfErrorLines(const data::csv::Content& p_content);
+static const std::vector<size_t> getErrorLineNumbers(const data::csv::Content& p_content);
 static const size_t lowerBound(const size_t p_initialNumber, const size_t p_rangeWidth, const size_t p_lowerLimit = 0);
 static const size_t upperBound(const size_t p_initialNumber, const size_t p_rangeWidth, const size_t p_upperLimit);
 static inline const std::string getRecordPrompt(const data::csv::RecordHead& p_recordHead, const size_t p_lastLineNumber);
+static inline const std::string getEntryType(const data::csv::ErrorEntry::Type& p_entryType);
 
 const data::display::Report Reporter::process(const data::csv::File& p_csvFile,
                                               const data::csv::Result& p_result) const
@@ -56,29 +58,29 @@ const data::display::Table Reporter::addFileInfo(const data::csv::File& p_csvFil
 
 const data::display::Table Reporter::addFileContent(const data::csv::File& p_csvFile) const
 {
-    const size_t errorLines = m_settings.linesAroundErrors();
-    if (errorLines == std::numeric_limits<size_t>::max()) {
-        // TODO:
-        // create a range from start to end
-        // call add lines wtih this range
-        // return the result
-    }
-    std::vector<size_t> linesToAdd    = getNumbersOfErrorLines(p_csvFile.m_content);
-    data::display::Ranges rawRanges   = getRanges(linesToAdd,
-                                                  p_csvFile.m_content.size() - 1);
-    data::display::Ranges finalRanges = mergeRanges(rawRanges);
-    data::display::Table table        = addLines(p_csvFile, finalRanges);
+    data::display::Ranges rawRanges          = getRanges(getErrorLineNumbers(p_csvFile.m_content),
+                                                         p_csvFile.m_content.size() - 1);
+    const data::display::Ranges mergedRanges = mergeRanges(rawRanges);
+    const data::display::Table table         = addLines(p_csvFile, mergedRanges);
     return table;
 }
 
 const data::display::Table Reporter::addErrorList(const data::csv::Result& p_result) const
 {
-    // TODO:
-    // Add this errorlist:
-    // - number of errors (if any)
-    // - the errors
-    // - the list of duplicated records
-    return data::display::Table();
+    const data::csv::ErrorList errorLog = p_result.m_errorList;
+    if (errorLog.empty()) {
+        return data::display::Table({ data::display::Row({ "No errors found!" }) });
+    }
+    data::display::Table table {};
+    const size_t lastLineNumber { p_result.m_lastLineNumber };
+    table.push_back(data::display::Row({ "The following " + std::to_string(errorLog.size()) + " errors / warnings found:" }));
+    for (const data::csv::ErrorEntry& entry : errorLog) {
+        data::display::Row row {};
+        row.push_back(getEntryType(entry.m_type) + " in line " + std::to_string(entry.first));
+        row.push_back(entry.second);
+        table.push_back(row);
+    }
+    return table;
 }
 
 const data::display::Ranges Reporter::getRanges(const std::vector<size_t>& p_errorLineNumbers,
@@ -120,10 +122,11 @@ const bool Reporter::isEmptyRowAndSkipIt(const data::csv::RecordHead::State& p_r
 const data::display::Row Reporter::addLine(const data::csv::Record& p_record,
                                            const size_t p_lastLineNumber) const
 {
-    data::display::Row row {};
-    if (!isEmptyRowAndSkipIt(p_record.first.m_state)) {
-        row.push_back(getRecordPrompt(p_record.first, p_lastLineNumber));
+    if (isEmptyRowAndSkipIt(p_record.first.m_state)) {
+        return {};
     }
+    data::display::Row row {};
+    row.push_back(getRecordPrompt(p_record.first, p_lastLineNumber));
     for (const data::csv::Field& field : p_record.second) {
         row.push_back(getFieldContent(field));
     }
@@ -134,43 +137,57 @@ const data::display::Table Reporter::addLines(const data::csv::File& p_csvFile,
                                               const data::display::Ranges& p_finalRanges) const
 {
     data::display::Table table {};
-    const size_t lastLineNumber = p_csvFile.m_content.back().first.m_fileLineNumber;
+    const data::display::Row separator({ "(...)" });
+    const size_t lastLineNumber { p_csvFile.m_content.back().first.m_fileLineNumber };
     if (m_settings.labelPosition() != utils::ISettings::LabelPosition::Inline) {
         table.push_back(addLabels(p_csvFile.m_labels, lastLineNumber));
     }
-    for (const data::display::Range& range : p_finalRanges) {
-        for (size_t i = range.first; i <= range.second; ++i) {
-            table.push_back(addLine(p_csvFile.m_content.at(i), lastLineNumber));
+    for (size_t rangeIdx = 0; rangeIdx < p_finalRanges.size(); ++rangeIdx) {
+        if (rangeIdx > 0) {
+            table.push_back(separator);
+        }
+        const data::display::Range& range = p_finalRanges.at(rangeIdx);
+        for (size_t recordIdx = range.first; recordIdx <= range.second; ++recordIdx) {
+            table.push_back(addLine(p_csvFile.m_content.at(recordIdx), lastLineNumber));
         }
     }
     return table;
 }
 
-static const std::vector<size_t> getNumbersOfErrorLines(const data::csv::Content& p_content)
+static const std::vector<size_t> getErrorLineNumbers(const data::csv::Content& p_content)
 {
-    std::vector<size_t> numbersOfErrorLines {};
+    std::vector<size_t> errorLineNumbers {};
     data::csv::Content::const_iterator firstRecord   = p_content.begin();
     data::csv::Content::const_iterator currentRecord = firstRecord;
     for (; currentRecord != p_content.end(); ++currentRecord) {
         if (currentRecord->first.m_state == data::csv::RecordHead::State::ERR) {
-            numbersOfErrorLines.push_back(std::distance(firstRecord, currentRecord));
+            errorLineNumbers.push_back(std::distance(firstRecord, currentRecord));
         }
     }
-    return numbersOfErrorLines;
+    return errorLineNumbers;
 }
 
 static const size_t lowerBound(const size_t p_initialNumber,
                                const size_t p_rangeWidth,
                                const size_t p_lowerLimit)
 {
-    const size_t lower_bound = p_initialNumber - p_rangeWidth;
-    return p_lowerLimit < lower_bound ? lower_bound : p_lowerLimit;
+    if (p_rangeWidth == std::numeric_limits<size_t>::max()) {
+        return p_lowerLimit;
+    }
+    const long long lower_bound = std::make_signed_t<size_t>(p_initialNumber) - std::make_signed_t<size_t>(p_rangeWidth);
+    if (lower_bound < std::make_signed_t<size_t>(p_lowerLimit)) {
+        return p_lowerLimit;
+    }
+    return static_cast<size_t>(lower_bound);
 }
 
 static const size_t upperBound(const size_t p_initialNumber,
                                const size_t p_rangeWidth,
                                const size_t p_upperLimit)
 {
+    if (p_rangeWidth == std::numeric_limits<size_t>::max()) {
+        return p_upperLimit;
+    }
     const size_t upper_bound = p_initialNumber + p_rangeWidth;
     return upper_bound < p_upperLimit ? upper_bound : p_upperLimit;
 }
@@ -230,7 +247,7 @@ static const data::display::Ranges mergeRanges(data::display::Ranges& p_rawRange
     data::display::Ranges final_ranges {};
     data::display::Ranges::const_iterator currentRangeToCompareIt = p_rawRanges.begin();
     for (; currentRangeToCompareIt != p_rawRanges.end(); ++currentRangeToCompareIt) {
-        if (!areRangesOverlaping(final_ranges.back(), *currentRangeToCompareIt)) {
+        if (final_ranges.empty() || !areRangesOverlaping(final_ranges.back(), *currentRangeToCompareIt)) {
             final_ranges.push_back(*currentRangeToCompareIt);
             continue;
         }
@@ -277,6 +294,29 @@ static inline const std::string getRecordPrompt(const data::csv::RecordHead& p_r
                                                 const size_t p_lastLineNumber)
 {
     return getRecordState(p_recordHead) + getRowHead(p_lastLineNumber, p_recordHead.m_fileLineNumber);
+}
+
+static inline const std::string getEntryType(const data::csv::ErrorEntry::Type& p_entryType)
+{
+    std::string typeAsString;
+    switch (p_entryType) {
+    case data::csv::ErrorEntry::Type::INFO: {
+        typeAsString = "Information";
+        break;
+    }
+    case data::csv::ErrorEntry::Type::WARNING: {
+        typeAsString = "Warning";
+        break;
+    }
+    case data::csv::ErrorEntry::Type::ERR: {
+        typeAsString = "Error";
+        break;
+    }
+    default:
+        std::cout << "Program logic error! Wrong ErrorEntry type @ getEntryType()\n";
+        break;
+    }
+    return typeAsString;
 }
 
 } // namespace display

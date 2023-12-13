@@ -55,7 +55,7 @@ public:
         m_diff(DiffDetectMode::Off),
         m_emptyFields('.'),
         m_linesAroundErrors(0),
-        m_label(LabelPosition::Top),
+        m_labels(LabelPosition::Top),
         m_tableOutput(false)
     {
     }
@@ -75,8 +75,8 @@ public:
     inline const unsigned char emptyFields() const { return m_emptyFields; }
     inline void linesAroundErrors(const size_t p_value) { m_linesAroundErrors = p_value; }
     inline const size_t linesAroundErrors() const { return m_linesAroundErrors; }
-    inline void labelPosition(const LabelPosition p_label) { m_label = p_label; }
-    inline const LabelPosition labelPosition() const { return m_label; }
+    inline void labelPosition(const LabelPosition p_label) { m_labels = p_label; }
+    inline const LabelPosition labelPosition() const { return m_labels; }
     inline void tableOutput(const bool p_value) { m_tableOutput = p_value; }
     inline const bool tableOutput() const { return m_tableOutput; }
 
@@ -88,7 +88,7 @@ private:
     DiffDetectMode m_diff;
     unsigned char m_emptyFields;
     size_t m_linesAroundErrors;
-    LabelPosition m_label;
+    LabelPosition m_labels;
     bool m_tableOutput;
 
     void storeSettings(const data::SettingData& p_tasks);

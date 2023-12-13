@@ -45,7 +45,8 @@ void checkRecordDuplication(data::csv::Content* p_content,
                 data::csv::ErrorEntry currentRecordErrorEntry {};
                 currentRecordErrorEntry.first  = currentRecordIt->first.m_fileLineNumber;
                 currentRecordErrorEntry.second = "Multiple occurrence record (this is the first occurrence)";
-                p_result->m_errors.push_back(currentRecordErrorEntry);
+                currentRecordErrorEntry.m_type = data::csv::ErrorEntry::Type::WARNING;
+                p_result->m_errorList.push_back(currentRecordErrorEntry);
             }
             recordToCheckIt->first.m_duplicated = true;
             data::csv::ErrorEntry checkedRecordErrorEntry {};
@@ -53,7 +54,8 @@ void checkRecordDuplication(data::csv::Content* p_content,
             checkedRecordErrorEntry.second = ("Multiple occurrence record (the first occurrence is in line "
                                               + std::to_string(currentRecordIt->first.m_fileLineNumber)
                                               + ")");
-            p_result->m_errors.push_back(checkedRecordErrorEntry);
+            checkedRecordErrorEntry.m_type = data::csv::ErrorEntry::Type::WARNING;
+            p_result->m_errorList.push_back(checkedRecordErrorEntry);
         }
     }
 }
@@ -71,7 +73,7 @@ void checkRecordDuplication(data::csv::Content* p_content,
 /// @param[in,out] - result : the Result data to store error and increment
 ///                           empty line counter
 /// @param[in] - labelCount : the total number of labels in the csv::File
-/// @param[in] - emptyLinesNotErrors : 
+/// @param[in] - emptyLinesNotErrors :
 /// @return (void)
 ///
 void markWrongLineLength(data::csv::Record* p_record,
@@ -95,7 +97,8 @@ void markWrongLineLength(data::csv::Record* p_record,
     errorEntry.second = ("The line doesn't match to the label list. (records: "
                          + std::to_string(recordSize) + " / "
                          + std::to_string(p_labelCount) + ")");
-    p_result->m_errors.push_back(errorEntry);
+    errorEntry.m_type = data::csv::ErrorEntry::Type::ERR;
+    p_result->m_errorList.push_back(errorEntry);
 }
 
 ///
@@ -106,7 +109,7 @@ void markWrongLineLength(data::csv::Record* p_record,
 /// @param[in,out] - result  : the Result data to store error and increment
 ///                            empty line counter
 /// @param[in] - labelCount  : the total number of labels in the csv::File
-/// @param[in] - emptyLinesNotErrors : 
+/// @param[in] - emptyLinesNotErrors :
 /// @return (void)
 ///
 void checkRecordLengths(data::csv::Content* p_content,
@@ -128,6 +131,7 @@ data::csv::Result Analyzer::process(data::csv::File& p_csvFile)
     const size_t labelCount { p_csvFile.m_labels.size() };
     data::csv::Content& content { p_csvFile.m_content };
     data::csv::Result result {};
+    result.m_lastLineNumber = p_csvFile.m_content.back().first.m_fileLineNumber;
     checkRecordLengths(&content, &result, labelCount, emptyLinesNotErrors);
     checkRecordDuplication(&content, &result);
     // TODO:

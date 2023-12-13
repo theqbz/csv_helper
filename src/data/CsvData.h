@@ -30,20 +30,16 @@ struct RecordHead
     ///
     enum State
     {
-        OK,        ///< Line alright
-        ERR,       ///< Line error
-        EMPTY,     ///< Line empty but not error (to handle differently during displaying)
+        OK,    ///< Line alright
+        ERR,   ///< Line error
+        EMPTY, ///< Line empty but not error (to handle differently during displaying)
     };
 
-    size_t m_fileLineNumber { 0 };
-    State m_state { State::OK };
-    bool m_duplicated { false };
+    size_t m_fileLineNumber { 0 }; ///< The line number in the original file
+    bool m_duplicated { false };   ///< Signs if the current line occoures more than once on the file
+    State m_state { State::OK };   ///< The state of the record
 
-    inline bool operator==(const RecordHead& p_other) const
-    {
-        return this->m_fileLineNumber == p_other.m_fileLineNumber
-            && this->m_state == p_other.m_state;
-    }
+    inline bool operator==(const RecordHead& p_other) const { return this->m_fileLineNumber == p_other.m_fileLineNumber && this->m_state == p_other.m_state; }
 };
 
 ///
@@ -74,11 +70,7 @@ struct Field
     State m_state { State::UNCHECKED };
 
     inline bool operator==(const Field& p_other) const { return this->m_content == p_other.m_content; }
-    inline bool theSame(const Field& p_other) const
-    {
-        return this->m_content == p_other.m_content
-            && this->m_state == p_other.m_state;
-    }
+    inline bool theSame(const Field& p_other) const { return this->m_content == p_other.m_content && this->m_state == p_other.m_state; }
 };
 
 ///
@@ -95,11 +87,7 @@ struct Fields : public std::vector<Field>
 struct Record : public std::pair<RecordHead, Fields>
 {
     inline bool operator==(const Record& p_other) const { return this->second == p_other.second; }
-    inline bool theSame(const Record& p_other) const
-    {
-        return this->first == p_other.first
-            && this->second == p_other.second;
-    }
+    inline bool theSame(const Record& p_other) const { return this->first == p_other.first && this->second == p_other.second; }
 };
 
 ///
@@ -122,11 +110,6 @@ struct File
     std::string m_fileName; ///< the path and filename of the .csv file
     Labels m_labels;        ///< container for the labels of .csv file. Type: vector of strings
     Content m_content;      ///< container for Records of .csv file. Type: vector of Records
-
-    // TODO:
-    // Delete this function and put it in the Reporter class!
-    const display::Table getTable(const utils::ISettings& p_settings);
-    // const display::Table getReport(const utils::ISettings& p_settings);
 };
 
 } // namespace csv
