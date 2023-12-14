@@ -104,10 +104,11 @@ static void printHelp()
               << "\tTo parse a file start the program with a filename:\n\n"
               << "\t\t>  csv_validator.exe  path/to/file.csv  [settings]\n\n"
               << "\tSettings:\n\n"
-              << "\t-delimiter (char)  -  default value: \";\" (the delimiter between Fields in .csv file)\n\n"
-              << "\t-emptyLines (string) [ skip | error | leave ]  -  default value: \"skip\" (defines what to do with empty lines)\n\n"
-              << "\t-emptyFields (char) <empty>: skip empty values  -  default value: \".\" (placeholder for empty values)\n\n"
-              << "\t-label (string) [ top | inline ]  -  default value: \"top\" (defines where to put the labels)\n\n";
+              << "\t-delimiter (char) - default value: \";\" (the delimiter between Fields in .csv file)\n\n"
+              << "\t-emptyLines (string) [ skip | error | leave ] - default value: \"skip\" (defines what to do with empty lines)\n\n"
+              << "\t-emptyFields (char) <empty>: skip empty values - default value: \".\" (placeholder for empty values)\n\n"
+              << "\t-label (string) [ top | inline ] - default value: \"top\" (defines where to put the labels)\n\n"
+              << "\t-errorLines (int) - default value: \"0\" (the number of lines to display before and after the wrong lines; -1: all lines)\n\n ";
     exit(0);
 }
 

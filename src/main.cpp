@@ -39,11 +39,12 @@ void testRun(const std::string& p_file, csvvalidator::data::SettingData p_consol
     display.render(report);
 }
 
-void printArgHelp(const char* p_programName)
+void printNoArgHelp(const char* p_programName)
 {
     std::cout << "No file presented.\n"
               << "To parse a file start the program with a filename:\n\n"
-              << "\t>  " << p_programName << "  path/to/file.csv  [settings]\n\n";
+              << "\t>  " << p_programName << "  path/to/file.csv  [settings]\n\n"
+              << "To get help, use the  -help  flag!\n\n";
 }
 
 int main(int argc, const char* argv[])
@@ -52,7 +53,8 @@ int main(int argc, const char* argv[])
     std::string fileToTest { DEBUG_TEST_FILE };
     std::cout << "* CsvValidator by QBZ * version: 1.0b\n";
     if (argc < 2) {
-        // printArgHelp(argv[0]);
+        printNoArgHelp(argv[0]);
+        return 0;
     } else {
         fileToTest = argv[1];
     }
