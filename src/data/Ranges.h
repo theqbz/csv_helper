@@ -9,11 +9,11 @@
 
 #include <algorithm>
 #include <compare>
-#include <set>
 #include <utility>
 #include <vector>
 
-namespace csvvalidator::data {
+namespace csvvalidator {
+namespace data {
 namespace display {
 
 struct Range : public std::pair<size_t, size_t>
@@ -55,4 +55,5 @@ struct Ranges : public std::vector<Range>
 };
 
 } // namespace display
-} // namespace csvvalidator::data
+} // namespace data
+} // namespace csvvalidator

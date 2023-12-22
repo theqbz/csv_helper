@@ -6,15 +6,13 @@
 ///
 
 #include "HelpTask.h"
+#include "../utils/Utility.h"
 
 #include <iostream>
 #include <string>
 
 namespace csvvalidator {
 namespace task {
-
-const std::string NO_ARGS        = "NO_ARGS_HELP";
-const std::string SETTING_WRITER = "settings";
 
 bool HelpTask::run()
 {
@@ -26,7 +24,7 @@ bool HelpTask::run()
         printShortHelp();
         return true;
     }
-    if (m_request == SETTING_WRITER) {
+    if (m_request == SETTING_WRITER_COMMAND) {
         printSettingWriterHelp();
         return true;
     }

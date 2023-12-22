@@ -38,7 +38,7 @@ const data::ini::File IniFile::read(std::fstream& p_iniFile)
     if (p_iniFile.peek() == std::char_traits<char>::eof()) {
         std::cout << "Ini file error\n";
         // TODO: create default .ini file
-        //       or not? -> only when user ask for it with SETTING_WRITER_FLAG from console Argument?
+        //       or not? -> only when user ask for it with SETTING_WRITER_COMMAND from console Argument?
         return {};
     }
     std::cout << "Reading ini file\n";

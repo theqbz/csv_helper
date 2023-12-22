@@ -1,6 +1,7 @@
 enable_testing()
 
 add_executable( csv_validator
+    "csv/IAnalyzer.h"
     "csv/Analyzer.h"
     "csv/Analyzer.cpp"
     "csv/IParser.h"
@@ -13,9 +14,9 @@ add_executable( csv_validator
     "data/Report.h"
     "data/Result.h"
     "data/SettingData.h"
+    "display/IDisplay.h"
     "display/Grid.h"
     "display/Grid.cpp"
-    "display/IDisplay.h"
     "display/Lines.h"
     "display/Lines.cpp"
     "display/IReporter.h"
@@ -25,15 +26,21 @@ add_executable( csv_validator
     "parser/Console.cpp"
     "parser/IniFile.h"
     "parser/IniFile.cpp"
-    "task/Task.h"
+    "task/ITask.h"
+    "task/CsvTask.h"
+    "task/HelpTask.h"
+    "task/HelpTask.cpp"
+    "task/TaskFactory.h"
+    "task/TaskFactory.cpp"
     "utils/IFileHandler.h"
     "utils/FileHandler.h"
     "utils/FileHandler.cpp"
     "utils/ISettings.h"
     "utils/Settings.h"
     "utils/Settings.cpp"
+    "utils/Utility.h"
     "main.cpp"
- "task/TaskFactory.h" "task/HelpTask.h" "task/HelpTask.cpp")
+)
 
 set_property( TARGET csv_validator PROPERTY CXX_STANDARD 20 )
 

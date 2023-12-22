@@ -10,12 +10,11 @@
 
 #include "SettingData.h"
 
-#include <map>
 #include <string>
 #include <utility>
-#include <vector>
 
-namespace csvvalidator::data {
+namespace csvvalidator {
+namespace data {
 namespace ini {
 
 ///
@@ -31,7 +30,7 @@ struct Records : public SettingData
 { };
 
 ///
-/// @brief Container for a whole .csv file
+/// @brief Container for a whole .ini file
 ///
 struct File
 {
@@ -40,4 +39,5 @@ struct File
 };
 
 } // namespace ini
-} // namespace csvvalidator::data
+} // namespace data
+} // namespace csvvalidator

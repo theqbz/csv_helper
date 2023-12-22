@@ -7,6 +7,7 @@
 
 #include "Console.h"
 #include "../data/ConsoleArguments.h"
+#include "../utils/Utility.h"
 
 #include <iostream>
 #include <set>
@@ -17,9 +18,6 @@ namespace csvvalidator {
 namespace parser {
 
 typedef std::vector<std::string> StrVec;
-
-static const char KEY_MARKER = '-';
-static const std::set<std::string> HELP_FLAGS { "-h", "--h", "-help", "--help" };
 
 static inline bool hasKey(const data::console::Argument& p_argument);
 static inline bool isKey(const std::string& p_text);
@@ -99,7 +97,7 @@ static inline bool isKey(const std::string& p_text)
 
 static void findHelp(data::console::Arguments p_arguments)
 {
-    for (const std::string& helpFlag : HELP_FLAGS) {
+    for (const std::string& helpFlag : HELP_COMMANDS) {
         if (p_arguments.find(helpFlag) != p_arguments.end()) {
             printHelp();
         }

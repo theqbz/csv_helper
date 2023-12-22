@@ -8,15 +8,12 @@
 
 #pragma once
 
-#include "../utils/ISettings.h"
-#include "Report.h"
-
-#include <stdint.h>
 #include <string>
 #include <utility>
 #include <vector>
 
-namespace csvvalidator::data {
+namespace csvvalidator {
+namespace data {
 namespace csv {
 
 ///
@@ -113,4 +110,5 @@ struct File
 };
 
 } // namespace csv
-} // namespace csvvalidator::data
+} // namespace data
+} // namespace csvvalidator

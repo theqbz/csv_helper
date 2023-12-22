@@ -17,6 +17,7 @@
 #include "ITask.h"
 
 #include <queue>
+#include <memory>
 
 namespace csvvalidator {
 namespace task {
@@ -24,15 +25,22 @@ namespace task {
 class TaskFactory
 {
 public:
-    TaskFactory() = delete;
+    TaskFactory()                   = delete;
     TaskFactory(const TaskFactory&) = delete;
-    TaskFactory(const data::console::Arguments& p_arguments);
+
+    TaskFactory(const data::console::Arguments& p_arguments,
+                const utils::ISettings& p_settings) :
+        m_settings(p_settings)
+    {
+        init(p_arguments);
+    }
 
     void init(const data::console::Arguments& p_arguments);
     void execute();
 
 private:
-    std::queue<task::ITask> m_tasks;
+    const utils::ISettings& m_settings;
+    std::queue<std::shared_ptr<task::ITask>> m_tasks;
 };
 
 } // namespace task

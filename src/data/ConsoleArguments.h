@@ -12,7 +12,8 @@
 #include <string>
 #include <utility>
 
-namespace csvvalidator::data {
+namespace csvvalidator {
+namespace data {
 namespace console {
 
 ///
@@ -24,10 +25,11 @@ typedef std::pair<std::string, std::string> Argument;
 /// @brief Container for the argument list from commandline.
 /// The Argument consists a pair of < key, value >
 ///
-struct Arguments : public SettingData
+struct Arguments : public csvvalidator::data::SettingData
 {
     std::string m_command; ///< The "Task" requested by the user. (This should be the first argument after program name, at index 1.)
 };
 
 } // namespace console
-} // namespace csvvalidator::data
+} // namespace data
+} // namespace csvvalidator

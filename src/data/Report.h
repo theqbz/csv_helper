@@ -10,7 +10,8 @@
 #include <string>
 #include <vector>
 
-namespace csvvalidator::data {
+namespace csvvalidator {
+namespace data {
 namespace display {
 
 ///
@@ -40,5 +41,5 @@ struct Report
 };
 
 } // namespace display
-} // namespace csvvalidator::data
-
+} // namespace data
+} // namespace csvvalidator
