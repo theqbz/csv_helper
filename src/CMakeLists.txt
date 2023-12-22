@@ -18,12 +18,14 @@ add_executable( csv_validator
     "display/IDisplay.h"
     "display/Lines.h"
     "display/Lines.cpp"
+    "display/IReporter.h"
     "display/Reporter.h"
     "display/Reporter.cpp"
     "parser/Console.h"
     "parser/Console.cpp"
     "parser/IniFile.h"
     "parser/IniFile.cpp"
+    "task/Task.h"
     "utils/IFileHandler.h"
     "utils/FileHandler.h"
     "utils/FileHandler.cpp"
@@ -31,7 +33,7 @@ add_executable( csv_validator
     "utils/Settings.h"
     "utils/Settings.cpp"
     "main.cpp"
-)
+ "task/TaskFactory.h" "task/HelpTask.h" "task/HelpTask.cpp")
 
 set_property( TARGET csv_validator PROPERTY CXX_STANDARD 20 )
 

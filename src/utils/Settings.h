@@ -37,6 +37,8 @@ namespace utils {
 class Settings : public ISettings
 {
 public:
+    Settings() = delete;
+
     ///
     /// Contructor for Settings class.
     ///
@@ -58,6 +60,7 @@ public:
         m_labels(LabelPosition::Top),
         m_tableOutput(false)
     {
+        init();
     }
 
     Settings(const Settings&) = delete;

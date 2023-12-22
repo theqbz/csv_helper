@@ -11,6 +11,7 @@
 #include "../data/Ranges.h"
 #include "../data/Report.h"
 #include "../data/Result.h"
+#include "IReporter.h"
 
 namespace csvvalidator {
 namespace display {
@@ -18,7 +19,7 @@ namespace display {
 ///
 /// @brief Creates report from csv::File and csv::Result data
 ///
-class Reporter
+class Reporter : public IReporter
 {
 public:
     explicit Reporter(const utils::ISettings& p_settings) :
@@ -34,7 +35,7 @@ public:
     /// @return the summarized report about a .csv file
     ///
     const data::display::Report process(const data::csv::File& p_csvFile,
-                                        const data::csv::Result& p_result) const;
+                                        const data::csv::Result& p_result) const final;
     const data::display::Table addFileInfo(const data::csv::File& p_csvFile,
                                            const data::csv::Result& p_result) const;
     const data::display::Table addFileContent(const data::csv::File& p_csvFile) const;

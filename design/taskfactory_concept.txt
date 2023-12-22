@@ -1,0 +1,13 @@
+task::TaskFactory creates Tasks from Command-line Arguments. (data::console::Arguments)
+A task::ITask can be
+    - CsvTask, which analyzes a .csv file and prints out the result
+    - SettingWriter, which writes the given settings to an .ini file
+
+The TaskFactory creates task from the m_command member variable of data::consol::Arguments.
+
+If the m_command is a setting writer command then the Factory creates a SettingWriter task
+If the m_command is a single file than the Factory creates a CsvTask
+If the m_command is a folder than the Factory searching for .csv files in the folder and creates CsvTasks for each .csv file found.
+If the m_command is a help request, or if any of the arguments is a help request, than Factory creates a Help task.
+
+The Factory pushes each created ITask to a queue, and then runs them from the queue.

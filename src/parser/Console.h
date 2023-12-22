@@ -4,12 +4,13 @@
 /// @file  Console.h
 /// @brief Declaration of the console argument parser class
 ///
+/// TODO:
+/// Must separate the file from settings!
 
 #pragma once
 
 #include "../data/ConsoleArguments.h"
 
-#include <map>
 #include <string>
 #include <vector>
 
@@ -33,6 +34,7 @@ public:
     ///
     static const data::console::Arguments parse(const int p_argc, const char* const p_argv[]);
     static const data::console::Arguments createArguments(const StrVec& p_rawData);
+    static const std::string getCommand(StrVec* p_rawData);
     static const StrVec convert(const int p_argc, const char* const p_argv[]);
 };
 

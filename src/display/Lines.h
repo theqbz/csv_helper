@@ -14,7 +14,7 @@
 namespace csvvalidator {
 namespace display {
 
-class Lines
+class Lines : public IDisplay
 {
 public:
     Lines(const utils::ISettings& p_settings) :
@@ -22,7 +22,7 @@ public:
     {
     }
 
-    void render(const data::display::Report& p_report) const;
+    void render(const data::display::Report& p_report) const final;
 
     void printSimpleTable(const data::display::Table& p_table) const;
     void printFileTable(const data::display::Table& p_table) const;

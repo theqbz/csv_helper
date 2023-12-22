@@ -9,7 +9,6 @@
 
 #include "SettingData.h"
 
-#include <map>
 #include <string>
 #include <utility>
 
@@ -26,7 +25,9 @@ typedef std::pair<std::string, std::string> Argument;
 /// The Argument consists a pair of < key, value >
 ///
 struct Arguments : public SettingData
-{ };
+{
+    std::string m_command; ///< The "Task" requested by the user. (This should be the first argument after program name, at index 1.)
+};
 
 } // namespace console
 } // namespace csvvalidator::data

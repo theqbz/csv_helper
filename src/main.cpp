@@ -27,7 +27,6 @@ void testRun(const std::string& p_file, csvvalidator::data::SettingData p_consol
 {
     csvvalidator::data::SettingData iniFile;
     csvvalidator::utils::Settings settings(p_consoleArgs, iniFile);
-    settings.init();
     csvvalidator::utils::FileHandler file(p_file);
     csvvalidator::csv::Parser csvParser(settings);
     csvvalidator::csv::Analyzer csvAnalyzer(settings);
@@ -49,7 +48,6 @@ void printNoArgHelp(const char* p_programName)
 
 int main(int argc, const char* argv[])
 {
-    std::cin.get();
     std::string fileToTest { DEBUG_TEST_FILE };
     std::cout << "* CsvValidator by QBZ * version: 1.0b\n";
     if (argc < 2) {

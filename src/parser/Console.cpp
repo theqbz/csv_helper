@@ -8,12 +8,9 @@
 #include "Console.h"
 #include "../data/ConsoleArguments.h"
 
-#include <algorithm>
 #include <iostream>
-#include <map>
 #include <set>
 #include <string>
-#include <utility>
 #include <vector>
 
 namespace csvvalidator {
@@ -30,9 +27,12 @@ static void findHelp(data::console::Arguments p_arguments);
 [[noreturn]] static void printHelp();
 
 const data::console::Arguments Console::parse(const int p_argc,
-                                     const char* const p_argv[])
+                                              const char* const p_argv[])
 {
-    data::console::Arguments arguments = Console::createArguments(Console::convert(p_argc, p_argv));
+    StrVec rawData = Console::convert(p_argc, p_argv);
+    data::console::Arguments arguments {};
+    arguments.m_command = getCommand(&rawData);
+    arguments           = Console::createArguments(rawData);
     findHelp(arguments);
     return arguments;
 }
@@ -65,6 +65,17 @@ const data::console::Arguments Console::createArguments(const StrVec& p_rawData)
         }
     }
     return arguments;
+}
+
+const std::string Console::getCommand(StrVec* p_rawData)
+{
+    if (!p_rawData) {
+        std::cout << "Program logic error: nullptr as rawData @ getCommand\n";
+        return {};
+    }
+    std::string command = p_rawData->front();
+    p_rawData->erase(p_rawData->begin());
+    return command;
 }
 
 const StrVec Console::convert(const int p_argc, const char* const p_argv[])
