@@ -23,8 +23,6 @@
 
 #pragma once
 
-#include "../data/ConsoleArguments.h"
-#include "../data/IniFile.h"
 #include "../data/SettingData.h"
 #include "ISettings.h"
 

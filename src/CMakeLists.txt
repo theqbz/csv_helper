@@ -40,7 +40,7 @@ add_executable( csv_validator
     "utils/Settings.cpp"
     "utils/Utility.h"
     "main.cpp"
-)
+ "task/CsvTask.cpp")
 
 set_property( TARGET csv_validator PROPERTY CXX_STANDARD 20 )
 

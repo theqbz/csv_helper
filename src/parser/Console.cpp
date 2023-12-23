@@ -21,7 +21,7 @@ typedef std::vector<std::string> StrVec;
 
 static inline bool hasKey(const data::console::Argument& p_argument);
 static inline bool isKey(const std::string& p_text);
-static void findHelp(data::console::Arguments p_arguments);
+//static void findHelp(data::console::Arguments p_arguments);
 [[noreturn]] static void printHelp();
 
 const data::console::Arguments Console::parse(const int p_argc,
@@ -29,15 +29,15 @@ const data::console::Arguments Console::parse(const int p_argc,
 {
     StrVec rawData = Console::convert(p_argc, p_argv);
     data::console::Arguments arguments {};
-    arguments.m_command = getCommand(&rawData);
-    arguments           = Console::createArguments(rawData);
-    findHelp(arguments);
+    arguments.m_command    = getCommand(&rawData);
+    arguments.m_parameters = Console::createParameters(rawData);
+    //findHelp(arguments);
     return arguments;
 }
 
-const data::console::Arguments Console::createArguments(const StrVec& p_rawData)
+const data::console::Parameters Console::createParameters(const StrVec& p_rawData)
 {
-    data::console::Arguments arguments {};
+    data::console::Parameters arguments {};
     StrVec::const_iterator it = p_rawData.begin();
     while (it < p_rawData.end()) {
         data::console::Argument argument {};
@@ -71,8 +71,11 @@ const std::string Console::getCommand(StrVec* p_rawData)
         std::cout << "Program logic error: nullptr as rawData @ getCommand\n";
         return {};
     }
-    std::string command = p_rawData->front();
-    p_rawData->erase(p_rawData->begin());
+    std::string command {};
+    if (!p_rawData->empty()) {
+        command = p_rawData->front();
+        p_rawData->erase(p_rawData->begin());
+    }
     return command;
 }
 
@@ -95,14 +98,14 @@ static inline bool isKey(const std::string& p_text)
     return !p_text.empty() && *p_text.begin() == KEY_MARKER;
 }
 
-static void findHelp(data::console::Arguments p_arguments)
-{
-    for (const std::string& helpFlag : HELP_COMMANDS) {
-        if (p_arguments.find(helpFlag) != p_arguments.end()) {
-            printHelp();
-        }
-    }
-}
+//static void findHelp(data::console::Arguments p_arguments)
+//{
+//    for (const std::string& helpFlag : HELP_COMMANDS) {
+//        if (p_arguments.find(helpFlag) != p_arguments.end()) {
+//            printHelp();
+//        }
+//    }
+//}
 
 static void printHelp()
 {

@@ -33,7 +33,7 @@ public:
     /// @return console::Arguments datastructure
     ///
     static const data::console::Arguments parse(const int p_argc, const char* const p_argv[]);
-    static const data::console::Arguments createArguments(const StrVec& p_rawData);
+    static const data::console::Parameters createParameters(const StrVec& p_rawData);
     static const std::string getCommand(StrVec* p_rawData);
     static const StrVec convert(const int p_argc, const char* const p_argv[]);
 };

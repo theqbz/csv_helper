@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include "IDisplay.h"
 #include "../utils/ISettings.h"
+#include "IDisplay.h"
 
 namespace csvvalidator {
 namespace display {
@@ -16,12 +16,12 @@ namespace display {
 class Grid : public IDisplay
 {
 public:
-    Grid(const utils::ISettings& p_settings):
+    Grid(const utils::ISettings& p_settings) :
         m_settings(p_settings)
     {
     }
 
-    void render(/* const Report& p_report */);
+    void render(const data::display::Report& p_report) const;
 
 private:
     const utils::ISettings& m_settings;

@@ -21,13 +21,17 @@ namespace console {
 ///
 typedef std::pair<std::string, std::string> Argument;
 
+struct Parameters : public data::SettingData
+{ };
+
 ///
 /// @brief Container for the argument list from commandline.
 /// The Argument consists a pair of < key, value >
 ///
-struct Arguments : public csvvalidator::data::SettingData
+struct Arguments
 {
     std::string m_command; ///< The "Task" requested by the user. (This should be the first argument after program name, at index 1.)
+    Parameters m_parameters;
 };
 
 } // namespace console

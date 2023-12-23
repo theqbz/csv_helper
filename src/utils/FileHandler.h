@@ -26,9 +26,17 @@ public:
     /// Constructor for FileHandler.
     /// Opens the file and check if this process was succesfull.
     ///
-    /// @param[in] p_fileName (required) : the path to file and filename
+    /// @param[in] fileName (required) : the path to file and filename as string
     ///
-    explicit FileHandler(const std::string& p_fileName);
+    explicit FileHandler(const std::string& p_fileName) noexcept;
+
+    ///
+    /// Constructor for FileHandler.
+    /// Opens the file and check if this process was succesfull.
+    ///
+    /// @param[in] path (required) : the path to file as filesystem::path
+    ///
+    explicit FileHandler(const std::filesystem::path& p_path) noexcept;
 
     ///
     /// Destructor for FileHandler.
@@ -42,19 +50,21 @@ public:
     /// @param (void)
     /// @return a reference to the file
     ///
-    std::fstream& get() final { return m_file; }
+    inline std::fstream& get() final { return m_file; }
 
     ///
     /// Get the name of the file
-    /// 
+    ///
     /// @param (void)
     /// @return the name of the file
-    /// 
-    const std::string fileName() const final { return m_fileName; }
+    ///
+    inline const std::string fileName() const final { return m_fileName; }
 
 private:
     const std::string m_fileName;
     std::fstream m_file;
+
+    void checkFile() const;
 };
 
 } // namespace utils

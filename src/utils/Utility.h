@@ -11,6 +11,12 @@
 #include <string>
 
 ///
+/// @brief Extension of csv files.
+/// CsvHelper accepts files as csv files only with this extensions
+///
+const std::set<std::string> CSV_EXTENSIONS { ".csv" };
+
+///
 /// @brief Default location of settings.ini file.
 ///
 const std::string DEFAULT_INI_FILE { "settings.ini" };
@@ -31,10 +37,10 @@ const std::string SETTING_WRITER_COMMAND { "settings" };
 /// @brief Possible help commands in CLI.
 /// This variable used in task::TaskFactory and task::HelpTask classes.
 ///
-const std::set<std::string> HELP_COMMANDS { "-h", "--h", "-help", "--help", "help" };
+const std::set<std::string> HELP_COMMANDS { "-h", "--h", "-help", "--help", "h", "help" };
 
 ///
 /// @brief Indicates keys during the command-line argument parsing process.
 /// This variable used in Console.cpp
-/// 
+///
 const char KEY_MARKER = '-';

@@ -7,17 +7,14 @@
 
 #pragma once
 
-#include "../csv/IAnalyzer.h"
-#include "../csv/IParser.h"
 #include "../data/ConsoleArguments.h"
 #include "../display/IDisplay.h"
-#include "../display/IReporter.h"
-#include "../utils/IFileHandler.h"
 #include "../utils/ISettings.h"
 #include "ITask.h"
 
-#include <queue>
 #include <memory>
+#include <queue>
+#include <string>
 
 namespace csvvalidator {
 namespace task {
@@ -36,11 +33,14 @@ public:
     }
 
     void init(const data::console::Arguments& p_arguments);
-    void execute();
+    bool runTasks();
 
 private:
     const utils::ISettings& m_settings;
     std::queue<std::shared_ptr<task::ITask>> m_tasks;
+
+    void searchDirectory(const std::string& p_directoryPath);
+    std::shared_ptr<display::IDisplay> getDisplay() const;
 };
 
 } // namespace task

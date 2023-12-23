@@ -8,8 +8,12 @@
 #pragma once
 
 #include "../data/ConsoleArguments.h"
+#include "../display/IDisplay.h"
 #include "../utils/ISettings.h"
 #include "ITask.h"
+
+#include <filesystem>
+#include <memory>
 
 namespace csvvalidator {
 namespace task {
@@ -21,11 +25,14 @@ class CsvTask : public ITask
 {
 public:
     CsvTask() = delete;
-    CsvTask(const data::console::Arguments& p_consoleArguments,
-            const utils::ISettings& p_settings) :
-        m_settings(p_settings)
-    {
-    }
+
+    explicit CsvTask(const data::console::Arguments& p_consoleArguments,
+                     const utils::ISettings& p_settings,
+                     std::shared_ptr<display::IDisplay> p_display) noexcept;
+
+    explicit CsvTask(const std::filesystem::path& p_path,
+                     const utils::ISettings& p_settings,
+                     std::shared_ptr<display::IDisplay> p_display) noexcept;
 
     ///
     /// Execute the task
@@ -33,20 +40,17 @@ public:
     /// @param (void)
     /// @return true, if the execution was successfull
     ///
-    bool run() final
-    {
-        // TODO:
-        // Create run function
-        return false;
-    }
+    bool run() final;
 
 private:
     const utils::ISettings& m_settings;
-    //utils::IFileHandler& m_file;
-    //csv::IParser& m_csvParser;
-    //csv::IAnalyzer& m_csvAnalyzer;
-    //display::IReporter& m_reporter;
-    //display::IDisplay& m_display;
+    const std::filesystem::path m_file;
+    std::shared_ptr<display::IDisplay> m_display;
+    // utils::IFileHandler& m_file;
+    // csv::IParser& m_csvParser;
+    // csv::IAnalyzer& m_csvAnalyzer;
+    // display::IReporter& m_reporter;
+    // display::IDisplay& m_display;
 };
 
 } // namespace task

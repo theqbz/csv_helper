@@ -29,7 +29,7 @@ public:
     ///
     /// @param settings : a reference to the Settings class
     ///
-    Parser(utils::ISettings& p_settings) :
+    Parser(const utils::ISettings& p_settings) :
         m_settings(p_settings)
     {
     }
@@ -46,7 +46,7 @@ public:
     const data::csv::File process(utils::IFileHandler& p_csvFile);
 
 private:
-    utils::ISettings& m_settings;
+    const utils::ISettings& m_settings;
 };
 
 } // namespace csv
