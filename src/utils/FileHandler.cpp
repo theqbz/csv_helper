@@ -32,7 +32,6 @@ FileHandler::FileHandler(const std::filesystem::path& p_path) noexcept :
 FileHandler::~FileHandler()
 {
     m_file.close();
-    std::cout << "File closed.\n";
 }
 
 void FileHandler::checkFile() const

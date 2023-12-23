@@ -18,17 +18,32 @@ namespace utils {
 class ISettings
 {
 public:
+    ///
+    /// @brief Defines how to handle the empty lines in files
+    ///
     enum class EmptyLines
     {
         Skip,  ///< Skip empty lines in result
         Error, ///< Display enmpty lines as error in result
-        Keep  ///< Display empty lines as empty lines in result
+        Keep   ///< Display empty lines as empty lines in result
     };
 
+    ///
+    /// @brief Defines where to print the labels
+    ///
     enum class LabelPosition
     {
-        Top,
-        Inline
+        Top,   ///< Print labels only on top of the file
+        Inline ///< Print labels in fields
+    };
+
+    ///
+    /// @brief Defines how detailed the error log should be
+    ///
+    enum class ErrorLevel
+    {
+        All,   ///< Prints errors and warnings
+        Error ///< Prints only errors
     };
 
     enum class DiffDetectMode
@@ -56,6 +71,8 @@ public:
     virtual inline const bool tableOutput() const                      = 0;
     virtual inline void diffDetectMode(const DiffDetectMode p_mode)    = 0;
     virtual inline const DiffDetectMode diffDetectMode() const         = 0;
+    virtual inline void errorLevel(const ErrorLevel p_errorLevel)      = 0;
+    virtual inline const ErrorLevel errorLevel() const                 = 0;
 };
 
 } // namespace utils

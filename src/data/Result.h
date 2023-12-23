@@ -37,10 +37,7 @@ struct ErrorEntry : public std::pair<size_t, std::string>
         ERR      ///> error
     };
 
-    ///
-    /// The type of the error entry
-    ///
-    Type m_type { Type::INFO };
+    Type m_type { Type::INFO }; ///< The type of the error entry
 };
 
 ///

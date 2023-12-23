@@ -36,11 +36,13 @@ public:
     ///
     const data::display::Report process(const data::csv::File& p_csvFile,
                                         const data::csv::Result& p_result) const final;
+
     const data::display::Table addFileInfo(const data::csv::File& p_csvFile,
                                            const data::csv::Result& p_result) const;
     const data::display::Table addFileContent(const data::csv::File& p_csvFile) const;
     const data::display::Table addErrorList(const data::csv::Result& p_result) const;
 
+    bool errorLogFilter(const auto& p_entry) const;
     const data::display::Ranges getRanges(const std::vector<size_t>& p_errorLineNumbers,
                                           const size_t p_upperLimit) const;
 

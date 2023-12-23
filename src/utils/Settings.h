@@ -56,7 +56,8 @@ public:
         m_emptyFields('.'),
         m_linesAroundErrors(0),
         m_labels(LabelPosition::Top),
-        m_tableOutput(false)
+        m_tableOutput(false),
+        m_errorLevel(ErrorLevel::Error)
     {
         init();
     }
@@ -80,6 +81,8 @@ public:
     inline const LabelPosition labelPosition() const { return m_labels; }
     inline void tableOutput(const bool p_value) { m_tableOutput = p_value; }
     inline const bool tableOutput() const { return m_tableOutput; }
+    inline void errorLevel(const ErrorLevel p_errorLevel) { m_errorLevel = p_errorLevel; }
+    inline const ErrorLevel errorLevel() const { return m_errorLevel; }
 
 private:
     data::SettingData m_consoleArguments;
@@ -91,6 +94,7 @@ private:
     size_t m_linesAroundErrors;
     LabelPosition m_labels;
     bool m_tableOutput;
+    ErrorLevel m_errorLevel;
 
     void storeSettings(const data::SettingData& p_tasks);
 };

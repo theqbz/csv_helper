@@ -89,19 +89,31 @@ ISettings::LabelPosition convertToLabelPosition(const std::string& p_text)
 ISettings::DiffDetectMode convertToDiffMode(const std::string& p_text)
 {
     if (p_text == "above") {
-        return Settings::DiffDetectMode::Above;
+        return ISettings::DiffDetectMode::Above;
     }
     if (p_text == "below") {
-        return Settings::DiffDetectMode::Below;
+        return ISettings::DiffDetectMode::Below;
     }
     if (p_text == "auto") {
-        return Settings::DiffDetectMode::Auto;
+        return ISettings::DiffDetectMode::Auto;
     }
     if (p_text != "off") {
         std::cout << "Error with argument \"DiffDetectMode\". This option will be set to default (off).\n"
                   << "( Possible values: -diffMode [ off | auto | above | below ] )\n";
     }
-    return Settings::DiffDetectMode::Off;
+    return ISettings::DiffDetectMode::Off;
+}
+
+ISettings::ErrorLevel convertToErrorLevel(const std::string& p_text)
+{
+    if (p_text == "all") {
+        return ISettings::ErrorLevel::All;
+    }
+    if (p_text != "error") {
+        std::cout << "Error with argument \"ErrorLevel\". This option will ve se to default (error).\n"
+                  << "( Possible values: -errorLevel [ all | error ] )\n";
+    }
+    return ISettings::ErrorLevel::Error;
 }
 
 void Settings::init()
@@ -149,6 +161,11 @@ void Settings::storeSettings(const data::SettingData& p_settingsData)
         diff_detect_mode != p_settingsData.end()) {
         m_diff = convertToDiffMode(diff_detect_mode->second);
     }
+    if (it error_level = p_settingsData.find("-errorLevel");
+        error_level != p_settingsData.end()) {
+        m_errorLevel = convertToErrorLevel(error_level->second);
+    }
+
 }
 
 } // namespace utils

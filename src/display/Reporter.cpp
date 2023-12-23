@@ -7,11 +7,13 @@
 
 #include "Reporter.h"
 #include "../data/Ranges.h"
+#include "../data/Report.h"
 #include "../data/Result.h"
+#include "../utils/ISettings.h"
 
 #include <iostream>
-#include <iterator>
 #include <limits>
+#include <ranges>
 #include <string>
 #include <vector>
 
@@ -35,6 +37,7 @@ static const size_t lowerBound(const size_t p_initialNumber, const size_t p_rang
 static const size_t upperBound(const size_t p_initialNumber, const size_t p_rangeWidth, const size_t p_upperLimit);
 static inline const std::string getRecordPrompt(const data::csv::RecordHead& p_recordHead, const size_t p_lastLineNumber);
 static inline const std::string getEntryType(const data::csv::ErrorEntry::Type& p_entryType);
+static const data::display::Row getFirstRow(const size_t p_errorCounter, const size_t p_warningCounter);
 
 const data::display::Report Reporter::process(const data::csv::File& p_csvFile,
                                               const data::csv::Result& p_result) const
@@ -50,9 +53,12 @@ const data::display::Table Reporter::addFileInfo(const data::csv::File& p_csvFil
                                                  const data::csv::Result& p_result) const
 {
     data::display::Row file_name({ "File: " + p_csvFile.m_fileName });
-    data::display::Row empty_lines({ "This file contains "
-                                     + std::to_string(p_result.m_emptyLineCount)
-                                     + " empty lines" });
+    data::display::Row empty_lines {};
+    if (m_settings.errorLevel() != utils::ISettings::ErrorLevel::Error) {
+        empty_lines.assign({ "This file contains "
+                             + std::to_string(p_result.m_emptyLineCount)
+                             + " empty lines" });
+    }
     return data::display::Table({ file_name, empty_lines });
 }
 
@@ -67,20 +73,29 @@ const data::display::Table Reporter::addFileContent(const data::csv::File& p_csv
 
 const data::display::Table Reporter::addErrorList(const data::csv::Result& p_result) const
 {
-    const data::csv::ErrorList errorLog = p_result.m_errorList;
-    if (errorLog.empty()) {
-        return data::display::Table({ data::display::Row({ "No errors found!" }) });
-    }
+    const data::csv::ErrorList errorLog { p_result.m_errorList };
     data::display::Table table {};
-    const size_t lastLineNumber { p_result.m_lastLineNumber };
-    table.push_back(data::display::Row({ "The following " + std::to_string(errorLog.size()) + " errors / warnings found:" }));
-    for (const data::csv::ErrorEntry& entry : errorLog) {
+    size_t errorCounter { 0 };
+    size_t warningCounter { 0 };
+    auto f = [&](const auto& e) { return errorLogFilter(e); };
+    for (const data::csv::ErrorEntry& entry : errorLog | std::views::filter(f)) {
+        entry.m_type == data::csv::ErrorEntry::Type::ERR ? ++errorCounter : NULL;
+        entry.m_type == data::csv::ErrorEntry::Type::WARNING ? ++warningCounter : NULL;
         data::display::Row row {};
         row.push_back(getEntryType(entry.m_type) + " in line " + std::to_string(entry.first));
         row.push_back(entry.second);
         table.push_back(row);
     }
+    table.insert(table.begin(), getFirstRow(errorCounter, warningCounter));
     return table;
+}
+
+bool Reporter::errorLogFilter(const auto& p_entry) const
+{
+    if (m_settings.errorLevel() == utils::ISettings::ErrorLevel::All) {
+        return true;
+    }
+    return p_entry.m_type == data::csv::ErrorEntry::Type::ERR;
 }
 
 const data::display::Ranges Reporter::getRanges(const std::vector<size_t>& p_errorLineNumbers,
@@ -139,7 +154,7 @@ const data::display::Table Reporter::addLines(const data::csv::File& p_csvFile,
     data::display::Table table {};
     const data::display::Row separator({ "(...)" });
     const size_t lastLineNumber { p_csvFile.m_content.back().first.m_fileLineNumber };
-    if (m_settings.labelPosition() != utils::ISettings::LabelPosition::Inline) {
+    if (!p_finalRanges.empty() && m_settings.labelPosition() != utils::ISettings::LabelPosition::Inline) {
         table.push_back(addLabels(p_csvFile.m_labels, lastLineNumber));
     }
     for (size_t rangeIdx = 0; rangeIdx < p_finalRanges.size(); ++rangeIdx) {
@@ -317,6 +332,20 @@ static inline const std::string getEntryType(const data::csv::ErrorEntry::Type& 
         break;
     }
     return typeAsString;
+}
+
+const data::display::Row getFirstRow(const size_t p_errorCounter, const size_t p_warningCounter)
+{
+    std::string andText {};
+    if (p_errorCounter == 0 && p_warningCounter == 0) {
+        andText = "No errors";
+    }
+    if (p_errorCounter != 0 && p_warningCounter != 0) {
+        andText = " and ";
+    }
+    std::string errorText { p_errorCounter == 0 ? "" : std::to_string(p_errorCounter) + " errors" };
+    std::string warningText { p_warningCounter == 0 ? "" : std::to_string(p_warningCounter) + " warnings" };
+    return data::display::Row({ errorText + andText + warningText + " found in the file." });
 }
 
 } // namespace display

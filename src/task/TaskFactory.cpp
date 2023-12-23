@@ -68,7 +68,7 @@ void TaskFactory::init(const data::console::Arguments& p_arguments)
 
 bool TaskFactory::runTasks()
 {
-    bool success = true;
+    bool success { true };
     while (!m_tasks.empty()) {
         success &= m_tasks.front()->run();
         m_tasks.pop();

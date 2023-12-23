@@ -45,6 +45,9 @@ const std::string cellSeparator(bool* p_previousCellWasEmpty,
 
 void Lines::printSimpleTable(const data::display::Table& p_table) const
 {
+    //if (!p_table.empty()) {
+    //    std::cout << "\n";
+    //}
     for (const data::display::Row& row : p_table) {
         if (row.empty()) {
             continue;
@@ -60,7 +63,6 @@ void Lines::printSimpleTable(const data::display::Table& p_table) const
         }
         std::cout << "\n";
     }
-    std::cout << "\n";
 }
 
 void Lines::printFileTable(const data::display::Table& p_table) const
@@ -68,6 +70,9 @@ void Lines::printFileTable(const data::display::Table& p_table) const
     const bool skipEmptyRow { m_settings.emptyLines() == utils::ISettings::EmptyLines::Skip };
     const unsigned char emptyCellFiller { m_settings.emptyFields() };
     const bool skipEmptyCell { emptyCellFiller == 0 };
+    if (!p_table.empty()) {
+        std::cout << "\n";
+    }
     for (const data::display::Row& row : p_table) {
         if (row.empty() && skipEmptyRow) {
             continue;
@@ -88,7 +93,6 @@ void Lines::printFileTable(const data::display::Table& p_table) const
         }
         std::cout << "\n";
     }
-    std::cout << "\n";
 }
 
 void Lines::render(const data::display::Report& p_report) const
@@ -96,6 +100,7 @@ void Lines::render(const data::display::Report& p_report) const
     printSimpleTable(p_report.m_info);
     printFileTable(p_report.m_file);
     printSimpleTable(p_report.m_errors);
+    std::cout << "____\n";
 }
 
 } // namespace display

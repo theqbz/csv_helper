@@ -14,6 +14,9 @@
 namespace csvvalidator {
 namespace task {
 
+static std::string aboutProgram();
+static std::string aboutStart();
+
 bool HelpTask::run()
 {
     if (m_request.empty()) {
@@ -33,24 +36,18 @@ bool HelpTask::run()
 
 void HelpTask::printShortHelp() const
 {
-    std::cout << "No file presented.\n"
-              << "To parse a file start the program with a filename:\n\n"
-              << "\t>  ./csv_validator.exe  path/to/file.csv  [settings]\n\n"
-              << "To get help, use the  -help  flag!\n\n";
+    std::cout << "No file or command presented.\n"
+              << aboutProgram()
+              << aboutStart()
+              << "\n"
+              << "\tTo get help, use the  -help  flag!\n"
+              << "\n";
 }
 
 void HelpTask::printFullHelp() const
 {
     std::cout //
-        << "\n"
-        << "\tThis program can analyze the provided .csv files, seeking for errors.\n"
-        << "\tIt can detect Records that occur more than once and if a Record\n"
-        << "\tcontains more or less Fileds than the number of Labels. (The Analyzer\n"
-        << "\tidentifies Label list in the first non empty row of the file!)\n"
-        << "\n"
-        << "\tTo parse a file start the program with a filename:\n"
-        << "\n"
-        << "\t\t>  csv_validator.exe  path/to/file.csv  [settings]\n"
+        << aboutStart()
         << "\n"
         << "\tSettings:\n"
         << "\n"
@@ -60,9 +57,11 @@ void HelpTask::printFullHelp() const
         << "\n"
         << "\t-emptyFields (char) - default value: \".\" (placeholder for empty values; <empty>: skip empty values)\n"
         << "\n"
-        << "\t-label (string) [ top | inline ] - default value: \"top\" (defines where to put the labels)\n"
+        << "\t-label (string) [ top | inline ] - default value: \"top\" (defines where to print the labels)\n"
         << "\n"
         << "\t-errorLines (int) - default value: \"0\" (the number of lines around errors; -1: all lines)\n"
+        << "\n"
+        << "\t-errorLevel (string) [ all | error ] - default value: \"error\" (defines the detail of the error log)\n"
         << "\n";
 }
 
@@ -73,6 +72,23 @@ void HelpTask::printSettingWriterHelp() const
               << "\n";
     // TODO:
     // Write the setting writer instructions
+}
+
+std::string aboutProgram()
+{
+    return "\n"
+           "\tThis program can analyze the provided csv files, seeking for errors.\n"
+           "\tIt can detect Records that occur more than once and if a Record\n"
+           "\tcontains more or less Fileds than the number of Labels. (The Analyzer\n"
+           "\tidentifies Label list in the first non empty row of the file!)\n";
+}
+
+std::string aboutStart()
+{
+    return "\n"
+           "\tTo parse a file start the program with a filename or a path:\n"
+           "\n"
+           "\t\t>  csv_validator.exe  path/to/file  [settings]\n";
 }
 
 } // namespace task
