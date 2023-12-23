@@ -17,6 +17,7 @@ namespace display {
 
 const std::string CELL_SEPARATOR = "|";
 
+// TODO: make ref. previousCellWasEmpty
 const std::string cellSeparator(bool* p_previousCellWasEmpty,
                                 const bool p_thisCellIsEmpty,
                                 const unsigned char p_emptyCellFiller)
@@ -30,6 +31,7 @@ const std::string cellSeparator(bool* p_previousCellWasEmpty,
     }
     if (!*p_previousCellWasEmpty && p_thisCellIsEmpty) {
         separator = " " + CELL_SEPARATOR;
+        // TODO: delete emptyCellFiller
         separator += p_emptyCellFiller;
     }
     if (*p_previousCellWasEmpty && p_thisCellIsEmpty) {
