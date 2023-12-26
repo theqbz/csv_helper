@@ -1,9 +1,9 @@
 ///
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
-/// @file  Data.h
+/// @file  CsvData.h
 /// @brief Definition of the datastructure which describes the structure of a
-///        .csv file and stores the data from it.
+///        csv file and stores the data from it.
 ///
 
 #pragma once

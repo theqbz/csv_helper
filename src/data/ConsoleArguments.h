@@ -17,20 +17,24 @@ namespace data {
 namespace console {
 
 ///
-/// A console argument type contains a pair of < key, value >
+/// A Parameter type contains a pair of < key, value >
 ///
-typedef std::pair<std::string, std::string> Argument;
+typedef std::pair<std::string, std::string> Parameter;
 
+///
+/// @brief Container for the Parameter list as SettingData
+/// The Parameter consists a pair of < key, value >
+///
 struct Parameters : public data::SettingData
 { };
 
 ///
-/// @brief Container for the argument list from commandline.
-/// The Argument consists a pair of < key, value >
+/// @brief The argument list from commandline.
+/// Arguments contains the command and the Parameters.
 ///
 struct Arguments
 {
-    std::string m_command; ///< The "Task" requested by the user. (This should be the first argument after program name, at index 1.)
+    std::string m_command; ///< The command ("Task") requested by the user. (This should be the first argument after program name in the console)
     Parameters m_parameters;
 };
 

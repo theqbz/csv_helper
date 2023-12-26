@@ -21,15 +21,6 @@
 namespace csvvalidator {
 namespace utils {
 
-// TODO:
-// Do this storeNewDefaultSettings outside of the class!
-[[noreturn]] static void storeNewDefaultSettings(const data::SettingData& p_tasks)
-{
-    // TODO: 1) write new settings into .ini file
-    //       2) exit program!
-    exit(1);
-}
-
 bool isNumber(const std::string& p_text)
 {
     std::string::const_iterator it = p_text.begin();
@@ -118,50 +109,45 @@ ISettings::ErrorLevel convertToErrorLevel(const std::string& p_text)
 
 void Settings::init()
 {
-    // TODO:
-    // Make this decision about writing settings, outside of the class!
-    if (const auto search = m_consoleArguments.find(SETTING_WRITER_COMMAND);
-        search != m_consoleArguments.end()) {
-        storeNewDefaultSettings(m_consoleArguments);
-    }
     data::SettingData settingsToStore {};
     settingsToStore.merge(m_consoleArguments);
     settingsToStore.merge(m_iniFile);
+    settingsToStore.merge(DEFAULT_SETTINGS);
     storeSettings(settingsToStore);
 }
 
 void Settings::storeSettings(const data::SettingData& p_settingsData)
 {
     typedef data::SettingData::const_iterator it;
-    if (it delimiter = p_settingsData.find("-delimiter");
+    if (it delimiter = p_settingsData.find("delimiter");
         delimiter != p_settingsData.end()) {
         m_delimiter = convertToChar(delimiter->second);
     }
-    if (it error_lines = p_settingsData.find("-errorLines");
+    if (it error_lines = p_settingsData.find("errorLines");
         error_lines != p_settingsData.end()) {
         m_linesAroundErrors = convertToSizeT(error_lines->second);
     }
-    if (it labels = p_settingsData.find("-labels");
+    if (it labels = p_settingsData.find("labels");
         labels != p_settingsData.end()) {
         m_labels = convertToLabelPosition(labels->second);
     }
-    if (it empty_fields = p_settingsData.find("-emptyFields");
+    if (it empty_fields = p_settingsData.find("emptyFields");
         empty_fields != p_settingsData.end()) {
         m_emptyFields = convertToChar(empty_fields->second);
     }
-    if (it empty_lines = p_settingsData.find("-emptyLines");
+    if (it empty_lines = p_settingsData.find("emptyLines");
         empty_lines != p_settingsData.end()) {
         m_emptyLines = convertToEmptyLines(empty_lines->second);
     }
-    if (it table_output = p_settingsData.find("-table");
+    if (it table_output = p_settingsData.find("table");
         table_output != p_settingsData.end()) {
         m_tableOutput = convertToBool(table_output->second);
     }
-    if (it diff_detect_mode = p_settingsData.find("-diffMode");
+    if (it diff_detect_mode = p_settingsData.find("diffMode");
         diff_detect_mode != p_settingsData.end()) {
         m_diff = convertToDiffMode(diff_detect_mode->second);
     }
-    if (it error_level = p_settingsData.find("-errorLevel");
+    if (it error_level = p_settingsData.find("errorLevel");
         error_level != p_settingsData.end()) {
         m_errorLevel = convertToErrorLevel(error_level->second);
     }

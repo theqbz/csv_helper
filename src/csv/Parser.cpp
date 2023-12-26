@@ -8,28 +8,25 @@
 #include "Parser.h"
 #include "../data/CsvData.h"
 #include "../utils/IFileHandler.h"
+#include "../utils/Utility.h"
 
-#include <algorithm>
-#include <fstream>
-#include <iostream>
+#include <string>
 
 namespace csvvalidator {
 namespace csv {
 
-const char DELIMITER            = ';';
-const std::string INVALID_LABEL = "<INVALID_LABEL>";
-
 const std::string getLabel(const data::csv::Labels& p_labels,
                            const size_t p_fieldCounter)
 {
-    if (p_fieldCounter < 0 || p_fieldCounter > p_labels.size() - 1) {
-        return INVALID_LABEL;
+    if (p_fieldCounter < 0 || (p_labels.size() - 1) < p_fieldCounter) {
+        return utils::INVALID_LABEL;
     }
     return p_labels.at(p_fieldCounter);
 }
 
 data::csv::Record getRecords(const std::string& p_line,
-                             const data::csv::Labels& p_labels)
+                             const data::csv::Labels& p_labels,
+                             const unsigned char p_delimiter)
 {
     if (p_line.length() == 0) {
         return {};
@@ -41,7 +38,7 @@ data::csv::Record getRecords(const std::string& p_line,
     size_t fieldCounter { 0 };
     do {
         data::csv::Field field {};
-        semicolonPos           = p_line.find(DELIMITER, offset);
+        semicolonPos           = p_line.find(p_delimiter, offset);
         field.m_content.first  = getLabel(p_labels, fieldCounter);
         field.m_content.second = p_line.substr(offset, semicolonPos - offset);
         fields.push_back(field);
@@ -52,7 +49,8 @@ data::csv::Record getRecords(const std::string& p_line,
     return record;
 }
 
-const data::csv::Labels getLabels(const std::string& p_line)
+const data::csv::Labels getLabels(const std::string& p_line,
+                                  const unsigned char p_delimiter)
 {
     if (p_line.empty()) {
         return {};
@@ -61,7 +59,7 @@ const data::csv::Labels getLabels(const std::string& p_line)
     size_t offset { 0 };
     size_t semicolonPos { 0 };
     do {
-        semicolonPos = p_line.find(DELIMITER, offset);
+        semicolonPos = p_line.find(p_delimiter, offset);
         labels.push_back(p_line.substr(offset, semicolonPos - offset));
         offset = semicolonPos + 1;
     } while (semicolonPos < std::string::npos);
@@ -78,25 +76,24 @@ const data::csv::File parse(std::fstream& p_file,
     std::string line {};
     bool firstNonEmptyLineFound { false };
     size_t fileLineCounter { 0 };
-    while (!firstNonEmptyLineFound && std::getline(p_file, line)) {
+    while (getline(p_file, line)) {
         ++fileLineCounter;
-        if (!line.empty()) {
-            file.m_labels          = getLabels(line);
+        if (!firstNonEmptyLineFound && !line.empty()) {
+            file.m_labels          = getLabels(line, p_delimiter);
             firstNonEmptyLineFound = true;
         }
-    }
-    while (std::getline(p_file, line)) {
-        ++fileLineCounter;
-        file.m_content.push_back(getRecords(line, file.m_labels));
-        file.m_content.back().first.m_fileLineNumber = fileLineCounter;
+        if (firstNonEmptyLineFound) {
+            file.m_content.push_back(getRecords(line, file.m_labels, p_delimiter));
+            file.m_content.back().first.m_fileLineNumber = fileLineCounter;
+        }
     }
     return file;
 }
 
 const data::csv::File Parser::process(utils::IFileHandler& p_csvFile)
 {
-    data::csv::File csvFile = parse(p_csvFile.get(), m_settings.delimiter());
-    csvFile.m_fileName      = p_csvFile.fileName();
+    data::csv::File csvFile { parse(p_csvFile.get(), m_settings.delimiter()) };
+    csvFile.m_fileName = p_csvFile.fileName();
     return csvFile;
 }
 

@@ -7,13 +7,6 @@
 
 #pragma once
 
-#include "../csv/IAnalyzer.h"
-#include "../csv/IParser.h"
-#include "../data/ConsoleArguments.h"
-#include "../display/IDisplay.h"
-#include "../display/IReporter.h"
-#include "../utils/IFileHandler.h"
-#include "../utils/ISettings.h"
 #include "ITask.h"
 
 #include <string>

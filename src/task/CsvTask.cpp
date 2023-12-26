@@ -1,14 +1,13 @@
 ///
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
-/// @file  CsvTask.h
-/// @brief Declaration of CsvTask class
+/// @file  CsvTask.cpp
+/// @brief Definition of CsvTask class
 ///
 
 #include "CsvTask.h"
 #include "../csv/Analyzer.h"
 #include "../csv/Parser.h"
-#include "../data/ConsoleArguments.h"
 #include "../data/CsvData.h"
 #include "../data/Report.h"
 #include "../data/Result.h"
@@ -18,19 +17,24 @@
 #include "../utils/ISettings.h"
 
 #include <filesystem>
-#include <memory>
 #include <iostream>
+#include <memory>
+#include <string>
 
 namespace csvvalidator {
 namespace task {
 
-CsvTask::CsvTask(const data::console::Arguments& p_consoleArguments,
+CsvTask::CsvTask(const std::string& p_path,
                  const utils::ISettings& p_settings,
                  std::shared_ptr<display::IDisplay> p_display) noexcept :
     m_settings(p_settings),
-    m_file(p_consoleArguments.m_command),
+    m_file(p_path),
     m_display(p_display)
 {
+    if (!m_display.get()) {
+        std::cout << "Program logic error: nullptr as display @ CsvTask constructor\n";
+        std::exit(1);
+    }
 }
 
 CsvTask::CsvTask(const std::filesystem::path& p_path,

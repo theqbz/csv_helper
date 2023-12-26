@@ -19,10 +19,9 @@ namespace parser {
 
 typedef std::vector<std::string> StrVec;
 
-static inline bool hasKey(const data::console::Argument& p_argument);
+static inline bool hasKey(const data::console::Parameter& p_parameter);
 static inline bool isKey(const std::string& p_text);
-//static void findHelp(data::console::Arguments p_arguments);
-[[noreturn]] static void printHelp();
+static inline void removeDashes(std::string* p_parameterKey);
 
 const data::console::Arguments Console::parse(const int p_argc,
                                               const char* const p_argv[])
@@ -31,38 +30,38 @@ const data::console::Arguments Console::parse(const int p_argc,
     data::console::Arguments arguments {};
     arguments.m_command    = getCommand(&rawData);
     arguments.m_parameters = Console::createParameters(rawData);
-    //findHelp(arguments);
     return arguments;
 }
 
 const data::console::Parameters Console::createParameters(const StrVec& p_rawData)
 {
-    data::console::Parameters arguments {};
+    data::console::Parameters parameters {};
     StrVec::const_iterator it = p_rawData.begin();
     while (it < p_rawData.end()) {
-        data::console::Argument argument {};
-        bool argumentDone = false;
-        while (it < p_rawData.end() && !argumentDone) {
-            if (!hasKey(argument)) {
-                argument.first = *it;
+        data::console::Parameter parameter {};
+        bool parameterDone = false;
+        while (it < p_rawData.end() && !parameterDone) {
+            if (!hasKey(parameter)) {
+                parameter.first = *it;
                 if (!isKey(*it)) {
-                    argumentDone = true;
+                    parameterDone = true;
                 }
                 ++it;
             } else {
                 if (!isKey(*it)) {
-                    argument.second = *it;
+                    parameter.second = *it;
                     ++it;
                 }
-                argumentDone = true;
+                parameterDone = true;
             }
         }
-        const auto [iterator, success] = arguments.insert(argument);
+        removeDashes(&parameter.first);
+        const auto [iterator, success] = parameters.insert(parameter);
         if (!success) {
-            std::cout << "An error with argument: " << argument.first << ", " << argument.second << "\n";
+            std::cout << "An error with parameter: " << parameter.first << ", " << parameter.second << "\n";
         }
     }
-    return arguments;
+    return parameters;
 }
 
 const std::string Console::getCommand(StrVec* p_rawData)
@@ -71,11 +70,12 @@ const std::string Console::getCommand(StrVec* p_rawData)
         std::cout << "Program logic error: nullptr as rawData @ getCommand\n";
         return {};
     }
-    std::string command {};
-    if (!p_rawData->empty()) {
-        command = p_rawData->front();
-        p_rawData->erase(p_rawData->begin());
+    if (p_rawData->empty()) {
+        return {};
     }
+    std::string command {};
+    command = p_rawData->front();
+    p_rawData->erase(p_rawData->begin());
     return command;
 }
 
@@ -88,40 +88,24 @@ const StrVec Console::convert(const int p_argc, const char* const p_argv[])
     return rawData;
 }
 
-static inline bool hasKey(const data::console::Argument& p_argument)
+static inline bool hasKey(const data::console::Parameter& p_parameter)
 {
-    return !p_argument.first.empty();
+    return !p_parameter.first.empty();
 }
 
 static inline bool isKey(const std::string& p_text)
 {
-    return !p_text.empty() && *p_text.begin() == KEY_MARKER;
+    return !p_text.empty() && *p_text.begin() == utils::KEY_MARKER;
 }
 
-//static void findHelp(data::console::Arguments p_arguments)
-//{
-//    for (const std::string& helpFlag : HELP_COMMANDS) {
-//        if (p_arguments.find(helpFlag) != p_arguments.end()) {
-//            printHelp();
-//        }
-//    }
-//}
-
-static void printHelp()
+void removeDashes(std::string* p_parameterKey)
 {
-    std::cout << "\n\tThis program can analyze the provided .csv files, seeking for errors.\n"
-              << "\tIt can detect if a Record contains more or less Fileds than the number\n"
-              << "\tof Labels. The Analyzer identifies Label list in the first non empty row\n"
-              << "\tof the file!\n\n"
-              << "\tTo parse a file start the program with a filename:\n\n"
-              << "\t\t>  csv_validator.exe  path/to/file.csv  [settings]\n\n"
-              << "\tSettings:\n\n"
-              << "\t-delimiter (char) - default value: \";\" (the delimiter between Fields in .csv file)\n\n"
-              << "\t-emptyLines (string) [ skip | error | leave ] - default value: \"skip\" (defines what to do with empty lines)\n\n"
-              << "\t-emptyFields (char) <empty>: skip empty values - default value: \".\" (placeholder for empty values)\n\n"
-              << "\t-label (string) [ top | inline ] - default value: \"top\" (defines where to put the labels)\n\n"
-              << "\t-errorLines (int) - default value: \"0\" (the number of lines to display before and after the wrong lines; -1: all lines)\n\n ";
-    exit(0);
+    if (!p_parameterKey) {
+        std::cout << "Program logic error: nullptr as p_parameter @ removeDashes\n";
+        return;
+    }
+    std::string& key = *p_parameterKey;
+    key.erase(key.begin(), key.begin() + key.find_first_not_of(utils::KEY_MARKER));
 }
 
 } // namespace parser

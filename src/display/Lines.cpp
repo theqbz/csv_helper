@@ -15,41 +15,25 @@
 namespace csvvalidator {
 namespace display {
 
-const std::string CELL_SEPARATOR = "|";
+static const std::string CELL_SEPARATOR = "|";
 
-// TODO: make ref. previousCellWasEmpty
-const std::string cellSeparator(bool* p_previousCellWasEmpty,
-                                const bool p_thisCellIsEmpty,
-                                const unsigned char p_emptyCellFiller)
+static const std::string cellSeparator(bool& p_previousCellWasEmpty,
+                                       const bool p_thisCellIsEmpty,
+                                       const unsigned char p_emptyCellFiller);
+
+void Lines::render(const data::display::Report& p_report) const
 {
-    if (p_previousCellWasEmpty == nullptr) {
-        return {};
-    }
-    std::string separator {};
-    if (!*p_previousCellWasEmpty && !p_thisCellIsEmpty) {
-        separator = " " + CELL_SEPARATOR + " ";
-    }
-    if (!*p_previousCellWasEmpty && p_thisCellIsEmpty) {
-        separator = " " + CELL_SEPARATOR;
-        // TODO: delete emptyCellFiller
-        separator += p_emptyCellFiller;
-    }
-    if (*p_previousCellWasEmpty && p_thisCellIsEmpty) {
-        separator = p_emptyCellFiller;
-    }
-    if (*p_previousCellWasEmpty && !p_thisCellIsEmpty) {
-        separator = p_emptyCellFiller;
-        separator += CELL_SEPARATOR + " ";
-    }
-    *p_previousCellWasEmpty = p_thisCellIsEmpty;
-    return separator;
+    printSimpleTable(p_report.m_info);
+    printFileTable(p_report.m_file);
+    printSimpleTable(p_report.m_errors);
+    std::cout << "____\n";
 }
 
 void Lines::printSimpleTable(const data::display::Table& p_table) const
 {
-    //if (!p_table.empty()) {
-    //    std::cout << "\n";
-    //}
+    // if (!p_table.empty()) {
+    //     std::cout << "\n";
+    // }
     for (const data::display::Row& row : p_table) {
         if (row.empty()) {
             continue;
@@ -90,19 +74,33 @@ void Lines::printFileTable(const data::display::Table& p_table) const
                 std::cout << cell;
                 firstCell = false;
             } else {
-                std::cout << cellSeparator(&previousCellWasEmpty, thisCellIsEmpty, emptyCellFiller) << cell;
+                std::cout << cellSeparator(previousCellWasEmpty, thisCellIsEmpty, emptyCellFiller) << cell;
             }
         }
         std::cout << "\n";
     }
 }
 
-void Lines::render(const data::display::Report& p_report) const
+const std::string cellSeparator(bool& p_previousCellWasEmpty,
+                                const bool p_thisCellIsEmpty,
+                                const unsigned char p_emptyCellFiller)
 {
-    printSimpleTable(p_report.m_info);
-    printFileTable(p_report.m_file);
-    printSimpleTable(p_report.m_errors);
-    std::cout << "____\n";
+    std::string separator {};
+    if (!p_previousCellWasEmpty && !p_thisCellIsEmpty) {
+        separator = " " + CELL_SEPARATOR + " ";
+    }
+    if (!p_previousCellWasEmpty && p_thisCellIsEmpty) {
+        separator = " " + CELL_SEPARATOR;
+    }
+    if (p_previousCellWasEmpty && p_thisCellIsEmpty) {
+        separator = p_emptyCellFiller;
+    }
+    if (p_previousCellWasEmpty && !p_thisCellIsEmpty) {
+        separator = p_emptyCellFiller;
+        separator += CELL_SEPARATOR + " ";
+    }
+    p_previousCellWasEmpty = p_thisCellIsEmpty;
+    return separator;
 }
 
 } // namespace display

@@ -8,7 +8,9 @@
 #pragma once
 
 #include "../data/IniFile.h"
-#include "../utils/IFileHandler.h"
+
+#include <string>
+#include <iosfwd>
 
 namespace csvvalidator {
 namespace parser {
@@ -25,10 +27,9 @@ public:
     /// @param (void)
     /// @return a ini::File datastructure, contains ini records
     ///
-    static inline const data::ini::File parse(utils::IFileHandler& p_file)
-    {
-        return read(p_file.get());
-    }
+    static const data::ini::File parse(const std::string& p_file);
+
+    static const data::ini::File parse(std::fstream& p_file);
 
     ///
     /// Create a ini::File data from a .ini file.

@@ -31,16 +31,16 @@ static bool isCsvFile(const std::filesystem::path& p_path);
 void TaskFactory::init(const data::console::Arguments& p_arguments)
 {
     if (p_arguments.m_command.empty()) {
-        m_tasks.push(std::make_shared<HelpTask>(NO_ARGS));
+        m_tasks.push(std::make_shared<HelpTask>(utils::NO_ARGS));
         return;
     }
     if (isHelp(p_arguments.m_command)) {
         m_tasks.push(std::make_shared<HelpTask>());
         return;
     }
-    if (p_arguments.m_command == SETTING_WRITER_COMMAND) {
+    if (p_arguments.m_command == utils::CONFIG_COMMAND) {
         if (isHelp(p_arguments.m_parameters)) {
-            m_tasks.push(std::make_shared<HelpTask>(SETTING_WRITER_COMMAND));
+            m_tasks.push(std::make_shared<HelpTask>(utils::CONFIG_COMMAND));
             return;
         }
         // TODO:
@@ -55,7 +55,9 @@ void TaskFactory::init(const data::console::Arguments& p_arguments)
         std::cout << "Can't find the the file: " << p_arguments.m_command << "\n";
         break;
     case std::filesystem::file_type::regular:
-        m_tasks.push(std::make_shared<CsvTask>(p_arguments, m_settings, getDisplay()));
+        // TODO:
+        // Check if the given file is a csv file!
+        m_tasks.push(std::make_shared<CsvTask>(p_arguments.m_command, m_settings, getDisplay()));
         break;
     case std::filesystem::file_type::directory:
         searchDirectory(p_arguments.m_command);
@@ -99,12 +101,12 @@ std::shared_ptr<display::IDisplay> TaskFactory::getDisplay() const
 
 static bool isHelp(std::string p_command)
 {
-    return HELP_COMMANDS.contains(p_command);
+    return utils::HELP_COMMANDS.contains(p_command);
 }
 
 static bool isHelp(data::console::Parameters p_parameters)
 {
-    for (const std::string& helpFlag : HELP_COMMANDS) {
+    for (const std::string& helpFlag : utils::HELP_COMMANDS) {
         if (p_parameters.find(helpFlag) != p_parameters.end()) {
             return true;
         }
@@ -114,7 +116,7 @@ static bool isHelp(data::console::Parameters p_parameters)
 
 static bool isCsvFile(const std::filesystem::path& p_path)
 {
-    return CSV_EXTENSIONS.contains(p_path.extension().string());
+    return utils::CSV_EXTENSIONS.contains(p_path.extension().string());
 }
 
 } // namespace task

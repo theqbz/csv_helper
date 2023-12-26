@@ -27,7 +27,10 @@ add_executable( csv_validator
     "parser/IniFile.h"
     "parser/IniFile.cpp"
     "task/ITask.h"
+    "task/ConfigTask.h"
+    "task/ConfigTask.cpp"
     "task/CsvTask.h"
+    "task/CsvTask.cpp"
     "task/HelpTask.h"
     "task/HelpTask.cpp"
     "task/TaskFactory.h"
@@ -40,7 +43,7 @@ add_executable( csv_validator
     "utils/Settings.cpp"
     "utils/Utility.h"
     "main.cpp"
- "task/CsvTask.cpp")
+)
 
 set_property( TARGET csv_validator PROPERTY CXX_STANDARD 20 )
 

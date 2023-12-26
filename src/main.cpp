@@ -11,19 +11,22 @@
 ///
 
 #include "data/ConsoleArguments.h"
-#include "data/SettingData.h"
+#include "data/IniFile.h"
 #include "parser/Console.h"
+#include "parser/IniFile.h"
 #include "task/TaskFactory.h"
 #include "utils/Settings.h"
+#include "utils/Utility.h"
 
 #include <iostream>
 
 int main(int argc, const char* argv[])
 {
-    // std::cin.get();
+    std::cin.get();
     std::cout << "* CsvValidator by QBZ * version: 1.0b\n";
     csvvalidator::data::console::Arguments consoleArgs { csvvalidator::parser::Console::parse(argc, argv) };
-    csvvalidator::utils::Settings settings(consoleArgs.m_parameters, csvvalidator::data::SettingData() /*< 2nd arg is possible ini file */);
+    csvvalidator::data::ini::File inifile { csvvalidator::parser::IniFile::parse(csvvalidator::utils::INI_FILE) };
+    csvvalidator::utils::Settings settings(consoleArgs.m_parameters, inifile.m_content);
     csvvalidator::task::TaskFactory taskFactory(consoleArgs, settings);
     taskFactory.runTasks();
     std::cout << "\nEnd program. Press ENTER to exit!\n";

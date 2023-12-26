@@ -4,21 +4,32 @@
 /// @file  Settings.h
 /// @brief Declaration of the settings class
 ///
-/// OPTION NAME         OPTION DETAILS
-/// -----------         --------------
-/// delimiter           delimiter between fields in .csv file
-/// emptyLines          error / leave / skip
-/// diff                off / auto / above / below
-/// emptyFields         placeholder for empty values
-///                     (0: skip empty values)
-/// linesAroundErrors   sohw number of lines around errors
-///                     (0: show all lines)
-/// label               top / inline
-///                     (This option and TalbeOutput are mutually exclusive:
-///                     if TableOutput enabled, inactivates this setting.)
-/// tableOutput         show output in a table
-///                     (This is mutually exclusive with LabelPosiotion: it
-///                     inactivates LabelPosition if enabled.)
+/// OPTION NAME     OPTION DETAILS
+/// -----------     --------------
+/// delimiter       delimiter between fields in a csv file
+/// 
+/// emptyLines      [ error | leave | skip ]
+///                 defines what to do with empty lines
+/// 
+/// diff            [ off | auto | above | below ]
+/// 
+/// emptyFields     placeholder for empty values
+///                 (0: skip empty values)
+/// 
+/// errorLines      the number of lines around errors
+///                 (0: show all lines)
+/// 
+/// label           [ top | inline ]
+///                 defines where to print the labels
+///                 (This option and TalbeOutput are mutually exclusive: if
+///                 "table" enabled, inactivates this setting.)
+///
+/// table           show output in a table
+///                 (This is mutually exclusive with LabelPosiotion: if this
+///                 option is enabled, it inactivates "label" setting.)
+///
+/// errorLevel      [ all | warning | error ]
+///                 defines the verbosity of the error log
 ///
 
 #pragma once
@@ -49,15 +60,7 @@ public:
     Settings(const data::SettingData& p_consoleArguments,
              const data::SettingData& p_iniFile) :
         m_consoleArguments(p_consoleArguments),
-        m_iniFile(p_iniFile),
-        m_delimiter(';'),
-        m_emptyLines(EmptyLines::Skip),
-        m_diff(DiffDetectMode::Off),
-        m_emptyFields('.'),
-        m_linesAroundErrors(0),
-        m_labels(LabelPosition::Top),
-        m_tableOutput(false),
-        m_errorLevel(ErrorLevel::Error)
+        m_iniFile(p_iniFile)
     {
         init();
     }
