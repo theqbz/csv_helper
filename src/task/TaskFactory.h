@@ -39,6 +39,7 @@ private:
     const utils::ISettings& m_settings;
     std::queue<std::shared_ptr<task::ITask>> m_tasks;
 
+    void createSingleCsvTask(const std::string& p_fileName);
     void searchDirectory(const std::string& p_directoryPath);
     std::shared_ptr<display::IDisplay> getDisplay() const;
 };

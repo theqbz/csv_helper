@@ -16,15 +16,15 @@ namespace task {
 class ConfigTask : public ITask
 {
 public:
-    ConfigTask(const data::SettingData& p_settings) :
-        m_settings(p_settings)
+    ConfigTask(const data::SettingData& p_arguments) :
+        m_arguments(p_arguments)
     {
     }
 
     bool run() final;
 
 private:
-    const data::SettingData m_settings;
+    const data::SettingData m_arguments;
 };
 
 } // namespace task

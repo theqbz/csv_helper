@@ -81,5 +81,15 @@ const std::string INVALID_LABEL = "<INVALID_LABEL>";
 ///
 const std::string INDENTATION { "  " };
 
+///
+/// @brief Yes answers
+///
+const std::set<std::string> YES_ANSWERS { "y", "Y", "yes", "Yes", "YES", "1", "i", "I", "true" };
+
+///
+/// @brief No answers
+///
+const std::set<std::string> NO_ANSWERS { "n", "N", "no", "No", "NO", "0", "false" };
+
 } // namespace utils
 } // namespace csvvalidator

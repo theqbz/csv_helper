@@ -1,8 +1,8 @@
 ///
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
-/// @file  TaskFactory.h
-/// @brief Declaration of TaskFactory class
+/// @file  TaskFactory.cpp
+/// @brief Definition of TaskFactory class
 ///
 
 #pragma once
@@ -13,6 +13,7 @@
 #include "../display/IDisplay.h"
 #include "../display/Lines.h"
 #include "../utils/Utility.h"
+#include "ConfigTask.h"
 #include "CsvTask.h"
 #include "HelpTask.h"
 
@@ -43,8 +44,8 @@ void TaskFactory::init(const data::console::Arguments& p_arguments)
             m_tasks.push(std::make_shared<HelpTask>(utils::CONFIG_COMMAND));
             return;
         }
-        // TODO:
-        // Create a setting writer task with p_parameters
+        m_tasks.push(std::make_shared<ConfigTask>(p_arguments.m_parameters));
+        return;
     }
     const std::filesystem::file_status status { std::filesystem::status(std::filesystem::path { p_arguments.m_command }) };
     switch (status.type()) {
@@ -55,6 +56,7 @@ void TaskFactory::init(const data::console::Arguments& p_arguments)
         std::cout << "Can't find the the file: " << p_arguments.m_command << "\n";
         break;
     case std::filesystem::file_type::regular:
+        // createCsvTask(p_arguments.m_command);
         // TODO:
         // Check if the given file is a csv file!
         m_tasks.push(std::make_shared<CsvTask>(p_arguments.m_command, m_settings, getDisplay()));
