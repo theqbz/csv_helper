@@ -38,6 +38,27 @@ Multiple arguments can be specified. The `config` command with no arguments
 creates a new .ini file with the default settings (or overwrites the existing
 one).
 
+## Building with CMake
+
+Build project using **conan version max. 1.59** and **CMake version at least 3.12**!
+
+### Windows
+
+``` bat
+<project_root_folder>  md build
+<project_root_folder>  conan install .
+<project_root_folder>  cd build
+<project_root_folder>\build  cmake .. -G Ninja
+```
+
+### Linux
+
+``` bash
+<project_root_folder>  mkdir build
+<project_root_folder>  conan install .
+<project_root_folder>  cd build
+<project_root_folder>\build  cmake .. -G Ninja
+```
 ## Libraries
 
 - FTXUI https://github.com/ArthurSonzogni/FTXUI</br>
