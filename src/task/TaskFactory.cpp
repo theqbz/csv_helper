@@ -61,10 +61,7 @@ void TaskFactory::init(const data::console::Arguments& p_arguments)
         std::cout << "Can't find the the file: " << p_arguments.m_command << "\n";
         break;
     case std::filesystem::file_type::regular:
-        // TODO:
-        // Check if the given file is a csv file!
-        // createCsvTask(p_arguments.m_command);
-        m_tasks.push(std::make_shared<CsvTask>(p_arguments.m_command, m_settings, getDisplay()));
+        createSingleCsvTask(p_arguments.m_command);
         break;
     case std::filesystem::file_type::directory:
         searchDirectory(p_arguments.m_command);
@@ -83,6 +80,15 @@ bool TaskFactory::runTasks()
         m_tasks.pop();
     }
     return success;
+}
+
+void TaskFactory::createSingleCsvTask(const std::string& p_fileName)
+{
+    if (!isCsvFile(p_fileName)) {
+        DEBUG_LOG("The file " + p_fileName + " is not a csv file.\n", true);
+        return;
+    }
+    m_tasks.push(std::make_shared<CsvTask>(p_fileName, m_settings, getDisplay()));
 }
 
 void TaskFactory::searchDirectory(const std::string& p_directoryPath)

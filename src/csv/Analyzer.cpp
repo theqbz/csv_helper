@@ -27,6 +27,7 @@ namespace csv {
 void checkRecordDuplication(data::csv::Content* p_content,
                             data::csv::Result* p_result)
 {
+    DEBUG_LOG(utils::INDENTATION + "Checking duplicated records\n", utils::verbose);
     if (!p_content || !p_result) {
         DEBUG_LOG("Program logic error! nullptr as content or result @ checkRecordDuplication()\n", true);
         return;
@@ -122,6 +123,7 @@ void checkRecordLengths(data::csv::Content* p_content,
                         const size_t p_labelCount,
                         const bool p_emptyLinesNotErrors)
 {
+    DEBUG_LOG(utils::INDENTATION + "Checking record lengths\n", utils::verbose);
     if (!p_content || !p_result) {
         DEBUG_LOG("Program logic error! nullptr as content or result @ checkRecordLengths()\n", true);
         return;
@@ -137,11 +139,13 @@ data::csv::Result Analyzer::process(data::csv::File& p_csvFile)
     const bool emptyLinesNotErrors { m_settings.emptyLines() != utils::ISettings::EmptyLines::Error };
     const size_t labelCount { p_csvFile.m_labels.size() };
     data::csv::Content& content { p_csvFile.m_content };
+    if (content.empty()) {
+        DEBUG_LOG(utils::INDENTATION + "The file has no csv::Fields\n", true);
+        return {};
+    }
     data::csv::Result result {};
-    result.m_lastLineNumber = p_csvFile.m_content.back().first.m_fileLineNumber;
-    DEBUG_LOG(utils::INDENTATION + "Checking record lengths\n", utils::verbose);
+    result.m_lastLineNumber = content.back().first.m_fileLineNumber;
     checkRecordLengths(&content, &result, labelCount, emptyLinesNotErrors);
-    DEBUG_LOG(utils::INDENTATION + "Checking duplicated records\n", utils::verbose);
     checkRecordDuplication(&content, &result);
     // TODO:
     // 1) Scan the Fields vertically (Record by Record, the same Field) and look after differences.

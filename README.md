@@ -20,7 +20,7 @@ To get help, use the `help` command!
 | `-delimiter`   | char   | default value: `;`          | the delimiter between Fields in .csv file                  | 
 | `-emptyLines`  | string | `skip`* / `error` / `leave` | defines what to do with empty lines                        |
 | `-emptyFields` | char   | default value: `_`          | placeholder for empty values; <empty>: skip empty values   |
-| `-label`       | string | `top`* / `inline`           | defines where to print the labels                          |
+| `-labels`      | string | `top`* / `inline`           | defines where to print the labels                          |
 | `-errorLines`  | int    | default value: `0`          | the number of lines showed around errors (`-1`: all lines) |
 | `-errorLevel`  | string | `all` / `error`*            | defines the verbosity of the error log                     |
 

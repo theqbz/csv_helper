@@ -107,11 +107,13 @@ std::string aboutSettings()
         + "\n"
         + utils::INDENTATION + "-emptyFields (char)  -  default value: \".\" (placeholder for empty values; <empty>: skip empty values)\n"
         + "\n"
-        + utils::INDENTATION + "-label (string) [ top | inline ]  -  default value: \"top\" (defines where to print the labels)\n"
+        + utils::INDENTATION + "-labels (string) [ top | inline ]  -  default value: \"top\" (defines where to print the labels)\n"
         + "\n"
         + utils::INDENTATION + "-errorLines (int)  -  default value: \"0\" (the number of lines around errors; -1: all lines)\n"
         + "\n"
         + utils::INDENTATION + "-errorLevel (string) [ all | error ]  -  default value: \"error\" (defines the verbosity of the error log)\n"
+        + "\n"
+        + utils::INDENTATION + "-verbose (enable detailed log; this option can only be used for the given start, it can't be permanently!)\n"
         + "\n";
 }
 

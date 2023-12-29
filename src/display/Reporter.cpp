@@ -44,12 +44,13 @@ const data::display::Report Reporter::process(const data::csv::File& p_csvFile,
                                               const data::csv::Result& p_result) const
 {
     DEBUG_LOG("Creating report\n", utils::verbose);
+    if (p_csvFile.m_content.empty()) {
+        DEBUG_LOG(utils::INDENTATION + "The file has no csv::Fields\n", utils::verbose);
+        return {};
+    }
     data::display::Report report {};
-    DEBUG_LOG(utils::INDENTATION + "Adding file info\n", utils::verbose);
     report.m_info   = addFileInfo(p_csvFile, p_result);
-    DEBUG_LOG(utils::INDENTATION + "Adding file content\n", utils::verbose);
     report.m_file   = addFileContent(p_csvFile);
-    DEBUG_LOG(utils::INDENTATION + "Adding error list\n", utils::verbose);
     report.m_errors = addErrorList(p_result);
     return report;
 }
@@ -57,6 +58,7 @@ const data::display::Report Reporter::process(const data::csv::File& p_csvFile,
 const data::display::Table Reporter::addFileInfo(const data::csv::File& p_csvFile,
                                                  const data::csv::Result& p_result) const
 {
+    DEBUG_LOG(utils::INDENTATION + "Adding file info\n", utils::verbose);
     data::display::Row file_name({ "File: " + p_csvFile.m_fileName });
     data::display::Row empty_lines {};
     if (m_settings.errorLevel() != utils::ISettings::ErrorLevel::Error) {
@@ -69,15 +71,19 @@ const data::display::Table Reporter::addFileInfo(const data::csv::File& p_csvFil
 
 const data::display::Table Reporter::addFileContent(const data::csv::File& p_csvFile) const
 {
-    data::display::Ranges rawRanges          = getRanges(getErrorLineNumbers(p_csvFile.m_content),
-                                                         p_csvFile.m_content.size() - 1);
+    DEBUG_LOG(utils::INDENTATION + "Adding file content\n", utils::verbose);
+    data::display::Ranges rawRanges = getRanges(getErrorLineNumbers(p_csvFile.m_content),
+                                                p_csvFile.m_content.size() - 1);
+    DEBUG_LOG(utils::INDENTATION + "rawRanges = " + std::to_string(rawRanges.size()) + "\n", utils::verbose);
     const data::display::Ranges mergedRanges = mergeRanges(rawRanges);
-    const data::display::Table table         = addLines(p_csvFile, mergedRanges);
+    DEBUG_LOG(utils::INDENTATION + "mergedRanges = " + std::to_string(mergedRanges.size()) + "\n", utils::verbose);
+    const data::display::Table table = addLines(p_csvFile, mergedRanges);
     return table;
 }
 
 const data::display::Table Reporter::addErrorList(const data::csv::Result& p_result) const
 {
+    DEBUG_LOG(utils::INDENTATION + "Adding error list\n", utils::verbose);
     const data::csv::ErrorList errorLog { p_result.m_errorList };
     data::display::Table table {};
     size_t errorCounter { 0 };
@@ -106,6 +112,7 @@ bool Reporter::errorLogFilter(const auto& p_entry) const
 const data::display::Ranges Reporter::getRanges(const std::vector<size_t>& p_errorLineNumbers,
                                                 const size_t p_upperLimit) const
 {
+    DEBUG_LOG(utils::INDENTATION + "Getting raw ranges\n", utils::verbose);
     data::display::Ranges ranges {};
     const size_t rangeWidth = m_settings.linesAroundErrors();
     for (const size_t& number : p_errorLineNumbers) {
@@ -156,9 +163,16 @@ const data::display::Row Reporter::addLine(const data::csv::Record& p_record,
 const data::display::Table Reporter::addLines(const data::csv::File& p_csvFile,
                                               const data::display::Ranges& p_finalRanges) const
 {
+    DEBUG_LOG(utils::INDENTATION + "Adding content lines\n", utils::verbose);
+    const data::csv::Content& content { p_csvFile.m_content };
+    if (content.empty()) {
+        DEBUG_LOG(utils::INDENTATION + "The file has no csv::Fields\n", utils::verbose);
+        return {};
+    }
     data::display::Table table {};
     const data::display::Row separator({ "(...)" });
-    const size_t lastLineNumber { p_csvFile.m_content.back().first.m_fileLineNumber };
+    const size_t lastLineNumber { content.back().first.m_fileLineNumber };
+    DEBUG_LOG(utils::INDENTATION + "lastLineNumber = " + std::to_string(lastLineNumber) + "\n", utils::verbose);
     if (!p_finalRanges.empty() && m_settings.labelPosition() != utils::ISettings::LabelPosition::Inline) {
         table.push_back(addLabels(p_csvFile.m_labels, lastLineNumber));
     }
@@ -176,6 +190,7 @@ const data::display::Table Reporter::addLines(const data::csv::File& p_csvFile,
 
 static const std::vector<size_t> getErrorLineNumbers(const data::csv::Content& p_content)
 {
+    DEBUG_LOG(utils::INDENTATION + "Getting error line numbers\n", utils::verbose);
     std::vector<size_t> errorLineNumbers {};
     data::csv::Content::const_iterator firstRecord   = p_content.begin();
     data::csv::Content::const_iterator currentRecord = firstRecord;
@@ -259,6 +274,7 @@ static void merge(const data::display::Range& p_sourceRange,
 
 static const data::display::Ranges mergeRanges(data::display::Ranges& p_rawRanges)
 {
+    DEBUG_LOG(utils::INDENTATION + "Merging ranges\n", utils::verbose);
     if (p_rawRanges.empty()) {
         return {};
     }
@@ -302,6 +318,7 @@ static const std::string getRowHead(const size_t p_totalLineCount,
 static const data::display::Row addLabels(const data::csv::Labels& p_labels,
                                           const size_t p_lastLineNumber)
 {
+    DEBUG_LOG(utils::INDENTATION + "Adding labels\n", utils::verbose);
     data::display::Row labels {};
     labels.push_back(" " + getRowHead(p_lastLineNumber, TABLE_HEADER_SIGN));
     for (const std::string& label : p_labels) {

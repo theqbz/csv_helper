@@ -137,7 +137,7 @@ const std::set<std::string> VERBOSE_COMMANDS { "-verbose", "--verbose" };
     do {                                                                                                   \
         if (p_verbose == true) {                                                                           \
             if (p_settings.empty()) {                                                                      \
-                std::cout << csvvalidator::utils::INDENTATION << "< empty >\n";                       \
+                std::cout << csvvalidator::utils::INDENTATION << "< empty >\n";                            \
             }                                                                                              \
             std::map<std::string, std::string>::const_iterator it = p_settings.begin();                    \
             for (; it != p_settings.end(); ++it) {                                                         \
