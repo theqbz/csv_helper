@@ -43,7 +43,6 @@ std::string convertToFileContent(const data::SettingData& p_settingData)
 {
     std::string fileContent { "# CsvValidator settings\n" };
     for (const auto& [key, value] : p_settingData) {
-        std::cout << "key=" << key << " value=" << value << "\n";
         fileContent += key + utils::KEY_VALUE_DELIMITER + value + "\n";
     }
     return fileContent;
@@ -53,12 +52,12 @@ void writeToFile(utils::IFileHandler& p_file, const data::SettingData& p_setting
 {
     if (p_file.get().good()) {
         std::cout << "Writing to " << p_file.fileName() << "\n";
-        p_file.get() << convertToFileContent(p_settings);
+        p_file.get() << convertToFileContent(p_settings).c_str();
         return;
     }
     std::cout << "Creating file " << p_file.fileName() << "\n";
     std::ofstream newFile(p_file.fileName());
-    newFile << convertToFileContent(p_settings);
+    newFile << convertToFileContent(p_settings).c_str();
     newFile.close();
 }
 
@@ -67,10 +66,6 @@ bool task::ConfigTask::run()
     utils::FileHandler iniFile(utils::INI_FILE);
     if (m_arguments.empty()
         && question("Would you like to create a new .ini file with the default settings in it? ")) {
-        std::cout << "default settings:\n";
-        for(const auto& element : utils::DEFAULT_SETTINGS){
-            std::cout << "key=" << element.first << " value=" << element.second << "\n";
-        }
         writeToFile(iniFile, data::SettingData(utils::DEFAULT_SETTINGS));
     }
 

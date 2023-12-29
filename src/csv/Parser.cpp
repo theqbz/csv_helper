@@ -78,13 +78,13 @@ const data::csv::File parse(std::fstream& p_file,
     size_t fileLineCounter { 0 };
     while (getline(p_file, line)) {
         ++fileLineCounter;
-        if (!firstNonEmptyLineFound && !line.empty()) {
-            file.m_labels          = getLabels(line, p_delimiter);
-            firstNonEmptyLineFound = true;
-        }
         if (firstNonEmptyLineFound) {
             file.m_content.push_back(getRecords(line, file.m_labels, p_delimiter));
             file.m_content.back().first.m_fileLineNumber = fileLineCounter;
+        }
+        if (!firstNonEmptyLineFound && !line.empty()) {
+            file.m_labels          = getLabels(line, p_delimiter);
+            firstNonEmptyLineFound = true;
         }
     }
     return file;

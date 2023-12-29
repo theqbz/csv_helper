@@ -20,7 +20,7 @@ namespace utils {
 /// by the user in the .ini file and the command-line arguments, specified when
 /// starting the program
 ///
-inline std::map<std::string, std::string> DEFAULT_SETTINGS {
+inline const std::map<std::string, std::string> DEFAULT_SETTINGS {
     { "delimiter", ";" },
     { "errorLines", "0" },
     { "labels", "top" },
@@ -59,6 +59,7 @@ const std::string CONFIG_COMMAND { "config" };
 
 ///
 /// @brief This character indicates the beginning of a comment.
+/// This vasriable used in parser::IniFile.cpp
 ///
 const std::string COMMENT_SIGNS = "#;";
 
@@ -70,6 +71,8 @@ const std::string KEY_VALUE_DELIMITER = "=";
 
 ///
 /// @brief This characters are the acceptable whitespaces in .ini files.
+/// This vasriable used in parser::IniFile.cpp
+///
 const std::string WHITESPACE = " \t\n";
 
 ///
@@ -109,11 +112,12 @@ const std::set<std::string> NO_ANSWERS { "n", "N", "no", "No", "NO", "0", "false
 } // namespace utils
 } // namespace csvvalidator
 
-#define PRINT_DEFAULTS                                                                                         \
-    do {                                                                                                       \
-        std::cout << "\nDefault settings:\n";                                                                  \
-        std::map<std::string, std::string>::const_iterator it = csvvalidator::utils::DEFAULT_SETTINGS.begin(); \
-        for (; it != csvvalidator::utils::DEFAULT_SETTINGS.end(); ++it) {                                      \
-            std::cout << it->first << " : " << it->second << "\n";                                             \
-        }                                                                                                      \
+#define PRINT_SETTINGS(settings)                                                  \
+    do {                                                                          \
+        std::cout << "\nsettings:\n";                                             \
+        std::map<std::string, std::string>::const_iterator it = settings.begin(); \
+        for (; it != settings.end(); ++it) {                                      \
+            std::cout << it->first << " : " << it->second << "\n";                \
+        }                                                                         \
+        std::cout << "\n";                                                        \
     } while (false);

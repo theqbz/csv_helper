@@ -109,13 +109,15 @@ ISettings::ErrorLevel convertToErrorLevel(const std::string& p_text)
 
 void Settings::init()
 {
-    data::SettingData defaults { utils::DEFAULT_SETTINGS };
+    // std::cout << "consoleArgs:\n";
+    // PRINT_SETTINGS(m_consoleArguments);
+    // std::cout << "ini:\n";
+    // PRINT_SETTINGS(m_iniFile);
     data::SettingData settingsToStore {};
     settingsToStore.merge(m_consoleArguments);
     settingsToStore.merge(m_iniFile);
-    settingsToStore.merge(defaults);
+    settingsToStore.merge( data::SettingData(utils::DEFAULT_SETTINGS) );
     storeSettings(settingsToStore);
-    PRINT_DEFAULTS;
 }
 
 void Settings::storeSettings(const data::SettingData& p_settingsData)

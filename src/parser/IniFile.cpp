@@ -41,7 +41,7 @@ const data::ini::File IniFile::read(std::fstream& p_iniFile)
         //        or not? -> only when user ask for it with CONFIG_COMMAND from console Argument?
         return {};
     }
-    std::cout << "Reading ini file\n";
+    std::cout << "Reading setting from ini file\n";
     data::ini::File file;
     std::string line;
     while (std::getline(p_iniFile, line)) {
@@ -62,7 +62,7 @@ const data::ini::Record IniFile::line(const std::string& p_line)
     }
     const size_t commentPos   = p_line.find_first_of(utils::COMMENT_SIGNS);
     const size_t delimiterPos = p_line.find(utils::KEY_VALUE_DELIMITER, 0);
-    if (delimiterPos >= commentPos) {
+    if (commentPos < delimiterPos) {
         return {};
     }
     data::ini::Record record;
@@ -77,11 +77,11 @@ const std::string IniFile::trim(const std::string& p_text)
     if (firstChar == std::string::npos) {
         return {};
     }
-    const size_t lastChar = p_text.find_last_not_of(utils::WHITESPACE, firstChar);
+    const size_t lastChar = p_text.find_last_not_of(utils::WHITESPACE);
     if (lastChar == std::string::npos) {
         return {};
     }
-    return p_text.substr(firstChar, lastChar - 1);
+    return p_text.substr(firstChar, lastChar + 1);
 }
 
 } // namespace parser

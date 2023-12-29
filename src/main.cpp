@@ -25,7 +25,7 @@ int main(int argc, const char* argv[])
     // std::cin.get();
     std::cout << "* CsvValidator by QBZ * version: 1.0b\n";
 
-    PRINT_DEFAULTS;
+    //PRINT_SETTINGS(csvvalidator::utils::DEFAULT_SETTINGS);
 
     csvvalidator::data::console::Arguments consoleArgs { csvvalidator::parser::Console::parse(argc, argv) };
     csvvalidator::data::ini::File inifile { csvvalidator::parser::IniFile::parse(csvvalidator::utils::INI_FILE) };
