@@ -8,6 +8,7 @@
 #pragma once
 
 #include "../data/SettingData.h"
+#include "../utils/Utility.h"
 #include "ITask.h"
 
 namespace csvvalidator {
@@ -19,12 +20,13 @@ public:
     ConfigTask(const data::SettingData& p_arguments) :
         m_arguments(p_arguments)
     {
+        DEBUG_LOG("ConfigTask created\n", utils::verbose);
     }
 
     bool run() final;
 
 private:
-    const data::SettingData m_arguments;
+    data::SettingData m_arguments;
 };
 
 } // namespace task

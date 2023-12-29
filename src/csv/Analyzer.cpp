@@ -8,8 +8,8 @@
 #include "Analyzer.h"
 #include "../data/CsvData.h"
 #include "../data/Result.h"
+#include "../utils/Utility.h"
 
-#include <algorithm>
 #include <string>
 #include <vector>
 
@@ -28,6 +28,7 @@ void checkRecordDuplication(data::csv::Content* p_content,
                             data::csv::Result* p_result)
 {
     if (!p_content || !p_result) {
+        DEBUG_LOG("Program logic error! nullptr as content or result @ checkRecordDuplication()\n", true);
         return;
     }
     data::csv::Content::iterator currentRecordIt = p_content->begin();
@@ -81,6 +82,10 @@ void markWrongLineLength(data::csv::Record* p_record,
                          const size_t p_labelCount,
                          const bool p_emptyLinesNotErrors)
 {
+    if (!p_record || !p_result) {
+        DEBUG_LOG("Program logic error! nullptr as record or result @ markWrongLineLength()\n", true);
+        return;
+    }
     const size_t recordSize = p_record->second.size();
     if (recordSize == p_labelCount) {
         p_record->first.m_state = data::csv::RecordHead::State::OK;
@@ -118,6 +123,7 @@ void checkRecordLengths(data::csv::Content* p_content,
                         const bool p_emptyLinesNotErrors)
 {
     if (!p_content || !p_result) {
+        DEBUG_LOG("Program logic error! nullptr as content or result @ checkRecordLengths()\n", true);
         return;
     }
     for (data::csv::Record& record : *p_content) {
@@ -127,12 +133,15 @@ void checkRecordLengths(data::csv::Content* p_content,
 
 data::csv::Result Analyzer::process(data::csv::File& p_csvFile)
 {
+    DEBUG_LOG("Analyzing csv::File\n", utils::verbose);
     const bool emptyLinesNotErrors { m_settings.emptyLines() != utils::ISettings::EmptyLines::Error };
     const size_t labelCount { p_csvFile.m_labels.size() };
     data::csv::Content& content { p_csvFile.m_content };
     data::csv::Result result {};
     result.m_lastLineNumber = p_csvFile.m_content.back().first.m_fileLineNumber;
+    DEBUG_LOG(utils::INDENTATION + "Checking record lengths\n", utils::verbose);
     checkRecordLengths(&content, &result, labelCount, emptyLinesNotErrors);
+    DEBUG_LOG(utils::INDENTATION + "Checking duplicated records\n", utils::verbose);
     checkRecordDuplication(&content, &result);
     // TODO:
     // 1) Scan the Fields vertically (Record by Record, the same Field) and look after differences.

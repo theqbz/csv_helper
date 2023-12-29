@@ -9,6 +9,8 @@
 
 #include "../data/Report.h"
 #include "../utils/ISettings.h"
+#include "../utils/Utility.h"
+
 #include <iostream>
 #include <string>
 
@@ -23,6 +25,7 @@ static const std::string cellSeparator(bool& p_previousCellWasEmpty,
 
 void Lines::render(const data::display::Report& p_report) const
 {
+    DEBUG_LOG("Rendering result\n\n", utils::verbose);
     printSimpleTable(p_report.m_info);
     printFileTable(p_report.m_file);
     printSimpleTable(p_report.m_errors);

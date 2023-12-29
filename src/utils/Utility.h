@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <iostream>
 #include <map>
 #include <set>
 #include <string>
@@ -109,15 +110,38 @@ const std::set<std::string> YES_ANSWERS { "y", "Y", "yes", "Yes", "YES", "1", "i
 ///
 const std::set<std::string> NO_ANSWERS { "n", "N", "no", "No", "NO", "0", "false" };
 
+///
+/// @brief Debug log verbosity
+///
+inline bool verbose { false };
+
+///
+/// @brief Verbose command variations
+///
+const std::set<std::string> VERBOSE_COMMANDS { "-verbose", "--verbose" };
+
 } // namespace utils
 } // namespace csvvalidator
 
-#define PRINT_SETTINGS(settings)                                                  \
-    do {                                                                          \
-        std::cout << "\nsettings:\n";                                             \
-        std::map<std::string, std::string>::const_iterator it = settings.begin(); \
-        for (; it != settings.end(); ++it) {                                      \
-            std::cout << it->first << " : " << it->second << "\n";                \
-        }                                                                         \
-        std::cout << "\n";                                                        \
+///
+/// @brief Verbose log
+///
+#define DEBUG_LOG(p_text, p_verbose) \
+    do {                             \
+        if (p_verbose == true) {     \
+            std::cout << p_text;     \
+        }                            \
+    } while (false);
+
+#define PRINT_SETTINGS(p_settings, p_verbose)                                                              \
+    do {                                                                                                   \
+        if (p_verbose == true) {                                                                           \
+            if (p_settings.empty()) {                                                                      \
+                std::cout << csvvalidator::utils::INDENTATION << "< empty >\n";                       \
+            }                                                                                              \
+            std::map<std::string, std::string>::const_iterator it = p_settings.begin();                    \
+            for (; it != p_settings.end(); ++it) {                                                         \
+                std::cout << csvvalidator::utils::INDENTATION << it->first << ":\t" << it->second << "\n"; \
+            }                                                                                              \
+        }                                                                                                  \
     } while (false);

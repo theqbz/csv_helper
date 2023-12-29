@@ -10,7 +10,6 @@
 #include "../utils/Utility.h"
 
 #include <iostream>
-#include <set>
 #include <string>
 #include <vector>
 
@@ -22,11 +21,14 @@ typedef std::vector<std::string> StrVec;
 static inline bool hasKey(const data::console::Parameter& p_parameter);
 static inline bool isKey(const std::string& p_text);
 static inline void removeDashes(std::string* p_parameterKey);
+static void setVerbosity(StrVec* p_rawData);
 
 const data::console::Arguments Console::parse(const int p_argc,
                                               const char* const p_argv[])
 {
+    DEBUG_LOG("Parsing console arguments...\n", utils::verbose);
     StrVec rawData = Console::convert(p_argc, p_argv);
+    setVerbosity(&rawData);
     data::console::Arguments arguments {};
     arguments.m_command    = getCommand(&rawData);
     arguments.m_parameters = Console::createParameters(rawData);
@@ -58,7 +60,7 @@ const data::console::Parameters Console::createParameters(const StrVec& p_rawDat
         removeDashes(&parameter.first);
         const auto [iterator, success] = parameters.insert(parameter);
         if (!success) {
-            std::cout << "An error with parameter: " << parameter.first << ", " << parameter.second << "\n";
+            DEBUG_LOG("An error with console argument: " + parameter.first + ", " + parameter.second + "\n", true);
         }
     }
     return parameters;
@@ -67,7 +69,7 @@ const data::console::Parameters Console::createParameters(const StrVec& p_rawDat
 const std::string Console::getCommand(StrVec* p_rawData)
 {
     if (!p_rawData) {
-        std::cout << "Program logic error: nullptr as rawData @ getCommand\n";
+        DEBUG_LOG("Program logic error: nullptr as rawData @ getCommand\n", true);
         return {};
     }
     if (p_rawData->empty()) {
@@ -101,11 +103,31 @@ static inline bool isKey(const std::string& p_text)
 void removeDashes(std::string* p_parameterKey)
 {
     if (!p_parameterKey) {
-        std::cout << "Program logic error: nullptr as p_parameter @ removeDashes\n";
+        DEBUG_LOG("Program logic error: nullptr as p_parameter @ removeDashes\n", true);
         return;
     }
     std::string& key = *p_parameterKey;
     key.erase(key.begin(), key.begin() + key.find_first_not_of(utils::KEY_MARKER));
+}
+
+static void setVerbosity(StrVec* p_rawData)
+{
+    if (!p_rawData) {
+        DEBUG_LOG("Program logic error: nullptr as rawData @ setVerbosity()\n", true);
+        return;
+    }
+    if (p_rawData->empty()) {
+        return;
+    }
+    StrVec::iterator it = p_rawData->begin();
+    for (; it != p_rawData->end(); ++it) {
+        if (utils::VERBOSE_COMMANDS.contains(*it)) {
+            utils::verbose = true;
+            p_rawData->erase(it);
+            DEBUG_LOG("Verbose mode\n", utils::verbose);
+            return;
+        }
+    }
 }
 
 } // namespace parser

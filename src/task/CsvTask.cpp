@@ -15,9 +15,9 @@
 #include "../display/Reporter.h"
 #include "../utils/FileHandler.h"
 #include "../utils/ISettings.h"
+#include "../utils/Utility.h"
 
 #include <filesystem>
-#include <iostream>
 #include <memory>
 #include <string>
 
@@ -31,8 +31,9 @@ CsvTask::CsvTask(const std::string& p_path,
     m_file(p_path),
     m_display(p_display)
 {
+    DEBUG_LOG("CsvTask created\n", utils::verbose);
     if (!m_display.get()) {
-        std::cout << "Program logic error: nullptr as display @ CsvTask constructor\n";
+        DEBUG_LOG("Program logic error: nullptr as display @ CsvTask constructor\n", true);
         std::exit(1);
     }
 }
@@ -44,20 +45,25 @@ CsvTask::CsvTask(const std::filesystem::path& p_path,
     m_file(p_path),
     m_display(p_display)
 {
+    DEBUG_LOG("CsvTask created\n", utils::verbose);
     if (!m_display.get()) {
-        std::cout << "Program logic error: nullptr as display @ CsvTask constructor\n";
+        DEBUG_LOG("Program logic error: nullptr as display @ CsvTask constructor\n", true);
         std::exit(1);
     }
 }
 
 bool CsvTask::run()
 {
-    utils::FileHandler file(m_file);
+    DEBUG_LOG("CsvTask running\n", utils::verbose);
     csv::Parser csvParser(m_settings);
     csv::Analyzer csvAnalyzer(m_settings);
     display::Reporter reporter(m_settings);
+    data::csv::File csvFile {};
 
-    data::csv::File csvFile { csvParser.process(file) };
+    {
+        utils::FileHandler file(m_file);
+        csvFile = csvParser.process(file);
+    }
     data::csv::Result csvResult { csvAnalyzer.process(csvFile) };
 
     data::display::Report report { reporter.process(csvFile, csvResult) };

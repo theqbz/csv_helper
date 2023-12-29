@@ -10,6 +10,7 @@
 #include "../data/Report.h"
 #include "../data/Result.h"
 #include "../utils/ISettings.h"
+#include "../utils/Utility.h"
 
 #include <iostream>
 #include <limits>
@@ -42,9 +43,13 @@ static const data::display::Row getFirstRow(const size_t p_errorCounter, const s
 const data::display::Report Reporter::process(const data::csv::File& p_csvFile,
                                               const data::csv::Result& p_result) const
 {
+    DEBUG_LOG("Creating report\n", utils::verbose);
     data::display::Report report {};
+    DEBUG_LOG(utils::INDENTATION + "Adding file info\n", utils::verbose);
     report.m_info   = addFileInfo(p_csvFile, p_result);
+    DEBUG_LOG(utils::INDENTATION + "Adding file content\n", utils::verbose);
     report.m_file   = addFileContent(p_csvFile);
+    DEBUG_LOG(utils::INDENTATION + "Adding error list\n", utils::verbose);
     report.m_errors = addErrorList(p_result);
     return report;
 }

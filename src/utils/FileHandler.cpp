@@ -6,6 +6,7 @@
 ///
 
 #include "FileHandler.h"
+#include "Utility.h"
 
 #include <filesystem>
 #include <fstream>
@@ -32,13 +33,16 @@ FileHandler::FileHandler(const std::filesystem::path& p_path) noexcept :
 FileHandler::~FileHandler()
 {
     m_file.close();
+    DEBUG_LOG(m_fileName + " file closed\n", utils::verbose);
 }
 
 void FileHandler::checkFile() const
 {
     if (!m_file.good()) {
         std::cout << "Failed to open file: " << m_fileName << "\n";
+        return;
     }
+    DEBUG_LOG(m_fileName + " file opened successfull\n", utils::verbose);
 }
 
 } // namespace utils

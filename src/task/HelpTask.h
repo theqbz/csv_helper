@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "../utils/Utility.h"
 #include "ITask.h"
 
 #include <string>
@@ -20,6 +21,7 @@ public:
     HelpTask(const std::string& p_helpRequest = "") :
         m_request(p_helpRequest)
     {
+        DEBUG_LOG("HelpTask created\n", utils::verbose);
     }
 
     bool run() final;

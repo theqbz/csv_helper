@@ -31,16 +31,21 @@ static bool isCsvFile(const std::filesystem::path& p_path);
 
 void TaskFactory::init(const data::console::Arguments& p_arguments)
 {
+    DEBUG_LOG("Init TaskFactory\n", utils::verbose);
     if (p_arguments.m_command.empty()) {
+        DEBUG_LOG("No console arguments provided\n", utils::verbose);
         m_tasks.push(std::make_shared<HelpTask>(utils::NO_ARGS));
         return;
     }
     if (isHelp(p_arguments.m_command)) {
+        DEBUG_LOG("Help command detected\n", utils::verbose);
         m_tasks.push(std::make_shared<HelpTask>());
         return;
     }
     if (p_arguments.m_command == utils::CONFIG_COMMAND) {
+        DEBUG_LOG("Config command detected\n", utils::verbose);
         if (isHelp(p_arguments.m_parameters)) {
+            DEBUG_LOG("Config-help detected\n", utils::verbose);
             m_tasks.push(std::make_shared<HelpTask>(utils::CONFIG_COMMAND));
             return;
         }
@@ -82,6 +87,7 @@ bool TaskFactory::runTasks()
 
 void TaskFactory::searchDirectory(const std::string& p_directoryPath)
 {
+    DEBUG_LOG("Searching in direcotry: " + p_directoryPath + "\n", utils::verbose);
     std::filesystem::path path { p_directoryPath };
     size_t foundFiles { 0 };
     for (const std::filesystem::path& directoryEntry : std::filesystem::directory_iterator(path)) {

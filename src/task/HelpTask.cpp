@@ -20,6 +20,7 @@ static std::string aboutHelp();
 
 bool HelpTask::run()
 {
+    DEBUG_LOG("HelpTask running\n", utils::verbose);
     if (m_request.empty()) {
         printFullHelp();
         return true;
@@ -37,6 +38,7 @@ bool HelpTask::run()
 
 void HelpTask::printShortHelp() const
 {
+    DEBUG_LOG("Printing short help\n\n", utils::verbose);
     std::cout << "No file or command presented.\n"
               << aboutProgram()
               << aboutStart()
@@ -46,6 +48,7 @@ void HelpTask::printShortHelp() const
 
 void HelpTask::printFullHelp() const
 {
+    DEBUG_LOG("Printing full help\n\n", utils::verbose);
     std::cout //
         << aboutStart()
         << "\n"
@@ -67,6 +70,7 @@ void HelpTask::printFullHelp() const
 
 void HelpTask::printSettingWriterHelp() const
 {
+    DEBUG_LOG("Printing config writer help\n\n", utils::verbose);
     std::cout << "\n"
               << "Setting writer help... soon.\n"
               << "\n";

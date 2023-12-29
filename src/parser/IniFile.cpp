@@ -12,7 +12,6 @@
 
 #include <filesystem>
 #include <iosfwd>
-#include <iostream>
 #include <string>
 
 namespace csvvalidator {
@@ -22,6 +21,7 @@ const data::ini::File IniFile::parse(const std::string& p_file)
 {
     const std::filesystem::file_status status { std::filesystem::status(std::filesystem::path { p_file }) };
     if (status.type() != std::filesystem::file_type::regular) {
+        DEBUG_LOG(p_file + " file not exists\n", utils::verbose);
         return {};
     }
     utils::FileHandler iniFile(p_file);
@@ -36,21 +36,25 @@ const data::ini::File IniFile::parse(std::fstream& p_file)
 const data::ini::File IniFile::read(std::fstream& p_iniFile)
 {
     if (p_iniFile.peek() == std::char_traits<char>::eof()) {
-        // std::cout << "Ini file error\n";
-        //  TODO: create default .ini file
-        //        or not? -> only when user ask for it with CONFIG_COMMAND from console Argument?
         return {};
     }
-    std::cout << "Reading setting from ini file\n";
+    DEBUG_LOG("Reading ini file\n", utils::verbose);
     data::ini::File file;
     std::string line;
+    size_t lineNumber { 1 };
     while (std::getline(p_iniFile, line)) {
-        if (!line.empty()) {
-            const auto [it, success] = file.m_content.insert(IniFile::line(line));
-            if (!success) {
-                std::cout << "Error in .ini record: " << line << "\n";
-            }
+        if (line.empty()) {
+            continue;
         }
+        data::ini::Record record = IniFile::line(line);
+        if (record.first.empty()) {
+            continue;
+        }
+        const auto [it, success] = file.m_content.insert(IniFile::line(line));
+        if (!success) {
+            DEBUG_LOG("Error in .ini record: " + line + " (in line " + std::to_string(lineNumber) + "\n", true);
+        }
+        ++lineNumber;
     }
     return file;
 }

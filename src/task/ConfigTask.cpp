@@ -23,22 +23,6 @@ namespace task {
 
 static bool question(const std::string& p_text);
 
-void updateExistingOptions(data::SettingData* p_existingIniFile,
-                           const data::SettingData& p_newOptions)
-{
-    typedef data::SettingData::iterator it;
-    if (!p_existingIniFile) {
-        std::cout << "Program logic error: nullptr as existingIniFile @ updateExistingOptions\n";
-        return;
-    }
-    for (const auto& [key, newValue] : p_newOptions) {
-        if (it optionToUpdate = p_existingIniFile->find(key);
-            optionToUpdate != p_existingIniFile->end()) {
-            optionToUpdate->second = newValue;
-        }
-    }
-}
-
 std::string convertToFileContent(const data::SettingData& p_settingData)
 {
     std::string fileContent { "# CsvValidator settings\n" };
@@ -48,47 +32,61 @@ std::string convertToFileContent(const data::SettingData& p_settingData)
     return fileContent;
 }
 
-void writeToFile(utils::IFileHandler& p_file, const data::SettingData& p_settings)
+void write(const data::SettingData& p_settings)
 {
-    if (p_file.get().good()) {
-        std::cout << "Writing to " << p_file.fileName() << "\n";
-        p_file.get() << convertToFileContent(p_settings).c_str();
+    utils::FileHandler file(utils::INI_FILE);
+    if (!file.get().good()) {
+        DEBUG_LOG("Creating file " + file.fileName() + " for config\n", true);
+        std::ofstream newFile(file.fileName());
+        newFile << convertToFileContent(p_settings).c_str();
+        newFile.close();
         return;
     }
-    std::cout << "Creating file " << p_file.fileName() << "\n";
-    std::ofstream newFile(p_file.fileName());
-    newFile << convertToFileContent(p_settings).c_str();
-    newFile.close();
+    DEBUG_LOG("Writing config to " + file.fileName() + "\n", true);
+    file.get() << convertToFileContent(p_settings).c_str();
+}
+
+void storeDefaultSettings()
+{
+    if (question("Would you like to create a _new_ .ini file with the _default_ settings? ")) {
+        write(data::SettingData(utils::DEFAULT_SETTINGS));
+    }
+}
+
+void updateIniFile(data::SettingData& p_settings)
+{
+    DEBUG_LOG("Updating existing .ini file\n", utils::verbose);
+    data::ini::File existingIniFile {};
+    {
+        utils::FileHandler file(utils::INI_FILE);
+        existingIniFile = parser::IniFile::read(file.get());
+    }
+
+    DEBUG_LOG("Setting from existing .ini file:\n", utils::verbose);
+    PRINT_SETTINGS(existingIniFile.m_content, utils::verbose);
+    DEBUG_LOG("Settings from console args:\n", utils::verbose);
+    PRINT_SETTINGS(p_settings, utils::verbose);
+
+    data::SettingData newIniContent {};
+    newIniContent.merge(p_settings);
+    newIniContent.merge(existingIniFile.m_content);
+
+    DEBUG_LOG("Merged settings:\n", utils::verbose);
+    PRINT_SETTINGS(newIniContent, utils::verbose);
+
+    write(newIniContent);
 }
 
 bool task::ConfigTask::run()
 {
-    utils::FileHandler iniFile(utils::INI_FILE);
-    if (m_arguments.empty()
-        && question("Would you like to create a new .ini file with the default settings in it? ")) {
-        writeToFile(iniFile, data::SettingData(utils::DEFAULT_SETTINGS));
+    DEBUG_LOG("ConfigTask running\n", utils::verbose);
+    if (m_arguments.empty()) {
+        DEBUG_LOG("No arguments to store to .ini file\n", utils::verbose);
+        storeDefaultSettings();
+        return true;
     }
-
-    // TODO:
-    // Check for arguments:
-    // If there are no argument just the settingWriterCommand, create new -ini file with default settings
-    // If there are arguments but no existing .ini file, create a new .ini file with settings that provided in arguments
-    // If there are arguments and there is an .ini file, chane the options in existing .ini file to the setting provided in arguments
-
-    data::ini::File existingIniFile {};
-    if (iniFile.get().good()) {
-        existingIniFile = parser::IniFile::parse(iniFile.get());
-    }
-    updateExistingOptions(&existingIniFile.m_content, m_arguments);
-    iniFile.get() << convertToFileContent(existingIniFile.m_content);
-
-    // TODO:
-    // Try to open existing ini file
-    // If it exists, parse it
-    //   Compare the ini file content with the settings, stored in m_arguments
-    //   Write to the file the new settings
-    // If it is not exists, create a new file with default settings merged with the settings, strored in m_arguments
-    return false;
+    updateIniFile(m_arguments);
+    return true;
 }
 
 bool question(const std::string& p_text)

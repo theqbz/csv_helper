@@ -31,6 +31,7 @@ data::csv::Record getRecords(const std::string& p_line,
     if (p_line.length() == 0) {
         return {};
     }
+    DEBUG_LOG("Parsing Records from csv file\n", false);
     data::csv::Record record {};
     data::csv::Fields fields {};
     size_t offset { 0 };
@@ -55,6 +56,7 @@ const data::csv::Labels getLabels(const std::string& p_line,
     if (p_line.empty()) {
         return {};
     }
+    DEBUG_LOG("Parsing Labels from csv file\n", false);
     data::csv::Labels labels {};
     size_t offset { 0 };
     size_t semicolonPos { 0 };
@@ -70,6 +72,7 @@ const data::csv::File parse(std::fstream& p_file,
                             const unsigned char p_delimiter)
 {
     if (p_file.peek() == std::char_traits<char>::eof()) {
+        DEBUG_LOG("File not exists in csv Parser()\n", utils::verbose);
         return {};
     }
     data::csv::File file {};
@@ -77,6 +80,7 @@ const data::csv::File parse(std::fstream& p_file,
     bool firstNonEmptyLineFound { false };
     size_t fileLineCounter { 0 };
     while (getline(p_file, line)) {
+        DEBUG_LOG(".", utils::verbose);
         ++fileLineCounter;
         if (firstNonEmptyLineFound) {
             file.m_content.push_back(getRecords(line, file.m_labels, p_delimiter));
@@ -87,11 +91,13 @@ const data::csv::File parse(std::fstream& p_file,
             firstNonEmptyLineFound = true;
         }
     }
+    DEBUG_LOG("\n", utils::verbose);
     return file;
 }
 
 const data::csv::File Parser::process(utils::IFileHandler& p_csvFile)
 {
+    DEBUG_LOG("Parsing " + p_csvFile.fileName() + " file", utils::verbose);
     data::csv::File csvFile { parse(p_csvFile.get(), m_settings.delimiter()) };
     csvFile.m_fileName = p_csvFile.fileName();
     return csvFile;
