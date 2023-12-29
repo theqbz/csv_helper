@@ -24,7 +24,7 @@ inline std::map<std::string, std::string> DEFAULT_SETTINGS {
     { "delimiter", ";" },
     { "errorLines", "0" },
     { "labels", "top" },
-    { "emptyFields", "." },
+    { "emptyFields", "_" },
     { "emptyLines", "skip" },
     { "table", "false" },
     { "diffMode", "off" },
@@ -56,6 +56,21 @@ const std::set<std::string> HELP_COMMANDS { "-h", "--h", "-help", "--help", "h",
 /// This variable used in task::TaskFactory class.
 ///
 const std::string CONFIG_COMMAND { "config" };
+
+///
+/// @brief This character indicates the beginning of a comment.
+///
+const std::string COMMENT_SIGNS = "#;";
+
+///
+/// @brief This character separates the keys and values in .ini files.
+/// This vasriable used in parser::IniFile.cpp and task::ConfigTask.cpp
+///
+const std::string KEY_VALUE_DELIMITER = "=";
+
+///
+/// @brief This characters are the acceptable whitespaces in .ini files.
+const std::string WHITESPACE = " \t\n";
 
 ///
 /// @brief Task initializer text if there were no command-line arguments presented.
@@ -93,3 +108,12 @@ const std::set<std::string> NO_ANSWERS { "n", "N", "no", "No", "NO", "0", "false
 
 } // namespace utils
 } // namespace csvvalidator
+
+#define PRINT_DEFAULTS                                                                                         \
+    do {                                                                                                       \
+        std::cout << "\nDefault settings:\n";                                                                  \
+        std::map<std::string, std::string>::const_iterator it = csvvalidator::utils::DEFAULT_SETTINGS.begin(); \
+        for (; it != csvvalidator::utils::DEFAULT_SETTINGS.end(); ++it) {                                      \
+            std::cout << it->first << " : " << it->second << "\n";                                             \
+        }                                                                                                      \
+    } while (false);

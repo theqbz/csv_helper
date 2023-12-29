@@ -56,9 +56,9 @@ void TaskFactory::init(const data::console::Arguments& p_arguments)
         std::cout << "Can't find the the file: " << p_arguments.m_command << "\n";
         break;
     case std::filesystem::file_type::regular:
-        // createCsvTask(p_arguments.m_command);
         // TODO:
         // Check if the given file is a csv file!
+        // createCsvTask(p_arguments.m_command);
         m_tasks.push(std::make_shared<CsvTask>(p_arguments.m_command, m_settings, getDisplay()));
         break;
     case std::filesystem::file_type::directory:
