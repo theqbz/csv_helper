@@ -48,8 +48,8 @@ add_executable( csv_validator
 set_property( TARGET csv_validator PROPERTY CXX_STANDARD 20 )
 
 target_link_libraries( csv_validator PUBLIC
-    ftxui::ftxui
-    gtest::gtest
+    CONAN_PKG::ftxui
+    CONAN_PKG::gtest
 )
 
 include( GoogleTest )

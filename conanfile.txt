@@ -3,5 +3,4 @@ ftxui/5.0.0
 gtest/1.11.0
 
 [generators]
-CMakeDeps
-CMakeToolchain
+cmake
