@@ -22,16 +22,16 @@ static std::string aboutHelp();
 
 bool HelpTask::run()
 {
-    DEBUG_LOG("HelpTask running\n", utils::verbose);
+    LOG("HelpTask running\n", utils::verbose);
     if (m_request.empty()) {
         printFullHelp();
         return true;
     }
-    if (m_request == utils::NO_ARGS) {
+    if (m_request == utils::CLI_NO_ARGS) {
         printShortHelp();
         return true;
     }
-    if (m_request == utils::CONFIG_COMMAND) {
+    if (m_request == utils::CLI_COMMANDS_CONFIG) {
         printSettingWriterHelp();
         return true;
     }
@@ -40,7 +40,7 @@ bool HelpTask::run()
 
 void HelpTask::printShortHelp() const
 {
-    DEBUG_LOG("Printing short help\n\n", utils::verbose);
+    LOG("Printing short help\n\n", utils::verbose);
     std::cout << "No file or command presented.\n"
               << aboutProgram()
               << aboutStart()
@@ -52,7 +52,7 @@ void HelpTask::printShortHelp() const
 
 void HelpTask::printFullHelp() const
 {
-    DEBUG_LOG("Printing full help\n\n", utils::verbose);
+    LOG("Printing full help\n\n", utils::verbose);
     std::cout //
         << aboutStart()
         << aboutSettings()
@@ -64,7 +64,7 @@ void HelpTask::printFullHelp() const
 
 void HelpTask::printSettingWriterHelp() const
 {
-    DEBUG_LOG("Printing config writer help\n\n", utils::verbose);
+    LOG("Printing config writer help\n\n", utils::verbose);
     std::cout << "\n"
               << utils::INDENTATION + "The program can permanently store user's own settings in an .ini file.\n"
               << utils::INDENTATION + "To use this function start the program with the  config  command and\n"

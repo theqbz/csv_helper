@@ -21,7 +21,7 @@ public:
     HelpTask(const std::string& p_helpRequest = "") :
         m_request(p_helpRequest)
     {
-        DEBUG_LOG("HelpTask created\n", utils::verbose);
+        LOG("HelpTask created\n", utils::verbose);
     }
 
     bool run() final;

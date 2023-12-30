@@ -31,22 +31,22 @@ static bool isCsvFile(const std::filesystem::path& p_path);
 
 void TaskFactory::init(const data::console::Arguments& p_arguments)
 {
-    DEBUG_LOG("Init TaskFactory\n", utils::verbose);
+    LOG("Init TaskFactory\n", utils::verbose);
     if (p_arguments.m_command.empty()) {
-        DEBUG_LOG("No console arguments provided\n", utils::verbose);
-        m_tasks.push(std::make_shared<HelpTask>(utils::NO_ARGS));
+        LOG("No console arguments provided\n", utils::verbose);
+        m_tasks.push(std::make_shared<HelpTask>(utils::CLI_NO_ARGS));
         return;
     }
     if (isHelp(p_arguments.m_command)) {
-        DEBUG_LOG("Help command detected\n", utils::verbose);
+        LOG("Help command detected\n", utils::verbose);
         m_tasks.push(std::make_shared<HelpTask>());
         return;
     }
-    if (p_arguments.m_command == utils::CONFIG_COMMAND) {
-        DEBUG_LOG("Config command detected\n", utils::verbose);
+    if (p_arguments.m_command == utils::CLI_COMMANDS_CONFIG) {
+        LOG("Config command detected\n", utils::verbose);
         if (isHelp(p_arguments.m_parameters)) {
-            DEBUG_LOG("Config-help detected\n", utils::verbose);
-            m_tasks.push(std::make_shared<HelpTask>(utils::CONFIG_COMMAND));
+            LOG("Config-help detected\n", utils::verbose);
+            m_tasks.push(std::make_shared<HelpTask>(utils::CLI_COMMANDS_CONFIG));
             return;
         }
         m_tasks.push(std::make_shared<ConfigTask>(p_arguments.m_parameters));
@@ -85,7 +85,7 @@ bool TaskFactory::runTasks()
 void TaskFactory::createSingleCsvTask(const std::string& p_fileName)
 {
     if (!isCsvFile(p_fileName)) {
-        DEBUG_LOG("The file " + p_fileName + " is not a csv file.\n", true);
+        LOG("The file " + p_fileName + " is not a csv file.\n", true);
         return;
     }
     m_tasks.push(std::make_shared<CsvTask>(p_fileName, m_settings, getDisplay()));
@@ -93,7 +93,7 @@ void TaskFactory::createSingleCsvTask(const std::string& p_fileName)
 
 void TaskFactory::searchDirectory(const std::string& p_directoryPath)
 {
-    DEBUG_LOG("Searching in direcotry: " + p_directoryPath + "\n", utils::verbose);
+    LOG("Searching in direcotry: " + p_directoryPath + "\n", utils::verbose);
     std::filesystem::path path { p_directoryPath };
     size_t foundFiles { 0 };
     for (const std::filesystem::path& directoryEntry : std::filesystem::directory_iterator(path)) {
@@ -115,12 +115,12 @@ std::shared_ptr<display::IDisplay> TaskFactory::getDisplay() const
 
 static bool isHelp(std::string p_command)
 {
-    return utils::HELP_COMMANDS.contains(p_command);
+    return utils::CLI_COMMANDS_HELP.contains(p_command);
 }
 
 static bool isHelp(data::console::Parameters p_parameters)
 {
-    for (const std::string& helpFlag : utils::HELP_COMMANDS) {
+    for (const std::string& helpFlag : utils::CLI_COMMANDS_HELP) {
         if (p_parameters.find(helpFlag) != p_parameters.end()) {
             return true;
         }

@@ -17,6 +17,7 @@
 #include "task/TaskFactory.h"
 #include "utils/Settings.h"
 #include "utils/Utility.h"
+#include "utils/programpath/ProgramPath.h"
 
 #include <iostream>
 
@@ -24,8 +25,9 @@ int main(int argc, const char* argv[])
 {
     // std::cin.get();
     std::cout << "* CsvValidator by QBZ * version: 1.0b\n";
+    csvvalidator::utils::setProgramPath(csvvalidator::utils::Program::absolutePath());
     csvvalidator::data::console::Arguments consoleArgs { csvvalidator::parser::Console::parse(argc, argv) };
-    csvvalidator::data::ini::File inifile { csvvalidator::parser::IniFile::parse(csvvalidator::utils::INI_FILE) };
+    csvvalidator::data::ini::File inifile { csvvalidator::parser::IniFile::parse(csvvalidator::utils::INI_FILE_NAME) };
     csvvalidator::utils::Settings settings(consoleArgs.m_parameters, inifile.m_content);
     csvvalidator::task::TaskFactory taskFactory(consoleArgs, settings);
     taskFactory.runTasks();

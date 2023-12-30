@@ -20,7 +20,7 @@ public:
     ConfigTask(const data::SettingData& p_arguments) :
         m_arguments(p_arguments)
     {
-        DEBUG_LOG("ConfigTask created\n", utils::verbose);
+        LOG("ConfigTask created\n", utils::verbose);
     }
 
     bool run() final;

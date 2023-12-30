@@ -21,7 +21,7 @@ public:
     Lines(const utils::ISettings& p_settings) :
         m_settings(p_settings)
     {
-        DEBUG_LOG("Lines display created\n", utils::verbose);
+        LOG("Lines display created\n", utils::verbose);
     }
 
     void render(const data::display::Report& p_report) const final;

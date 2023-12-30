@@ -109,12 +109,12 @@ ISettings::ErrorLevel convertToErrorLevel(const std::string& p_text)
 
 void Settings::init()
 {
-    DEBUG_LOG("Storing settings\n", utils::verbose);
-    DEBUG_LOG("Defaults:\n", utils::verbose);
+    LOG("Storing settings\n", utils::verbose);
+    LOG("Defaults:\n", utils::verbose);
     PRINT_SETTINGS(utils::DEFAULT_SETTINGS, utils::verbose);
-    DEBUG_LOG("From .ini file:\n", utils::verbose);
+    LOG("From .ini file:\n", utils::verbose);
     PRINT_SETTINGS(m_iniFile, utils::verbose);
-    DEBUG_LOG("From console args:\n", utils::verbose);
+    LOG("From console args:\n", utils::verbose);
     PRINT_SETTINGS(m_consoleArguments, utils::verbose);
 
     data::SettingData settingsToStore {};

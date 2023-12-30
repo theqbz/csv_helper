@@ -7,18 +7,18 @@
 /// OPTION NAME     OPTION DETAILS
 /// -----------     --------------
 /// delimiter       delimiter between fields in a csv file
-/// 
+///
 /// emptyLines      [ error | leave | skip ]
 ///                 defines what to do with empty lines
-/// 
+///
 /// diff            [ off | auto | above | below ]
-/// 
+///
 /// emptyFields     placeholder for empty values
 ///                 (0: skip empty values)
-/// 
+///
 /// errorLines      the number of lines around errors
 ///                 (0: show all lines)
-/// 
+///
 /// label           [ top | inline ]
 ///                 defines where to print the labels
 ///                 (This option and TalbeOutput are mutually exclusive: if
@@ -36,6 +36,8 @@
 
 #include "../data/SettingData.h"
 #include "ISettings.h"
+
+#include <filesystem>
 
 namespace csvvalidator {
 namespace utils {
@@ -70,6 +72,8 @@ public:
 
     void init();
 
+    inline void iniFileLocation(const std::filesystem::path p_path) { m_iniFileLocation = p_path; }
+    inline const std::filesystem::path iniFileLocation() const { return m_iniFileLocation; }
     inline void delimiter(const unsigned char p_delimiter) { m_delimiter = p_delimiter; }
     inline const unsigned char delimiter() const { return m_delimiter; }
     inline void emptyLines(const EmptyLines& p_placeholder) { m_emptyLines = p_placeholder; }
@@ -88,6 +92,7 @@ public:
     inline const ErrorLevel errorLevel() const { return m_errorLevel; }
 
 private:
+    std::filesystem::path m_iniFileLocation;
     data::SettingData m_consoleArguments;
     data::SettingData m_iniFile;
     unsigned char m_delimiter;

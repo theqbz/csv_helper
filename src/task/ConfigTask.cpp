@@ -27,14 +27,14 @@ std::string convertToFileContent(const data::SettingData& p_settingData)
 {
     std::string fileContent { "# CsvValidator settings\n" };
     for (const auto& [key, value] : p_settingData) {
-        fileContent += key + utils::KEY_VALUE_DELIMITER + value + "\n";
+        fileContent += key + utils::INI_KEY_VALUE_DELIMITER + value + "\n";
     }
     return fileContent;
 }
 
 void write(const data::SettingData& p_settings)
 {
-    utils::FileHandler file(utils::INI_FILE);
+    utils::FileHandler file(utils::INI_FILE_NAME);
     if (!file.get().good()) {
         DEBUG_LOG("Creating file " + file.fileName() + " for config\n", true);
         std::ofstream newFile(file.fileName());
@@ -58,7 +58,7 @@ void updateIniFile(data::SettingData& p_settings)
     DEBUG_LOG("Updating existing .ini file\n", utils::verbose);
     data::ini::File existingIniFile {};
     {
-        utils::FileHandler file(utils::INI_FILE);
+        utils::FileHandler file(utils::INI_FILE_NAME);
         existingIniFile = parser::IniFile::read(file.get());
     }
 

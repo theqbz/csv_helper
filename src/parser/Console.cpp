@@ -26,7 +26,7 @@ static void setVerbosity(StrVec* p_rawData);
 const data::console::Arguments Console::parse(const int p_argc,
                                               const char* const p_argv[])
 {
-    DEBUG_LOG("Parsing console arguments...\n", utils::verbose);
+    LOG("Parsing console arguments...\n", utils::verbose);
     StrVec rawData = Console::convert(p_argc, p_argv);
     setVerbosity(&rawData);
     data::console::Arguments arguments {};
@@ -60,7 +60,7 @@ const data::console::Parameters Console::createParameters(const StrVec& p_rawDat
         removeDashes(&parameter.first);
         const auto [iterator, success] = parameters.insert(parameter);
         if (!success) {
-            DEBUG_LOG("An error with console argument: " + parameter.first + ", " + parameter.second + "\n", true);
+            LOG("An error with console argument: " + parameter.first + ", " + parameter.second + "\n", true);
         }
     }
     return parameters;
@@ -69,7 +69,7 @@ const data::console::Parameters Console::createParameters(const StrVec& p_rawDat
 const std::string Console::getCommand(StrVec* p_rawData)
 {
     if (!p_rawData) {
-        DEBUG_LOG("Program logic error: nullptr as rawData @ getCommand\n", true);
+        LOG("Program logic error: nullptr as rawData @ getCommand\n", true);
         return {};
     }
     if (p_rawData->empty()) {
@@ -97,34 +97,33 @@ static inline bool hasKey(const data::console::Parameter& p_parameter)
 
 static inline bool isKey(const std::string& p_text)
 {
-    return !p_text.empty() && *p_text.begin() == utils::KEY_MARKER;
+    return !p_text.empty() && *p_text.begin() == utils::CLI_KEY_MARKER;
 }
 
 void removeDashes(std::string* p_parameterKey)
 {
     if (!p_parameterKey) {
-        DEBUG_LOG("Program logic error: nullptr as p_parameter @ removeDashes\n", true);
+        LOG("Program logic error: nullptr as p_parameter @ removeDashes\n", true);
         return;
     }
     std::string& key = *p_parameterKey;
-    key.erase(key.begin(), key.begin() + key.find_first_not_of(utils::KEY_MARKER));
+    key.erase(key.begin(), key.begin() + key.find_first_not_of(utils::CLI_KEY_MARKER));
 }
 
 static void setVerbosity(StrVec* p_rawData)
 {
     if (!p_rawData) {
-        DEBUG_LOG("Program logic error: nullptr as rawData @ setVerbosity()\n", true);
+        LOG("Program logic error: nullptr as rawData @ setVerbosity()\n", true);
         return;
     }
     if (p_rawData->empty()) {
         return;
     }
-    StrVec::iterator it = p_rawData->begin();
-    for (; it != p_rawData->end(); ++it) {
-        if (utils::VERBOSE_COMMANDS.contains(*it)) {
+    for (StrVec::iterator it = p_rawData->begin(); it != p_rawData->end(); ++it) {
+        if (utils::CLI_VERBOSE_COMMANDS.contains(*it)) {
             utils::verbose = true;
             p_rawData->erase(it);
-            DEBUG_LOG("Verbose mode\n", utils::verbose);
+            LOG("Verbose mode\n", true);
             return;
         }
     }

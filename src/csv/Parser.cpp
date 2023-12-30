@@ -19,7 +19,7 @@ const std::string getLabel(const data::csv::Labels& p_labels,
                            const size_t p_fieldCounter)
 {
     if (p_fieldCounter < 0 || (p_labels.size() - 1) < p_fieldCounter) {
-        return utils::INVALID_LABEL;
+        return utils::CSV_INVALID_LABEL;
     }
     return p_labels.at(p_fieldCounter);
 }
@@ -31,7 +31,7 @@ data::csv::Record getRecords(const std::string& p_line,
     if (p_line.length() == 0) {
         return {};
     }
-    DEBUG_LOG("Parsing Records from csv file\n", false);
+    LOG("Parsing Records from csv file\n", false);
     data::csv::Record record {};
     data::csv::Fields fields {};
     size_t offset { 0 };
@@ -56,7 +56,7 @@ const data::csv::Labels getLabels(const std::string& p_line,
     if (p_line.empty()) {
         return {};
     }
-    DEBUG_LOG("Parsing Labels from csv file\n", false);
+    LOG("Parsing Labels from csv file\n", false);
     data::csv::Labels labels {};
     size_t offset { 0 };
     size_t semicolonPos { 0 };
@@ -72,7 +72,7 @@ const data::csv::File parse(std::fstream& p_file,
                             const unsigned char p_delimiter)
 {
     if (p_file.peek() == std::char_traits<char>::eof()) {
-        DEBUG_LOG("File not exists @ csv Parser()\n", utils::verbose);
+        LOG("File not exists @ csv Parser()\n", utils::verbose);
         return {};
     }
     data::csv::File file {};
@@ -90,15 +90,15 @@ const data::csv::File parse(std::fstream& p_file,
             firstNonEmptyLineFound = true;
         }
     }
-    DEBUG_LOG(utils::INDENTATION + "fileLineCounter = " + std::to_string(fileLineCounter) + "\n", utils::verbose);
-    DEBUG_LOG(utils::INDENTATION + "label count = " + std::to_string(file.m_labels.size()) + "\n", utils::verbose);
-    DEBUG_LOG(utils::INDENTATION + "content count = " + std::to_string(file.m_content.size()) + "\n", utils::verbose);
+    LOG(utils::INDENTATION + "fileLineCounter = " + std::to_string(fileLineCounter) + "\n", utils::verbose);
+    LOG(utils::INDENTATION + "label count = " + std::to_string(file.m_labels.size()) + "\n", utils::verbose);
+    LOG(utils::INDENTATION + "content count = " + std::to_string(file.m_content.size()) + "\n", utils::verbose);
     return file;
 }
 
 const data::csv::File Parser::process(utils::IFileHandler& p_csvFile)
 {
-    DEBUG_LOG("Parsing " + p_csvFile.fileName() + " file\n", utils::verbose);
+    LOG("Parsing " + p_csvFile.fileName() + " file\n", utils::verbose);
     data::csv::File csvFile { parse(p_csvFile.get(), m_settings.delimiter()) };
     csvFile.m_fileName = p_csvFile.fileName();
     return csvFile;

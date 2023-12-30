@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <string>
+#include <filesystem>
 
 namespace csvvalidator {
 namespace utils {
@@ -42,7 +42,7 @@ public:
     ///
     enum class ErrorLevel
     {
-        All,   ///< Prints errors and warnings
+        All,  ///< Prints errors and warnings
         Error ///< Prints only errors
     };
 
@@ -57,21 +57,23 @@ public:
     ISettings()          = default;
     virtual ~ISettings() = default;
 
-    virtual inline void delimiter(const unsigned char p_delimiter)     = 0;
+    virtual inline void iniFileLocation(const std::filesystem::path)   = 0;
+    virtual inline const std::filesystem::path iniFileLocation() const = 0;
+    virtual inline void delimiter(const unsigned char)                 = 0;
     virtual inline const unsigned char delimiter() const               = 0;
-    virtual inline void linesAroundErrors(const size_t p_value)        = 0;
+    virtual inline void linesAroundErrors(const size_t)                = 0;
     virtual inline const size_t linesAroundErrors() const              = 0;
-    virtual inline void labelPosition(const LabelPosition p_position)  = 0;
+    virtual inline void labelPosition(const LabelPosition)             = 0;
     virtual inline const LabelPosition labelPosition() const           = 0;
-    virtual inline void emptyFields(const unsigned char p_placeholder) = 0;
+    virtual inline void emptyFields(const unsigned char)               = 0;
     virtual inline const unsigned char emptyFields() const             = 0;
-    virtual inline void emptyLines(const EmptyLines& p_placeholder)    = 0;
+    virtual inline void emptyLines(const EmptyLines&)                  = 0;
     virtual inline const EmptyLines emptyLines() const                 = 0;
-    virtual inline void tableOutput(const bool p_value)                = 0;
+    virtual inline void tableOutput(const bool)                        = 0;
     virtual inline const bool tableOutput() const                      = 0;
-    virtual inline void diffDetectMode(const DiffDetectMode p_mode)    = 0;
+    virtual inline void diffDetectMode(const DiffDetectMode)           = 0;
     virtual inline const DiffDetectMode diffDetectMode() const         = 0;
-    virtual inline void errorLevel(const ErrorLevel p_errorLevel)      = 0;
+    virtual inline void errorLevel(const ErrorLevel)                   = 0;
     virtual inline const ErrorLevel errorLevel() const                 = 0;
 };
 

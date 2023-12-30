@@ -33,7 +33,7 @@ FileHandler::FileHandler(const std::filesystem::path& p_path) noexcept :
 FileHandler::~FileHandler()
 {
     m_file.close();
-    DEBUG_LOG(m_fileName + " file closed\n", utils::verbose);
+    LOG(m_fileName + " file closed\n", utils::verbose);
 }
 
 void FileHandler::checkFile() const
@@ -42,7 +42,7 @@ void FileHandler::checkFile() const
         std::cout << "Failed to open file: " << m_fileName << "\n";
         return;
     }
-    DEBUG_LOG(m_fileName + " file opened successfull\n", utils::verbose);
+    LOG(m_fileName + " file opened successfull\n", utils::verbose);
 }
 
 } // namespace utils

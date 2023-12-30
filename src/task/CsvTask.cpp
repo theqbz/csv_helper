@@ -31,9 +31,9 @@ CsvTask::CsvTask(const std::string& p_path,
     m_file(p_path),
     m_display(p_display)
 {
-    DEBUG_LOG("CsvTask created\n", utils::verbose);
+    LOG("CsvTask created\n", utils::verbose);
     if (!m_display.get()) {
-        DEBUG_LOG("Program logic error: nullptr as display @ CsvTask constructor\n", true);
+        LOG("Program logic error: nullptr as display @ CsvTask constructor\n", true);
         std::exit(1);
     }
 }
@@ -45,16 +45,16 @@ CsvTask::CsvTask(const std::filesystem::path& p_path,
     m_file(p_path),
     m_display(p_display)
 {
-    DEBUG_LOG("CsvTask created\n", utils::verbose);
+    LOG("CsvTask created\n", utils::verbose);
     if (!m_display.get()) {
-        DEBUG_LOG("Program logic error: nullptr as display @ CsvTask constructor\n", true);
+        LOG("Program logic error: nullptr as display @ CsvTask constructor\n", true);
         std::exit(1);
     }
 }
 
 bool CsvTask::run()
 {
-    DEBUG_LOG("CsvTask running\n", utils::verbose);
+    LOG("CsvTask running\n", utils::verbose);
     csv::Parser csvParser(m_settings);
     csv::Analyzer csvAnalyzer(m_settings);
     display::Reporter reporter(m_settings);
