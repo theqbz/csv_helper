@@ -24,7 +24,7 @@ FileHandler::FileHandler(const std::string& p_fileName) noexcept :
 }
 
 FileHandler::FileHandler(const std::filesystem::path& p_path) noexcept :
-    m_fileName(p_path.string()),
+    m_fileName(p_path.filename().string()),
     m_file(p_path)
 {
     checkFile();
@@ -39,7 +39,7 @@ FileHandler::~FileHandler()
 void FileHandler::checkFile() const
 {
     if (!m_file.good()) {
-        std::cout << "Failed to open file: " << m_fileName << "\n";
+        LOG("Failed to open file: " + m_fileName + "\n", true);
         return;
     }
     LOG(m_fileName + " file opened successfull\n", utils::verbose);

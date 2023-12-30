@@ -6,16 +6,14 @@
 ///
 
 #include "ConfigTask.h"
-#include "../data/IniFile.h"
 #include "../data/SettingData.h"
 #include "../parser/IniFile.h"
 #include "../utils/FileHandler.h"
 #include "../utils/Utility.h"
 
-#include <fstream>
+#include <filesystem>
+#include <iosfwd>
 #include <iostream>
-#include <map>
-#include <ostream>
 #include <string>
 
 namespace csvvalidator {
@@ -32,60 +30,70 @@ std::string convertToFileContent(const data::SettingData& p_settingData)
     return fileContent;
 }
 
-void write(const data::SettingData& p_settings)
+void createNewIniFile(const data::SettingData& p_settings,
+                      const std::filesystem::path& p_iniPath)
 {
-    utils::FileHandler file(utils::INI_FILE_NAME);
-    if (!file.get().good()) {
-        DEBUG_LOG("Creating file " + file.fileName() + " for config\n", true);
-        std::ofstream newFile(file.fileName());
-        newFile << convertToFileContent(p_settings).c_str();
-        newFile.close();
-        return;
-    }
-    DEBUG_LOG("Writing config to " + file.fileName() + "\n", true);
+    LOG("Creating new config file\n", true);
+    std::ofstream newFile(p_iniPath);
+    newFile << convertToFileContent(p_settings).c_str();
+    newFile.close();
+}
+
+void updateExistingIniFile(const data::SettingData& p_settings,
+                           const std::filesystem::path& p_iniPath)
+{
+    utils::FileHandler file(p_iniPath);
+    LOG("Update config file\n", true);
     file.get() << convertToFileContent(p_settings).c_str();
 }
 
-void storeDefaultSettings()
+const data::SettingData mergeSettings(data::SettingData& p_newSettings,
+                                      data::SettingData& p_existingSettings)
 {
-    if (question("Would you like to create a _new_ .ini file with the _default_ settings? ")) {
-        write(data::SettingData(utils::DEFAULT_SETTINGS));
-    }
-}
-
-void updateIniFile(data::SettingData& p_settings)
-{
-    DEBUG_LOG("Updating existing .ini file\n", utils::verbose);
-    data::ini::File existingIniFile {};
-    {
-        utils::FileHandler file(utils::INI_FILE_NAME);
-        existingIniFile = parser::IniFile::read(file.get());
-    }
-
-    DEBUG_LOG("Setting from existing .ini file:\n", utils::verbose);
-    PRINT_SETTINGS(existingIniFile.m_content, utils::verbose);
-    DEBUG_LOG("Settings from console args:\n", utils::verbose);
-    PRINT_SETTINGS(p_settings, utils::verbose);
+    LOG("Previous setting:\n", utils::verbose);
+    PRINT_SETTINGS(p_existingSettings, utils::verbose);
+    LOG("New settings:\n", utils::verbose);
+    PRINT_SETTINGS(p_newSettings, utils::verbose);
 
     data::SettingData newIniContent {};
-    newIniContent.merge(p_settings);
-    newIniContent.merge(existingIniFile.m_content);
+    newIniContent.merge(p_newSettings);
+    newIniContent.merge(p_existingSettings);
 
-    DEBUG_LOG("Merged settings:\n", utils::verbose);
+    LOG("Settings to be stored:\n", utils::verbose);
     PRINT_SETTINGS(newIniContent, utils::verbose);
+    return newIniContent;
+}
 
-    write(newIniContent);
+void storeSettings(data::SettingData& p_settingsToStore)
+{
+    LOG("Store settings\n", utils::verbose);
+    const std::filesystem::path iniPath { utils::getIniLocation() };
+    const bool iniFileExists { utils::iniFileExists(iniPath) };
+    data::SettingData existingIniContent {};
+    if (iniFileExists) {
+        utils::FileHandler file(iniPath);
+        existingIniContent = parser::IniFile::read(file.get()).m_content;
+    }
+    const data::SettingData newIniContent { mergeSettings(p_settingsToStore, existingIniContent) };
+    if (iniFileExists) {
+        updateExistingIniFile(newIniContent, iniPath);
+        return;
+    }
+    createNewIniFile(newIniContent, iniPath);
 }
 
 bool task::ConfigTask::run()
 {
-    DEBUG_LOG("ConfigTask running\n", utils::verbose);
+    LOG("ConfigTask running\n", utils::verbose);
+    data::SettingData settingsToStore { m_arguments };
     if (m_arguments.empty()) {
-        DEBUG_LOG("No arguments to store to .ini file\n", utils::verbose);
-        storeDefaultSettings();
-        return true;
+        LOG("No arguments to store to .ini file\n", utils::verbose);
+        if (!question("Would you like to create a _new_ config file with the default settings? ")) {
+            return true;
+        }
+        settingsToStore = data::SettingData(utils::DEFAULT_SETTINGS);
     }
-    updateIniFile(m_arguments);
+    storeSettings(settingsToStore);
     return true;
 }
 

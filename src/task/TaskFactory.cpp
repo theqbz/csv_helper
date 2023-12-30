@@ -32,6 +32,8 @@ static bool isCsvFile(const std::filesystem::path& p_path);
 void TaskFactory::init(const data::console::Arguments& p_arguments)
 {
     LOG("Init TaskFactory\n", utils::verbose);
+    // TODO:
+    // add createHelpTask and createCommandTask functions to simplify this
     if (p_arguments.m_command.empty()) {
         LOG("No console arguments provided\n", utils::verbose);
         m_tasks.push(std::make_shared<HelpTask>(utils::CLI_NO_ARGS));
