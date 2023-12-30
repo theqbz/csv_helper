@@ -42,6 +42,9 @@ add_executable( csv_validator
     "utils/Settings.h"
     "utils/Settings.cpp"
     "utils/Utility.h"
+    "utils/programpath/ProgramPath.h"
+    "utils/programpath/WindowsPath.h"
+    "utils/programpath/LinuxPath.h"
     "main.cpp"
 )
 
