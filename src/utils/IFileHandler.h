@@ -7,7 +7,8 @@
 
 #pragma once
 
-#include <fstream>
+#include <iosfwd>
+#include <string>
 
 namespace csvvalidator {
 namespace utils {

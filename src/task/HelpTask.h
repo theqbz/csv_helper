@@ -27,7 +27,7 @@ public:
     bool run() final;
     void printShortHelp() const;
     void printFullHelp() const;
-    void printSettingWriterHelp() const;
+    void printConfigWriterHelp() const;
 
 private:
     std::string m_request;

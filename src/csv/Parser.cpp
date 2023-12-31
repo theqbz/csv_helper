@@ -11,6 +11,8 @@
 #include "../utils/Utility.h"
 
 #include <string>
+#include <iosfwd>
+#include <fstream>
 
 namespace csvvalidator {
 namespace csv {

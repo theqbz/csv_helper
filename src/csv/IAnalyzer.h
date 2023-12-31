@@ -2,7 +2,7 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  Analyzer.h
-/// @brief Interface definition for Analyzer class
+/// @brief Interface declaration for Analyzer class
 ///
 
 #pragma once
