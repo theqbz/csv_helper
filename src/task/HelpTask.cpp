@@ -19,6 +19,7 @@ static std::string aboutStart();
 static std::string aboutSettings();
 static std::string aboutConfig();
 static std::string aboutHelp();
+static bool isConfigHelp(const std::string& p_request);
 
 bool HelpTask::run()
 {
@@ -31,8 +32,8 @@ bool HelpTask::run()
         printShortHelp();
         return true;
     }
-    if (m_request == utils::CLI_COMMANDS_CONFIG) {
-        printSettingWriterHelp();
+    if (isConfigHelp(m_request)) {
+        printConfigWriterHelp();
         return true;
     }
     return false;
@@ -62,7 +63,7 @@ void HelpTask::printFullHelp() const
         << "\n";
 }
 
-void HelpTask::printSettingWriterHelp() const
+void HelpTask::printConfigWriterHelp() const
 {
     LOG("Printing config writer help\n\n", utils::verbose);
     std::cout << "\n"
@@ -129,6 +130,11 @@ std::string aboutHelp()
     return "\n"
         + utils::INDENTATION + "To get help, use the  help  command!\n"
         + "\n";
+}
+
+bool isConfigHelp(const std::string& p_request)
+{
+    return utils::CLI_COMMANDS_CONFIG.contains(p_request);
 }
 
 } // namespace task

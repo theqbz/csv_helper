@@ -18,7 +18,6 @@
 #include "HelpTask.h"
 
 #include <filesystem>
-#include <iostream>
 #include <memory>
 #include <string>
 
@@ -27,49 +26,44 @@ namespace task {
 
 static bool isHelp(std::string p_command);
 static bool isHelp(data::console::Parameters p_parameters);
+static bool isConfigCommand(const std::string& p_request);
 static bool isCsvFile(const std::filesystem::path& p_path);
+
+TaskFactory::TaskFactory(const data::console::Arguments& p_arguments,
+                         const utils::ISettings& p_settings) noexcept :
+    m_settings(p_settings)
+{
+    init(p_arguments);
+}
 
 void TaskFactory::init(const data::console::Arguments& p_arguments)
 {
     LOG("Init TaskFactory\n", utils::verbose);
-    // TODO:
-    // add createHelpTask and createCommandTask functions to simplify this
-    if (p_arguments.m_command.empty()) {
-        LOG("No console arguments provided\n", utils::verbose);
-        m_tasks.push(std::make_shared<HelpTask>(utils::CLI_NO_ARGS));
-        return;
-    }
     if (isHelp(p_arguments.m_command)) {
-        LOG("Help command detected\n", utils::verbose);
-        m_tasks.push(std::make_shared<HelpTask>());
+        createHelpTask(p_arguments.m_command);
         return;
     }
-    if (p_arguments.m_command == utils::CLI_COMMANDS_CONFIG) {
+    if (isConfigCommand(p_arguments.m_command)) {
         LOG("Config command detected\n", utils::verbose);
-        if (isHelp(p_arguments.m_parameters)) {
-            LOG("Config-help detected\n", utils::verbose);
-            m_tasks.push(std::make_shared<HelpTask>(utils::CLI_COMMANDS_CONFIG));
-            return;
-        }
-        m_tasks.push(std::make_shared<ConfigTask>(p_arguments.m_parameters));
+        createConfigTask(p_arguments);
         return;
     }
     const std::filesystem::file_status status { std::filesystem::status(std::filesystem::path { p_arguments.m_command }) };
     switch (status.type()) {
     case std::filesystem::file_type::none:
-        std::cout << "Can't recognize the type of the file: " << p_arguments.m_command << "\n";
+        LOG("Can't recognize the type of the file: " + p_arguments.m_command + "\n", true);
         break;
     case std::filesystem::file_type::not_found:
-        std::cout << "Can't find the the file: " << p_arguments.m_command << "\n";
+        LOG("Can't find the the file: " + p_arguments.m_command + "\n", true);
         break;
     case std::filesystem::file_type::regular:
         createSingleCsvTask(p_arguments.m_command);
         break;
     case std::filesystem::file_type::directory:
-        searchDirectory(p_arguments.m_command);
+        createCsvTasksFromDirectory(p_arguments.m_command);
         break;
     default:
-        std::cout << "Not acceptable file type: " << p_arguments.m_command;
+        LOG("Not acceptable file type: " + p_arguments.m_command, true);
         break;
     }
 }
@@ -84,6 +78,22 @@ bool TaskFactory::runTasks()
     return success;
 }
 
+void TaskFactory::createHelpTask(const std::string p_command)
+{
+    LOG(p_command + "help detected\n", utils::verbose);
+    m_tasks.push(std::make_shared<HelpTask>(p_command));
+}
+
+void TaskFactory::createConfigTask(const data::console::Arguments& p_arguments)
+{
+    if (isHelp(p_arguments.m_parameters)) {
+        LOG("Config-help detected\n", utils::verbose);
+        createHelpTask(p_arguments.m_command);
+        return;
+    }
+    m_tasks.push(std::make_shared<ConfigTask>(p_arguments.m_parameters));
+}
+
 void TaskFactory::createSingleCsvTask(const std::string& p_fileName)
 {
     if (!isCsvFile(p_fileName)) {
@@ -93,7 +103,7 @@ void TaskFactory::createSingleCsvTask(const std::string& p_fileName)
     m_tasks.push(std::make_shared<CsvTask>(p_fileName, m_settings, getDisplay()));
 }
 
-void TaskFactory::searchDirectory(const std::string& p_directoryPath)
+void TaskFactory::createCsvTasksFromDirectory(const std::string& p_directoryPath)
 {
     LOG("Searching in direcotry: " + p_directoryPath + "\n", utils::verbose);
     std::filesystem::path path { p_directoryPath };
@@ -104,7 +114,7 @@ void TaskFactory::searchDirectory(const std::string& p_directoryPath)
             ++foundFiles;
         }
     }
-    std::cout << "There was " << foundFiles << " csv files on path " << p_directoryPath << "\n";
+    LOG("There was " + std::to_string(foundFiles) + " csv files on path " + p_directoryPath + "\n", true);
 }
 
 std::shared_ptr<display::IDisplay> TaskFactory::getDisplay() const
@@ -117,7 +127,7 @@ std::shared_ptr<display::IDisplay> TaskFactory::getDisplay() const
 
 static bool isHelp(std::string p_command)
 {
-    return utils::CLI_COMMANDS_HELP.contains(p_command);
+    return p_command.empty() || utils::CLI_COMMANDS_HELP.contains(p_command);
 }
 
 static bool isHelp(data::console::Parameters p_parameters)
@@ -128,6 +138,11 @@ static bool isHelp(data::console::Parameters p_parameters)
         }
     }
     return false;
+}
+
+static bool isConfigCommand(const std::string& p_request)
+{
+    return utils::CLI_COMMANDS_CONFIG.contains(p_request);
 }
 
 static bool isCsvFile(const std::filesystem::path& p_path)

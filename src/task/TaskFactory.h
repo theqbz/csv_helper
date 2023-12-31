@@ -25,13 +25,8 @@ public:
     TaskFactory()                   = delete;
     TaskFactory(const TaskFactory&) = delete;
 
-    TaskFactory(const data::console::Arguments& p_arguments,
-                const utils::ISettings& p_settings) :
-        m_settings(p_settings)
-    {
-        init(p_arguments);
-    }
-
+    explicit TaskFactory(const data::console::Arguments& p_arguments,
+                         const utils::ISettings& p_settings) noexcept;
     void init(const data::console::Arguments& p_arguments);
     bool runTasks();
 
@@ -39,8 +34,10 @@ private:
     const utils::ISettings& m_settings;
     std::queue<std::shared_ptr<task::ITask>> m_tasks;
 
+    void createHelpTask(const std::string p_command);
+    void createConfigTask(const data::console::Arguments& p_arguments);
     void createSingleCsvTask(const std::string& p_fileName);
-    void searchDirectory(const std::string& p_directoryPath);
+    void createCsvTasksFromDirectory(const std::string& p_directoryPath);
     std::shared_ptr<display::IDisplay> getDisplay() const;
 };
 

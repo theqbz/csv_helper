@@ -304,7 +304,7 @@ static const std::string getRowHead(const size_t p_totalLineCount,
     std::string_view totalLineCount { std::to_string(p_totalLineCount) };
     return getPlaceholder(totalLineCount, p_currentLineSign)
         + p_currentLineSign + "."
-        + utils::DISPLAY_PROMT_END_SIGN;
+        + utils::DISPLAY_PROMT_CLOSE_SIGN;
 }
 
 static const std::string getRowHead(const size_t p_totalLineCount,
