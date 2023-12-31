@@ -2,10 +2,11 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  IniFile.h
-/// @brief Definition of the datastructure to descibe and store records from
-///        a .ini file
+/// @brief Declarations of ini::File, ini::Records datastructures
 ///
-
+/// These datastructures descibes the structure of an *ini file* and stores
+/// data from the file.
+///
 #pragma once
 
 #include "SettingData.h"
@@ -13,18 +14,18 @@
 #include <string>
 #include <utility>
 
-namespace csvvalidator {
-namespace data {
+namespace csvvalidator::data {
 namespace ini {
 
 ///
-/// An ini record type contains a pair of < key, value >
+/// An ini record type is a pair of < key, value >
 ///
 typedef std::pair<std::string, std::string> Record;
 
 ///
 /// @brief Container for the records (rows) of an .ini file.
-/// A Record consists a pair of < key, value >
+///
+/// Records are SettingData and consists a list of unique < key, value > pairs.
 ///
 struct Records : public SettingData
 { };
@@ -39,5 +40,4 @@ struct File
 };
 
 } // namespace ini
-} // namespace data
-} // namespace csvvalidator
+} // namespace csvvalidator::data

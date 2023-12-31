@@ -2,34 +2,31 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  Result.h
-/// @brief Definition of the datastructure which stores the result of the
-///        analysis of a csv::File
+/// @brief Declarations of csv::Result, csv::ErrorList and csv::ErrorEntry
+///        datastructures.
 ///
-
+/// These datastructures stores the result of the analysis of a csv::File
+///
 #pragma once
-
-#include "../utils/ISettings.h"
-#include "Report.h"
 
 #include <string>
 #include <utility>
 #include <vector>
 
-namespace csvvalidator {
-namespace data {
+namespace csvvalidator::data {
 namespace csv {
 
 ///
 /// @brief Container for error messages.
-/// An ErrorEntry consist the line number and the error message represented
-/// by a < size_t, string > pair, and the type of the message
+/// 
+/// An ErrorEntry is a < size_t, string > pair of the line number and the error
+/// message, and contains the type of the entry.
 ///
 struct ErrorEntry : public std::pair<size_t, std::string>
 {
     ///
     /// @brief The type of the entry.
-    /// ErrorEntry type can be [ info | warning | err(or) ]
-    ///
+    /// 
     enum class Type
     {
         INFO,    ///> information
@@ -42,7 +39,8 @@ struct ErrorEntry : public std::pair<size_t, std::string>
 
 ///
 /// @brief Container for error log.
-/// Error log is a vector of ErrorEntryes
+/// 
+/// Error log is a vector of ErrorEntries
 ///
 struct ErrorList : public std::vector<ErrorEntry>
 { };
@@ -58,5 +56,4 @@ struct Result
 };
 
 } // namespace csv
-} // namespace data
-} // namespace csvvalidator
+} // namespace csvvalidator::data

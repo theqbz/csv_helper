@@ -2,9 +2,10 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  Ranges.h
-/// @brief Declaration of range datastructure
+/// @brief Declarations of display::Ranges and display::Range datastructure
 ///
-
+/// These datastructures stores ranges with ordering functions
+///
 #pragma once
 
 #include <algorithm>
@@ -12,15 +13,20 @@
 #include <utility>
 #include <vector>
 
-namespace csvvalidator {
-namespace data {
+namespace csvvalidator::data {
 namespace display {
 
+///
+/// @brief A range defined by a start and end point.
+///
+/// The points represented by a < size_t, size_t > pair. The range contains
+/// both the start and end points.
+///
 struct Range : public std::pair<size_t, size_t>
 {
     ///
-    /// @brief Make the begining and the end point of the Range in a non
-    ///        descending order.
+    /// @brief Make the start and end points of the Range in non-descending
+    ///        order.
     ///
     inline void normalize()
     {
@@ -29,17 +35,18 @@ struct Range : public std::pair<size_t, size_t>
         }
     }
 
-    inline std::strong_ordering operator<=>(const Range& p_other) const
-    {
-        return this->first <=> p_other.first;
-    }
+    inline std::strong_ordering operator<=>(const Range& p_other) const { return this->first <=> p_other.first; }
 };
 
+///
+/// @brief Container for Ranges.
+///
+/// Ranges consists of a vector of Range.
+///
 struct Ranges : public std::vector<Range>
 {
     ///
-    /// @brief Make all the begining and the end points of all the Range in a
-    ///        non descending order.
+    /// @brief Normalize all of the Ranges.
     ///
     void normalize()
     {
@@ -48,12 +55,8 @@ struct Ranges : public std::vector<Range>
         }
     }
 
-    inline void sort()
-    {
-        std::sort(this->begin(), this->end());
-    }
+    inline void sort() { std::sort(this->begin(), this->end()); }
 };
 
 } // namespace display
-} // namespace data
-} // namespace csvvalidator
+} // namespace csvvalidator::data

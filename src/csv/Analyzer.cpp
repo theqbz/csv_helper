@@ -63,7 +63,7 @@ void checkRecordDuplication(data::csv::Content* p_content,
 }
 
 ///
-/// @brief Edit the State of the RecordHead accordingly the size of the
+/// @brief Edit the ErrorState of the RecordHead accordingly the size of the
 ///        csv::Recod and program Settings.
 ///
 /// Record size is the number of Fileds in the csv::Record, which if different
@@ -89,15 +89,15 @@ void markWrongLineLength(data::csv::Record* p_record,
     }
     const size_t recordSize = p_record->second.size();
     if (recordSize == p_labelCount) {
-        p_record->first.m_state = data::csv::RecordHead::State::OK;
+        p_record->first.m_state = data::csv::RecordHead::ErrorState::OK;
         return;
     }
     if (recordSize == 0 && p_emptyLinesNotErrors) {
-        p_record->first.m_state = data::csv::RecordHead::State::EMPTY;
+        p_record->first.m_state = data::csv::RecordHead::ErrorState::EMPTY;
         ++(p_result->m_emptyLineCount);
         return;
     }
-    p_record->first.m_state = data::csv::RecordHead::State::ERR;
+    p_record->first.m_state = data::csv::RecordHead::ErrorState::ERR;
     data::csv::ErrorEntry errorEntry {};
     errorEntry.first  = p_record->first.m_fileLineNumber;
     errorEntry.second = ("The line doesn't match to the label list. (records: "

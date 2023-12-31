@@ -48,7 +48,7 @@ public:
 
     const bool isLabelInline() const;
     const std::string getFieldContent(const data::csv::Field& p_field) const;
-    const bool isEmptyRowAndSkipIt(const data::csv::RecordHead::State& p_recordState) const;
+    const bool isEmptyRowAndSkipIt(const data::csv::RecordHead::ErrorState& p_recordState) const;
     const data::display::Row addLine(const data::csv::Record& p_record,
                                      const size_t p_lastLineNumber) const;
     const data::display::Table addLines(const data::csv::File& p_csvFile,

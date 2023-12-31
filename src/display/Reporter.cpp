@@ -138,9 +138,9 @@ const std::string Reporter::getFieldContent(const data::csv::Field& p_field) con
         : p_field.m_content.second;
 }
 
-const bool Reporter::isEmptyRowAndSkipIt(const data::csv::RecordHead::State& p_recordState) const
+const bool Reporter::isEmptyRowAndSkipIt(const data::csv::RecordHead::ErrorState& p_recordState) const
 {
-    return p_recordState == data::csv::RecordHead::State::EMPTY
+    return p_recordState == data::csv::RecordHead::ErrorState::EMPTY
         && m_settings.emptyLines() == utils::ISettings::EmptyLines::Skip;
 }
 
@@ -193,7 +193,7 @@ static const std::vector<size_t> getErrorLineNumbers(const data::csv::Content& p
     data::csv::Content::const_iterator firstRecord   = p_content.begin();
     data::csv::Content::const_iterator currentRecord = firstRecord;
     for (; currentRecord != p_content.end(); ++currentRecord) {
-        if (currentRecord->first.m_state == data::csv::RecordHead::State::ERR) {
+        if (currentRecord->first.m_state == data::csv::RecordHead::ErrorState::ERR) {
             errorLineNumbers.push_back(std::distance(firstRecord, currentRecord));
         }
     }
@@ -227,7 +227,7 @@ static const size_t upperBound(const size_t p_initialNumber,
 
 static const std::string getRecordState(const data::csv::RecordHead& p_recordHead)
 {
-    data::csv::RecordHead::State state = p_recordHead.m_state;
+    data::csv::RecordHead::ErrorState state = p_recordHead.m_state;
     std::string result {};
     switch (state) {
     case data::csv::RecordHead::OK:
@@ -240,7 +240,7 @@ static const std::string getRecordState(const data::csv::RecordHead& p_recordHea
         result = utils::DISPLAY_PROMPT_NEUTRAL_SIGN;
         break;
     default:
-        result = "@!> Program logic error: invalid RecordHead State";
+        result = "@!> Program logic error: invalid RecordHead ErrorState";
         break;
     }
     return result;

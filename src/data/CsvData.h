@@ -2,89 +2,82 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  CsvData.h
-/// @brief Definition of the datastructure which describes the structure of a
-///        csv file and stores the data from it.
+/// @brief Declarations of csv::File, csv::Labels, csv::Content, csv::Record,
+///        csv::Fields, csv::Field and csv::RecordHead datastructures.
 ///
-
+/// These datastructures describes the structure of a *csv file* and stores the
+/// data from the file.
+///
 #pragma once
 
 #include <string>
 #include <utility>
 #include <vector>
 
-namespace csvvalidator {
-namespace data {
+namespace csvvalidator::data {
 namespace csv {
 
 ///
-/// @brief Contains the state of the record
+/// @brief The state of a csv::Record.
 ///
 struct RecordHead
 {
     ///
-    /// The state of the Record
-    /// Represent by [ OK | ERR | EMPTY ]
+    /// @brief The error state of the Record.
     ///
-    enum State
+    enum ErrorState
     {
-        OK,    ///< Line alright
-        ERR,   ///< Line error
-        EMPTY, ///< Line empty but not error (to handle differently during displaying)
+        OK,    ///< Record without error
+        ERR,   ///< Incorrect Record
+        EMPTY, ///< Record is empty but this is not an error (to handle differently during displaying)
     };
 
-    size_t m_fileLineNumber { 0 }; ///< The line number in the original file
-    bool m_duplicated { false };   ///< Signs if the current line occoures more than once on the file
-    State m_state { State::OK };   ///< The state of the record
+    ErrorState m_state { ErrorState::OK }; ///< The error state of the record
+    size_t m_fileLineNumber { 0 };         ///< The line number in the original file
+    bool m_duplicated { false };           ///< Signs if the current line occoures more than once on the file
 
-    inline bool operator==(const RecordHead& p_other) const { return this->m_fileLineNumber == p_other.m_fileLineNumber && this->m_state == p_other.m_state; }
+    inline bool operator==(const RecordHead& p_other) const
+    {
+        return this->m_fileLineNumber == p_other.m_fileLineNumber && this->m_state == p_other.m_state;
+    }
 };
 
 ///
-/// @brief Descriptor for a single value from a .csv file.
+/// @brief Descriptor for a value from a *csv file*.
 ///
 struct Field
 {
     ///
-    /// The state of the field.
-    /// Represent by [ UNCHECKED | OK | DIFF ]
+    /// @brief The difference state of the field.
     ///
-    enum State
+    enum DiffState
     {
         UNCHECKED, ///< The csv field has not been checked yet
         OK,        ///< The csv field was checked and marked as no difference
         DIFF       ///< The csv field was checked and marked as difference
     };
 
-    ///
-    /// The content of the csv field.
-    /// The content consists a pair of < key, value >
-    ///
-    std::pair<std::string, std::string> m_content;
-
-    ///
-    /// The state of the csv value
-    ///
-    State m_state { State::UNCHECKED };
+    DiffState m_state { DiffState::UNCHECKED };    ///< The difference state of the Field
+    std::pair<std::string, std::string> m_content; ///< The content of the field
 
     inline bool operator==(const Field& p_other) const { return this->m_content == p_other.m_content; }
-    inline bool theSame(const Field& p_other) const { return this->m_content == p_other.m_content && this->m_state == p_other.m_state; }
 };
 
 ///
-/// @brief Container for fields from a record (row) of a .csv file.
+/// @brief Container for fields from a record (row) of a *csv file*.
 ///
 struct Fields : public std::vector<Field>
 { };
 
 ///
-/// @brief Container for a record (row) of a .csv file.
+/// @brief Container for a record (row) of a *csv file*.
+///
 /// The Record consists a header and the content of the record,
 /// represent by a pair of < RecordHead, Fields >
 ///
 struct Record : public std::pair<RecordHead, Fields>
 {
     inline bool operator==(const Record& p_other) const { return this->second == p_other.second; }
-    inline bool theSame(const Record& p_other) const { return this->first == p_other.first && this->second == p_other.second; }
 };
 
 ///
@@ -110,5 +103,4 @@ struct File
 };
 
 } // namespace csv
-} // namespace data
-} // namespace csvvalidator
+} // namespace csvvalidator::data
