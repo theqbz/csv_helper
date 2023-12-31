@@ -12,6 +12,7 @@
 #include "../display/Grid.h"
 #include "../display/IDisplay.h"
 #include "../display/Lines.h"
+#include "../utils/ISettings.h"
 #include "../utils/Utility.h"
 #include "ConfigTask.h"
 #include "CsvTask.h"
@@ -24,7 +25,7 @@
 namespace csvvalidator {
 namespace task {
 
-static bool isHelp(std::string p_command);
+static bool isHelpCommand(const std::string& p_command);
 static bool isHelp(data::console::Parameters p_parameters);
 static bool isConfigCommand(const std::string& p_request);
 static bool isCsvFile(const std::filesystem::path& p_path);
@@ -39,7 +40,7 @@ TaskFactory::TaskFactory(const data::console::Arguments& p_arguments,
 void TaskFactory::init(const data::console::Arguments& p_arguments)
 {
     LOG("Init TaskFactory\n", utils::verbose);
-    if (isHelp(p_arguments.m_command)) {
+    if (isHelpCommand(p_arguments.m_command)) {
         createHelpTask(p_arguments.m_command);
         return;
     }
@@ -125,7 +126,7 @@ std::shared_ptr<display::IDisplay> TaskFactory::getDisplay() const
     return std::make_shared<display::Lines>(m_settings);
 }
 
-static bool isHelp(std::string p_command)
+static bool isHelpCommand(const std::string& p_command)
 {
     return p_command.empty() || utils::CLI_COMMANDS_HELP.contains(p_command);
 }

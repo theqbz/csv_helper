@@ -19,20 +19,21 @@ static std::string aboutStart();
 static std::string aboutSettings();
 static std::string aboutConfig();
 static std::string aboutHelp();
-static bool isConfigHelp(const std::string& p_request);
+static bool isHelpCommand(const std::string& p_request);
+static bool isConfigCommand(const std::string& p_request);
 
 bool HelpTask::run()
 {
     LOG("HelpTask running\n", utils::verbose);
     if (m_request.empty()) {
-        printFullHelp();
-        return true;
-    }
-    if (m_request == utils::CLI_NO_ARGS) {
         printShortHelp();
         return true;
     }
-    if (isConfigHelp(m_request)) {
+    if (isHelpCommand(m_request)) {
+        printFullHelp();
+        return true;
+    }
+    if (isConfigCommand(m_request)) {
         printConfigWriterHelp();
         return true;
     }
@@ -132,7 +133,12 @@ std::string aboutHelp()
         + "\n";
 }
 
-bool isConfigHelp(const std::string& p_request)
+static bool isHelpCommand(const std::string& p_request)
+{
+    return p_request.empty() || utils::CLI_COMMANDS_HELP.contains(p_request);
+}
+
+bool isConfigCommand(const std::string& p_request)
 {
     return utils::CLI_COMMANDS_CONFIG.contains(p_request);
 }
