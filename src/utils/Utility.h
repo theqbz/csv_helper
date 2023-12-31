@@ -2,7 +2,9 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  Utility.cpp
-/// @brief Definition of constants.
+/// @brief Definition of global constants and macros.
+///
+/// Storage for magic numbers and values for either single and multiple use
 ///
 
 #pragma once
@@ -15,7 +17,8 @@
 
 ///
 /// @brief Program logger.
-/// Prints log depends on verbosity
+///
+/// Prints program log, depending on verbosity.
 ///
 /// @param[in] - p_text    : the text to print (any streamable type)
 /// @param[in] - p_verbose : the verbosity (bool type)
@@ -29,7 +32,8 @@
 
 ///
 /// @brief Setting printer.
-/// Prints the content of the data::SettingData depend on verbosity
+///
+/// Prints the content of the data::SettingData, depending on verbosity
 ///
 /// @param[in] p_settings : the data::SettingData to print
 /// @param[in] p_verbose  : the verbosity (bool type)
@@ -52,9 +56,10 @@ namespace utils {
 
 ///
 /// @brief Built-in default settings of the program.
+///
 /// These default settings can be overridden by the permanent settings, stored
-/// by the user in the .ini file and the command-line arguments, specified when
-/// starting the program
+/// by the user in the config file and the command-line arguments, specified
+/// when starting the program.
 ///
 inline const std::map<std::string, std::string> DEFAULT_SETTINGS {
     { "delimiter", ";" },
@@ -68,118 +73,171 @@ inline const std::map<std::string, std::string> DEFAULT_SETTINGS {
 };
 
 ///
-/// @brief Default location and name of the "csvvalidator.ini" file.
+/// @brief Default name of the program config file.
+///
 /// This file stores the permanent user defined settings, which can temporary
 /// owervritten with the command-line arguments, specified when starting the
-/// propgram
+/// propgram.
 ///
 const std::string INI_FILE_NAME { "csvvalidator.ini" };
 
 ///
 /// @brief Extensions of csv files.
-/// CsvHelper accepts files as "csv" files only with the extensions listed here
+///
+/// This set of strings can be accepted as the extension of a "csv" file.
 ///
 const std::set<std::string> CSV_EXTENSIONS { ".csv" };
 
 ///
-/// @brief Possible help commands in CLI.
-/// This variable used in task::TaskFactory and task::HelpTask classes.
-///
-const std::set<std::string> CLI_COMMANDS_HELP { "-h", "--h", "-help", "--help", "h", "help" };
-
-///
-/// @brief CLI command and task initializer text to store new setting values.
-/// This variable used in task::TaskFactory class.
-///
-const std::string CLI_COMMANDS_CONFIG { "config" };
-
-///
-/// @brief This character indicates the beginning of a comment.
-/// This vasriable used in parser::IniFile.cpp
-///
-const std::string INI_COMMENT_SIGNS = "#;";
-
-///
-/// @brief This character separates the keys and values in .ini files.
-/// This vasriable used in parser::IniFile.cpp and task::ConfigTask.cpp
-///
-const std::string INI_KEY_VALUE_DELIMITER = "=";
-
-///
-/// @brief This characters are the acceptable whitespaces in .ini files.
-/// This vasriable used in parser::IniFile.cpp
-///
-const std::string INI_WHITESPACE = " \t\n";
-
-///
-/// @brief Task initializer text if there were no command-line arguments presented.
-/// This variable used in task::TaskFactory and task::HelpTask classes.
-///
-const std::string CLI_NO_ARGS { "NO_ARGS_HELP" };
-
-///
-/// @brief Indicates keys during the command-line argument parsing process.
-/// This variable used in Console.cpp
-///
-const char CLI_KEY_MARKER = '-';
-
-///
-/// @brief Indicates if the Field exceeds the range, specified by the number of tags
-/// This variable used in Parser.cpp
+/// @brief CSV field out of bound sign.
+/// 
+/// This text indicates if a csv::Field is exceeds the range, defined by the
+/// number of csv::Labels.
 ///
 const std::string CSV_INVALID_LABEL = "<INVALID_LABEL>";
 
 ///
-/// @brief Sets the intendation for command-line output
-/// This variable used in HelpTask.cpp
+/// @brief CLI help commands.
+///
+/// This set of strings can be accepted as *help command* from command-line
+/// interface.
+///
+const std::set<std::string> CLI_COMMANDS_HELP { "-h", "--h", "-help", "--help", "h", "help" };
+
+///
+/// @brief CLI config commands.
+///
+/// This set of string can be accepted as *config command* from command-line
+/// interface.
+///
+const std::set<std::string> CLI_COMMANDS_CONFIG { "config" };
+
+///
+/// @brief CLI verbose command.
+/// 
+/// This set of strings can be accepted as *verbose command* from command-line
+/// interface.
+///
+const std::set<std::string> CLI_VERBOSE_COMMANDS { "-verbose", "--verbose" };
+
+///
+/// @brief CLI no arguments sign
+/// 
+/// Task initializer text if there were no command-line arguments presented.
+///
+const std::string CLI_NO_ARGS { "NO_ARGS_HELP" };
+
+///
+/// @brief CLI key marker
+/// 
+/// This character indicates the keys during the command-line argument parsing
+/// process.
+///
+const char CLI_KEY_MARKER = '-';
+
+///
+/// @brief Display header prompt sign.
+///
+/// This string signs the label's line in the prompt of a display::Row (if the
+/// labels are on top of the csv content).
+///
+const std::string DISPLAY_ROMPT_HEADER_SIGN { "H" };
+
+///
+/// @brief Display neutral prompt sign.
+/// 
+/// This string signs the neutral state csv::Records in the prompt of a
+/// display::Row
+///
+const std::string DISPLAY_PROMPT_NEUTRAL_SIGN { " " };
+
+///
+/// @brief Display error prompt sign.
+/// 
+/// This string signs the error state csv::Records in the prompt of a
+/// display::Row
+///
+const std::string DISPLAY_PROMPT_ERROR_SIGN { "*" };
+
+///
+/// @brief Display prompt closing sing.
+/// 
+/// This string closes the promt of a display::Row.
+///
+const std::string DISPLAY_PROMT_CLOSE_SIGN { ">" };
+
+///
+/// @brief INI comment signs.
+///
+/// This characters can indicate the beginning of a comment in the .ini files.
+///
+const std::string INI_COMMENT_SIGNS = "#;";
+
+///
+/// @brief INI key-value delimiter.
+/// 
+/// This characters separates the keys and values in the .ini files.
+///
+const std::string INI_KEY_VALUE_DELIMITER = "=";
+
+///
+/// @brief INI whitespaces.
+/// 
+/// This characters are the acceptable whitespaces in .ini files.
+///
+const std::string INI_WHITESPACE = " \t\n";
+
+///
+/// @brief Cosole output indentation.
 ///
 const std::string INDENTATION { "  " };
 
 ///
-/// @brief Yes answers
+/// @brief Yes answers.
+/// 
+/// This set of strings can be accepted as *yes* answer during user
+/// communication.
 ///
 const std::set<std::string> YES_ANSWERS { "y", "Y", "yes", "Yes", "YES", "1", "i", "I", "true" };
 
 ///
 /// @brief No answers
+/// 
+/// This set of strings can be accepted as *no* answer during user
+/// communication.
 ///
 const std::set<std::string> NO_ANSWERS { "n", "N", "no", "No", "NO", "0", "false" };
 
 ///
-/// @brief Verbose command variations
-///
-const std::set<std::string> CLI_VERBOSE_COMMANDS { "-verbose", "--verbose" };
-
-///
-/// @brief Debug log verbosity
+/// @brief Debug log verbosity.
 ///
 inline bool verbose { false };
 
 ///
-/// @brief Program location
+/// @brief The location of the config file. 
 ///
-inline std::filesystem::path programPath {};
+inline std::filesystem::path configPath {};
 
 ///
-/// @brief Program path
+/// @brief Set the path to the config file.
 ///
-/// @param[in] p_absolutePath : the absolute path of the executable
+/// @param[in] p_absolutePath : the absolute path of the config file location.
 /// @return (void)
 ///
-inline void setProgramPath(const std::filesystem::path& p_absolutePath)
+inline void setConfigPath(const std::filesystem::path& p_absolutePath)
 {
-    programPath = p_absolutePath;
+    configPath = p_absolutePath;
 }
 
 ///
-/// @brief Get config location
+/// @brief Get config location.
 ///
 /// @param[in] p_fileName : the name of the config file; not required
 /// @return the path to the config file
 ///
 inline const std::filesystem::path getIniLocation(const std::string& p_fileName = INI_FILE_NAME)
 {
-    std::filesystem::path path { utils::programPath };
+    std::filesystem::path path { utils::configPath };
     const std::filesystem::path iniPath { path.replace_filename(p_fileName) };
     LOG("Config file location = " + iniPath.string() + "\n", utils::verbose);
     return iniPath;

@@ -22,8 +22,6 @@ namespace csvvalidator {
 namespace display {
 
 static const char LINE_NUMBER_SPACING = ' ';
-const std::string TABLE_HEADER_SIGN   = "H";
-const std::string PROMT_CLOSING_SIGN  = ">";
 
 static const std::string getRecordState(const data::csv::RecordHead& p_recordHead);
 static bool areRangesOverlaping(const data::display::Range& p_range1, const data::display::Range& p_range2);
@@ -61,7 +59,7 @@ const data::display::Table Reporter::addFileInfo(const data::csv::File& p_csvFil
     LOG(utils::INDENTATION + "Adding file info\n", utils::verbose);
     data::display::Row file_name({ "File: " + p_csvFile.m_fileName });
     data::display::Row empty_lines {};
-    if (m_settings.errorLevel() != utils::ISettings::ErrorLevel::Error) {
+    if (m_settings.errorLevel() < utils::ISettings::ErrorLevel::Error) {
         empty_lines.assign({ "This file contains "
                              + std::to_string(p_result.m_emptyLineCount)
                              + " empty lines" });
@@ -233,13 +231,13 @@ static const std::string getRecordState(const data::csv::RecordHead& p_recordHea
     std::string result {};
     switch (state) {
     case data::csv::RecordHead::OK:
-        result = " ";
+        result = utils::DISPLAY_PROMPT_NEUTRAL_SIGN;
         break;
     case data::csv::RecordHead::ERR:
-        result = "*";
+        result = utils::DISPLAY_PROMPT_ERROR_SIGN;
         break;
     case data::csv::RecordHead::EMPTY:
-        result = " ";
+        result = utils::DISPLAY_PROMPT_NEUTRAL_SIGN;
         break;
     default:
         result = "@!> Program logic error: invalid RecordHead State";
@@ -306,7 +304,7 @@ static const std::string getRowHead(const size_t p_totalLineCount,
     std::string_view totalLineCount { std::to_string(p_totalLineCount) };
     return getPlaceholder(totalLineCount, p_currentLineSign)
         + p_currentLineSign + "."
-        + PROMT_CLOSING_SIGN;
+        + utils::DISPLAY_PROMT_END_SIGN;
 }
 
 static const std::string getRowHead(const size_t p_totalLineCount,
@@ -320,7 +318,7 @@ static const data::display::Row addLabels(const data::csv::Labels& p_labels,
 {
     LOG(utils::INDENTATION + "Adding labels\n", utils::verbose);
     data::display::Row labels {};
-    labels.push_back(" " + getRowHead(p_lastLineNumber, TABLE_HEADER_SIGN));
+    labels.push_back(" " + getRowHead(p_lastLineNumber, utils::DISPLAY_ROMPT_HEADER_SIGN));
     for (const std::string& label : p_labels) {
         labels.push_back(label);
     }
