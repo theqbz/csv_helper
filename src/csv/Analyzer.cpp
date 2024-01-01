@@ -22,8 +22,7 @@ namespace csv {
 ///        state of the RecordHead accordingly the scan result.
 ///
 /// @param[in,out] - content : the content of the file to copare
-/// @param[in,out] - result  : the Result data to store error
-/// @return (void)
+/// @return the Result of the process
 ///
 const data::csv::Result checkRecordDuplication(data::csv::Content* p_content)
 {
@@ -74,11 +73,9 @@ const data::csv::Result checkRecordDuplication(data::csv::Content* p_content)
 /// in the program settings.
 ///
 /// @param[in,out] - record : the csv::Record to check
-/// @param[in,out] - result : the Result data to store error and increment
-///                           empty line counter
 /// @param[in] - labelCount : the total number of labels in the csv::File
-/// @param[in] - emptyLinesNotErrors :
-/// @return (void)
+/// @param[in] - emptyLinesNotErrors : setting for handling empty lines
+/// @return the Result of the process
 ///
 const data::csv::Result markWrongLineLength(data::csv::Record* p_record,
                                             const size_t p_labelCount,
@@ -115,11 +112,9 @@ const data::csv::Result markWrongLineLength(data::csv::Record* p_record,
 ///        with the wrong line length.
 ///
 /// @param[in,out] - content : the csv::Content to check
-/// @param[in,out] - result  : the Result data to store error and increment
-///                            empty line counter
 /// @param[in] - labelCount  : the total number of labels in the csv::File
-/// @param[in] - emptyLinesNotErrors :
-/// @return (void)
+/// @param[in] - emptyLinesNotErrors : setting for handling empty lines
+/// @return the Result of the process
 ///
 const data::csv::Result checkRecordLengths(data::csv::Content* p_content,
                                            const size_t p_labelCount,
