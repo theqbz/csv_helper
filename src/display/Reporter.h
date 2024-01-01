@@ -7,11 +7,12 @@
 
 #pragma once
 
+#include "IReporter.h"
 #include "../data/CsvData.h"
 #include "../data/Ranges.h"
 #include "../data/Report.h"
 #include "../data/Result.h"
-#include "IReporter.h"
+#include "../utils/ISettings.h"
 
 namespace csvvalidator {
 namespace display {
