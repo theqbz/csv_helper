@@ -8,6 +8,7 @@
 #include "Analyzer.h"
 #include "../data/CsvData.h"
 #include "../data/Result.h"
+#include "../utils/ISettings.h"
 #include "../utils/Utility.h"
 
 #include <string>
@@ -24,14 +25,14 @@ namespace csv {
 /// @param[in,out] - result  : the Result data to store error
 /// @return (void)
 ///
-void checkRecordDuplication(data::csv::Content* p_content,
-                            data::csv::Result* p_result)
+const data::csv::Result checkRecordDuplication(data::csv::Content* p_content)
 {
     LOG(utils::INDENTATION + "Checking duplicated records\n", utils::verbose);
-    if (!p_content || !p_result) {
+    if (!p_content) {
         LOG("Program logic error! nullptr as content or result @ checkRecordDuplication()\n", true);
-        return;
+        return {};
     }
+    data::csv::Result result {};
     data::csv::Content::iterator currentRecordIt = p_content->begin();
     for (; currentRecordIt != p_content->end(); ++currentRecordIt) {
         if (currentRecordIt->second.empty() || currentRecordIt->first.m_duplicated) {
@@ -48,7 +49,7 @@ void checkRecordDuplication(data::csv::Content* p_content,
                 currentRecordErrorEntry.first  = currentRecordIt->first.m_fileLineNumber;
                 currentRecordErrorEntry.second = "Multiple occurrence record (this is the first occurrence)";
                 currentRecordErrorEntry.m_type = data::csv::ErrorEntry::Type::WARNING;
-                p_result->m_errorList.push_back(currentRecordErrorEntry);
+                result.m_errorList.push_back(currentRecordErrorEntry);
             }
             recordToCheckIt->first.m_duplicated = true;
             data::csv::ErrorEntry checkedRecordErrorEntry {};
@@ -57,9 +58,10 @@ void checkRecordDuplication(data::csv::Content* p_content,
                                               + std::to_string(currentRecordIt->first.m_fileLineNumber)
                                               + ")");
             checkedRecordErrorEntry.m_type = data::csv::ErrorEntry::Type::WARNING;
-            p_result->m_errorList.push_back(checkedRecordErrorEntry);
+            result.m_errorList.push_back(checkedRecordErrorEntry);
         }
     }
+    return result;
 }
 
 ///
@@ -78,24 +80,24 @@ void checkRecordDuplication(data::csv::Content* p_content,
 /// @param[in] - emptyLinesNotErrors :
 /// @return (void)
 ///
-void markWrongLineLength(data::csv::Record* p_record,
-                         data::csv::Result* p_result,
-                         const size_t p_labelCount,
-                         const bool p_emptyLinesNotErrors)
+const data::csv::Result markWrongLineLength(data::csv::Record* p_record,
+                                            const size_t p_labelCount,
+                                            const bool p_emptyLinesNotErrors)
 {
-    if (!p_record || !p_result) {
-        LOG("Program logic error! nullptr as record or result @ markWrongLineLength()\n", true);
-        return;
+    if (!p_record) {
+        LOG("Program logic error! nullptr as record @ markWrongLineLength()\n", true);
+        return {};
     }
     const size_t recordSize = p_record->second.size();
     if (recordSize == p_labelCount) {
         p_record->first.m_state = data::csv::RecordHead::ErrorState::OK;
-        return;
+        return {};
     }
+    data::csv::Result result {};
     if (recordSize == 0 && p_emptyLinesNotErrors) {
         p_record->first.m_state = data::csv::RecordHead::ErrorState::EMPTY;
-        ++(p_result->m_emptyLineCount);
-        return;
+        ++result.m_emptyLineCount;
+        return result;
     }
     p_record->first.m_state = data::csv::RecordHead::ErrorState::ERR;
     data::csv::ErrorEntry errorEntry {};
@@ -104,7 +106,8 @@ void markWrongLineLength(data::csv::Record* p_record,
                          + std::to_string(recordSize) + " / "
                          + std::to_string(p_labelCount) + ")");
     errorEntry.m_type = data::csv::ErrorEntry::Type::ERR;
-    p_result->m_errorList.push_back(errorEntry);
+    result.m_errorList.push_back(errorEntry);
+    return result;
 }
 
 ///
@@ -118,19 +121,20 @@ void markWrongLineLength(data::csv::Record* p_record,
 /// @param[in] - emptyLinesNotErrors :
 /// @return (void)
 ///
-void checkRecordLengths(data::csv::Content* p_content,
-                        data::csv::Result* p_result,
-                        const size_t p_labelCount,
-                        const bool p_emptyLinesNotErrors)
+const data::csv::Result checkRecordLengths(data::csv::Content* p_content,
+                                           const size_t p_labelCount,
+                                           const bool p_emptyLinesNotErrors)
 {
     LOG(utils::INDENTATION + "Checking record lengths\n", utils::verbose);
-    if (!p_content || !p_result) {
-        LOG("Program logic error! nullptr as content or result @ checkRecordLengths()\n", true);
-        return;
+    if (!p_content) {
+        LOG("Program logic error! nullptr as content @ checkRecordLengths()\n", true);
+        return {};
     }
+    data::csv::Result result {};
     for (data::csv::Record& record : *p_content) {
-        markWrongLineLength(&record, p_result, p_labelCount, p_emptyLinesNotErrors);
+        result += markWrongLineLength(&record, p_labelCount, p_emptyLinesNotErrors);
     }
+    return result;
 }
 
 data::csv::Result Analyzer::process(data::csv::File& p_csvFile)
@@ -145,10 +149,10 @@ data::csv::Result Analyzer::process(data::csv::File& p_csvFile)
     }
     data::csv::Result result {};
     result.m_lastLineNumber = content.back().first.m_fileLineNumber;
-    checkRecordLengths(&content, &result, labelCount, emptyLinesNotErrors);
-    checkRecordDuplication(&content, &result);
+    result += checkRecordLengths(&content, labelCount, emptyLinesNotErrors);
+    result += checkRecordDuplication(&content);
     // TODO:
-    // 1) Scan the Fields vertically (Record by Record, the same Field) and look after differences.
+    // Scan the Fields vertically (Record by Record, the same Field) and look after differences.
     return result;
 }
 
