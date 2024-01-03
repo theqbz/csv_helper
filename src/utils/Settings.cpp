@@ -33,7 +33,15 @@ size_t convertToSizeT(const std::string& p_text)
     if (p_text.empty() || !isNumber(p_text)) {
         return std::numeric_limits<size_t>::max();
     }
-    return stoi(p_text);
+    size_t result { 0ULL };
+    try {
+        result = stoull(p_text);
+    } catch (const std::exception&) {
+        std::cout << "Error with argument, too large number! (" << p_text << ")\n"
+                  << "The option will be set to 0\n";
+        result = 0ULL;
+    }
+    return result;
 }
 
 char convertToChar(const std::string& p_text)

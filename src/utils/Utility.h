@@ -90,7 +90,7 @@ const std::set<std::string> CSV_EXTENSIONS { ".csv" };
 
 ///
 /// @brief CSV field out of bound sign.
-/// 
+///
 /// This text indicates if a csv::Field is exceeds the range, defined by the
 /// number of csv::Labels.
 ///
@@ -114,7 +114,7 @@ const std::set<std::string> CLI_COMMANDS_CONFIG { "config" };
 
 ///
 /// @brief CLI verbose command.
-/// 
+///
 /// This set of strings can be accepted as *verbose command* from command-line
 /// interface.
 ///
@@ -122,14 +122,14 @@ const std::set<std::string> CLI_VERBOSE_COMMANDS { "-verbose", "--verbose" };
 
 ///
 /// @brief CLI no arguments sign
-/// 
+///
 /// Task initializer text if there were no command-line arguments presented.
 ///
 const std::string CLI_NO_ARGS { "NO_ARGS_HELP" };
 
 ///
 /// @brief CLI key marker
-/// 
+///
 /// This character indicates the keys during the command-line argument parsing
 /// process.
 ///
@@ -145,23 +145,31 @@ const std::string DISPLAY_ROMPT_HEADER_SIGN { "H" };
 
 ///
 /// @brief Display neutral prompt sign.
-/// 
-/// This string signs the neutral state csv::Records in the prompt of a
+///
+/// This string signs the neutral state of csv::Records in the prompt of a
 /// display::Row
 ///
 const std::string DISPLAY_PROMPT_NEUTRAL_SIGN { " " };
 
 ///
 /// @brief Display error prompt sign.
-/// 
-/// This string signs the error state csv::Records in the prompt of a
+///
+/// This string signs the error state of csv::Records in the prompt of a
 /// display::Row
 ///
 const std::string DISPLAY_PROMPT_ERROR_SIGN { "*" };
 
 ///
+/// @brief Display duplicated prompt sign.
+///
+/// This string signs the duplicated state of csv::Records in the prompt of a
+/// display::Row
+///
+const std::string DISPLAY_PROMPT_DUPLICATED_SIGN { "+" };
+
+///
 /// @brief Display prompt closing sing.
-/// 
+///
 /// This string closes the promt of a display::Row.
 ///
 const std::string DISPLAY_PROMT_CLOSE_SIGN { ">" };
@@ -175,14 +183,14 @@ const std::string INI_COMMENT_SIGNS = "#;";
 
 ///
 /// @brief INI key-value delimiter.
-/// 
+///
 /// This characters separates the keys and values in the .ini files.
 ///
 const std::string INI_KEY_VALUE_DELIMITER = "=";
 
 ///
 /// @brief INI whitespaces.
-/// 
+///
 /// This characters are the acceptable whitespaces in .ini files.
 ///
 const std::string INI_WHITESPACE = " \t\n";
@@ -194,7 +202,7 @@ const std::string INDENTATION { "  " };
 
 ///
 /// @brief Yes answers.
-/// 
+///
 /// This set of strings can be accepted as *yes* answer during user
 /// communication.
 ///
@@ -202,7 +210,7 @@ const std::set<std::string> YES_ANSWERS { "y", "Y", "yes", "Yes", "YES", "1", "i
 
 ///
 /// @brief No answers
-/// 
+///
 /// This set of strings can be accepted as *no* answer during user
 /// communication.
 ///
@@ -214,7 +222,7 @@ const std::set<std::string> NO_ANSWERS { "n", "N", "no", "No", "NO", "0", "false
 inline bool verbose { false };
 
 ///
-/// @brief The location of the config file. 
+/// @brief The location of the config file.
 ///
 inline std::filesystem::path configPath {};
 

@@ -40,37 +40,42 @@ TaskFactory::TaskFactory(const data::console::Arguments& p_arguments,
 void TaskFactory::init(const data::console::Arguments& p_arguments)
 {
     LOG("Init TaskFactory\n", utils::verbose);
-    if (isHelpCommand(p_arguments.m_command)) {
-        createHelpTask(p_arguments.m_command);
+    const std::string command = p_arguments.m_command;
+    if (isHelpCommand(command)) {
+        LOG(utils::INDENTATION + command + (command.empty() ? "H" : " h") + "elp detected\n", utils::verbose);
+        createHelpTask(command);
         return;
     }
-    if (isConfigCommand(p_arguments.m_command)) {
-        LOG("Config command detected\n", utils::verbose);
+    if (isConfigCommand(command)) {
+        LOG(utils::INDENTATION + "Config command detected\n", utils::verbose);
         createConfigTask(p_arguments);
         return;
     }
-    const std::filesystem::file_status status { std::filesystem::status(std::filesystem::path { p_arguments.m_command }) };
+    const std::filesystem::file_status status { std::filesystem::status(std::filesystem::path { command }) };
     switch (status.type()) {
     case std::filesystem::file_type::none:
-        LOG("Can't recognize the type of the file: " + p_arguments.m_command + "\n", true);
+        LOG("Can't recognize the type of the file: " + command + "\n", true);
         break;
     case std::filesystem::file_type::not_found:
-        LOG("Can't find the the file: " + p_arguments.m_command + "\n", true);
+        LOG("Can't find the the file: " + command + "\n", true);
         break;
     case std::filesystem::file_type::regular:
-        createSingleCsvTask(p_arguments.m_command);
+        LOG(utils::INDENTATION + "File detected\n", utils::verbose);
+        createSingleCsvTask(command);
         break;
     case std::filesystem::file_type::directory:
-        createCsvTasksFromDirectory(p_arguments.m_command);
+        LOG(utils::INDENTATION + "Directory detected\n", utils::verbose);
+        createCsvTasksFromDirectory(command);
         break;
     default:
-        LOG("Not acceptable file type: " + p_arguments.m_command, true);
+        LOG("Not acceptable file type: " + command, true);
         break;
     }
 }
 
 bool TaskFactory::runTasks()
 {
+    LOG("Executing tasks\n", utils::verbose);
     bool success { true };
     while (!m_tasks.empty()) {
         success &= m_tasks.front()->run();
@@ -81,14 +86,13 @@ bool TaskFactory::runTasks()
 
 void TaskFactory::createHelpTask(const std::string p_command)
 {
-    LOG(p_command + "help detected\n", utils::verbose);
     m_tasks.push(std::make_shared<HelpTask>(p_command));
 }
 
 void TaskFactory::createConfigTask(const data::console::Arguments& p_arguments)
 {
     if (isHelp(p_arguments.m_parameters)) {
-        LOG("Config-help detected\n", utils::verbose);
+        LOG(utils::INDENTATION + "Config-help detected\n", utils::verbose);
         createHelpTask(p_arguments.m_command);
         return;
     }
@@ -106,7 +110,7 @@ void TaskFactory::createSingleCsvTask(const std::string& p_fileName)
 
 void TaskFactory::createCsvTasksFromDirectory(const std::string& p_directoryPath)
 {
-    LOG("Searching in direcotry: " + p_directoryPath + "\n", utils::verbose);
+    LOG(utils::INDENTATION + "Searching in direcotry: " + p_directoryPath + "\n", utils::verbose);
     std::filesystem::path path { p_directoryPath };
     size_t foundFiles { 0 };
     for (const std::filesystem::path& directoryEntry : std::filesystem::directory_iterator(path)) {

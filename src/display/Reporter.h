@@ -4,15 +4,13 @@
 /// @file  Reporter.h
 /// @brief Declaration of the Reporter class
 ///
-
 #pragma once
 
-#include "IReporter.h"
 #include "../data/CsvData.h"
-#include "../data/Ranges.h"
 #include "../data/Report.h"
 #include "../data/Result.h"
 #include "../utils/ISettings.h"
+#include "IReporter.h"
 
 namespace csvvalidator {
 namespace display {
@@ -42,18 +40,7 @@ public:
                                            const data::csv::Result& p_result) const;
     const data::display::Table addFileContent(const data::csv::File& p_csvFile) const;
     const data::display::Table addErrorList(const data::csv::Result& p_result) const;
-
     bool errorLogFilter(const auto& p_entry) const;
-    const data::display::Ranges getRanges(const std::vector<size_t>& p_errorLineNumbers,
-                                          const size_t p_upperLimit) const;
-
-    const bool isLabelInline() const;
-    const std::string getFieldContent(const data::csv::Field& p_field) const;
-    const bool isEmptyRowAndSkipIt(const data::csv::RecordHead::ErrorState& p_recordState) const;
-    const data::display::Row addLine(const data::csv::Record& p_record,
-                                     const size_t p_lastLineNumber) const;
-    const data::display::Table addLines(const data::csv::File& p_csvFile,
-                                        const data::display::Ranges& p_finalRanges) const;
 
 private:
     const utils::ISettings& m_settings;

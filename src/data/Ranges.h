@@ -2,9 +2,9 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  Ranges.h
-/// @brief Declarations of display::Ranges and display::Range datastructure
+/// @brief Declarations of display::Ranges and display::Range datastructure.
 ///
-/// These datastructures stores ranges with ordering functions
+/// These datastructures stores ranges with ordering functions.
 ///
 #pragma once
 

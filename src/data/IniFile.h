@@ -2,7 +2,7 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  IniFile.h
-/// @brief Declarations of ini::File, ini::Records datastructures
+/// @brief Declarations of ini::File and ini::Records datastructures.
 ///
 /// These datastructures descibes the structure of an *ini file* and stores
 /// data from the file.
