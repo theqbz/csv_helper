@@ -2,7 +2,7 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  Analyzer.h
-/// @brief Declaration of csv::File analyzer class
+/// @brief Declaration of csv::Analyzer class.
 ///
 
 #pragma once
@@ -16,7 +16,7 @@ namespace csvvalidator {
 namespace csv {
 
 ///
-/// @brief Analyze a csv::File and create a csv::Result about the process.
+/// @brief Analyze a data::csv::File and create a data::csv::Result about it.
 /// 
 class Analyzer : public IAnalyzer
 {

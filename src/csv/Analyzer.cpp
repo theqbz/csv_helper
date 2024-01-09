@@ -1,11 +1,11 @@
 ///
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
-/// @file  Analyzer.h
-/// @brief Definition of csv::File analyzer class
+/// @file  Analyzer.cpp
+/// @brief Definition of csv::Analyzer class.
 ///
-
 #include "Analyzer.h"
+
 #include "../data/CsvData.h"
 #include "../data/Result.h"
 #include "../utils/ISettings.h"
@@ -48,6 +48,7 @@ const data::csv::Result checkRecordDuplication(data::csv::Content* p_content)
                 currentRecordErrorEntry.first  = currentRecordIt->first.m_fileLineNumber;
                 currentRecordErrorEntry.second = "Multiple occurrence record (this is the first occurrence)";
                 currentRecordErrorEntry.m_type = data::csv::ErrorEntry::Type::WARNING;
+                ++result.m_warningCount;
                 result.m_errorList.push_back(currentRecordErrorEntry);
             }
             recordToCheckIt->first.m_duplicated = true;
@@ -57,6 +58,7 @@ const data::csv::Result checkRecordDuplication(data::csv::Content* p_content)
                                               + std::to_string(currentRecordIt->first.m_fileLineNumber)
                                               + ")");
             checkedRecordErrorEntry.m_type = data::csv::ErrorEntry::Type::WARNING;
+            ++result.m_warningCount;
             result.m_errorList.push_back(checkedRecordErrorEntry);
         }
     }
@@ -97,6 +99,7 @@ const data::csv::Result markWrongLineLength(data::csv::Record* p_record,
         return result;
     }
     p_record->first.m_state = data::csv::RecordHead::ErrorState::ERR;
+    ++result.m_errorCount;
     data::csv::ErrorEntry errorEntry {};
     errorEntry.first  = p_record->first.m_fileLineNumber;
     errorEntry.second = ("The line doesn't match to the label list. (records: "
@@ -135,8 +138,6 @@ const data::csv::Result checkRecordLengths(data::csv::Content* p_content,
 data::csv::Result Analyzer::process(data::csv::File& p_csvFile)
 {
     LOG("Analyzing csv::File\n", utils::verbose);
-    const bool emptyLinesNotErrors { m_settings.emptyLines() != utils::ISettings::EmptyLines::Error };
-    const size_t labelCount { p_csvFile.m_labels.size() };
     data::csv::Content& content { p_csvFile.m_content };
     if (content.empty()) {
         LOG(utils::INDENTATION + "The file has no csv::Fields\n", true);
@@ -144,10 +145,13 @@ data::csv::Result Analyzer::process(data::csv::File& p_csvFile)
     }
     data::csv::Result result {};
     result.m_lastLineNumber = content.back().first.m_fileLineNumber;
-    result += checkRecordLengths(&content, labelCount, emptyLinesNotErrors);
+    result += checkRecordLengths(&content, p_csvFile.m_labels.size(), m_settings.emptyLines() != utils::ISettings::EmptyLines::Error);
     result += checkRecordDuplication(&content);
     // TODO:
     // Scan the Fields vertically (Record by Record, the same Field) and look after differences.
+    LOG(utils::INDENTATION + "empty line count = " + std::to_string(result.m_emptyLineCount) + "\n", utils::verbose);
+    LOG(utils::INDENTATION + "error count = " + std::to_string(result.m_errorCount) + "\n", utils::verbose);
+    LOG(utils::INDENTATION + "warning count = " + std::to_string(result.m_warningCount) + "\n", utils::verbose);
     return result;
 }
 

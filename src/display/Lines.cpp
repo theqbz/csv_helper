@@ -4,7 +4,6 @@
 /// @file  Lines.cpp
 /// @brief Function definitions for the Lines class
 ///
-
 #include "Lines.h"
 
 #include "../data/Report.h"
@@ -84,9 +83,9 @@ void Lines::printFileTable(const data::display::Table& p_table) const
     }
 }
 
-const std::string cellSeparator(bool& p_previousCellWasEmpty,
-                                const bool p_thisCellIsEmpty,
-                                const unsigned char p_emptyCellFiller)
+static const std::string cellSeparator(bool& p_previousCellWasEmpty,
+                                       const bool p_thisCellIsEmpty,
+                                       const unsigned char p_emptyCellFiller)
 {
     std::string separator {};
     if (!p_previousCellWasEmpty && !p_thisCellIsEmpty) {

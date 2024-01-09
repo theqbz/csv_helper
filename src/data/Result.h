@@ -50,9 +50,11 @@ struct ErrorList : public std::vector<ErrorEntry>
 ///
 struct Result
 {
-    ErrorList m_errorList;   ///< vector of error entries
-    size_t m_lastLineNumber; ///< number of the last line of the .csv file
-    size_t m_emptyLineCount; ///< counts the empty lines in the csv::File
+    ErrorList m_errorList;         ///< vector of error entries
+    size_t m_lastLineNumber { 0 }; ///< number of the last line of the .csv file
+    size_t m_emptyLineCount { 0 }; ///< counts the empty lines in the csv::File
+    size_t m_errorCount { 0 };     ///< counts errors during the Analyzis
+    size_t m_warningCount { 0 };   ///< counts warnings during the Analyzis
 
     ///
     /// @brief Merge Result objects.
@@ -64,6 +66,8 @@ struct Result
     {
         this->m_errorList.insert(this->m_errorList.end(), p_other.m_errorList.begin(), p_other.m_errorList.end());
         this->m_emptyLineCount += p_other.m_emptyLineCount;
+        this->m_errorCount += p_other.m_errorCount;
+        this->m_warningCount += p_other.m_warningCount;
         return *this;
     }
 };

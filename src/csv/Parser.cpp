@@ -92,7 +92,7 @@ const data::csv::File parse(std::fstream& p_file,
             firstNonEmptyLineFound = true;
         }
     }
-    LOG(utils::INDENTATION + "fileLineCounter = " + std::to_string(fileLineCounter) + "\n", utils::verbose);
+    LOG(utils::INDENTATION + "total lines in file = " + std::to_string(fileLineCounter) + "\n", utils::verbose);
     LOG(utils::INDENTATION + "label count = " + std::to_string(file.m_labels.size()) + "\n", utils::verbose);
     LOG(utils::INDENTATION + "content count = " + std::to_string(file.m_content.size()) + "\n", utils::verbose);
     return file;

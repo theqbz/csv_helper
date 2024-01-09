@@ -2,7 +2,7 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  ToRanges.h
-/// @brief Declarations of data::convert::Ranges class.
+/// @brief Declarations of data::convert::ToRanges class.
 ///
 #pragma once
 
@@ -15,7 +15,7 @@ namespace convert {
 /// @brief Worker class to convert a list of lineNumbers to
 ///        data::display::Ranges
 ///
-class Ranges
+class ToRanges
 {
 public:
     ///

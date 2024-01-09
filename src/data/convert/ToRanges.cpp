@@ -2,7 +2,7 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  ToRanges.cpp
-/// @brief Definition of data::convert::Ranges class.
+/// @brief Definition of data::convert::ToRanges class.
 ///
 
 #include "ToRanges.h"
@@ -12,11 +12,11 @@
 namespace csvvalidator::data {
 namespace convert {
 
-size_t Ranges::width      = 0;
-size_t Ranges::lowerLimit = 0;
-size_t Ranges::upperLimit = 0;
+size_t ToRanges::width      = 0;
+size_t ToRanges::lowerLimit = 0;
+size_t ToRanges::upperLimit = 0;
 
-const display::Ranges Ranges::get(const std::vector<size_t>& p_lineNumbers,
+const display::Ranges ToRanges::get(const std::vector<size_t>& p_lineNumbers,
                                   const size_t p_width,
                                   const size_t p_lowerLimit,
                                   const size_t p_upperLimit)
@@ -34,7 +34,7 @@ const display::Ranges Ranges::get(const std::vector<size_t>& p_lineNumbers,
     return ranges;
 }
 
-const display::Ranges Ranges::rawRanges(const std::vector<size_t>& p_lineNumbers)
+const display::Ranges ToRanges::rawRanges(const std::vector<size_t>& p_lineNumbers)
 {
     LOG(utils::INDENTATION + "Getting raw ranges\n", utils::verbose);
     data::display::Ranges ranges {};
@@ -45,7 +45,7 @@ const display::Ranges Ranges::rawRanges(const std::vector<size_t>& p_lineNumbers
     return ranges;
 }
 
-const size_t Ranges::lowerBound(const size_t p_initialNumber)
+const size_t ToRanges::lowerBound(const size_t p_initialNumber)
 {
     if (width == std::numeric_limits<size_t>::max()) {
         return lowerLimit;
@@ -53,7 +53,7 @@ const size_t Ranges::lowerBound(const size_t p_initialNumber)
     return p_initialNumber < lowerLimit + width ? lowerLimit : p_initialNumber - width;
 }
 
-const size_t Ranges::upperBound(const size_t p_initialNumber)
+const size_t ToRanges::upperBound(const size_t p_initialNumber)
 {
     if (width == std::numeric_limits<size_t>::max() || upperLimit < width) {
         return upperLimit;
@@ -61,7 +61,7 @@ const size_t Ranges::upperBound(const size_t p_initialNumber)
     return upperLimit - width < p_initialNumber ? upperLimit : p_initialNumber + width;
 }
 
-const display::Ranges Ranges::merge(const display::Ranges& p_rawRanges)
+const display::Ranges ToRanges::merge(const display::Ranges& p_rawRanges)
 {
     LOG(utils::INDENTATION + "Merging ranges\n", utils::verbose);
     if (p_rawRanges.empty()) {
@@ -80,7 +80,7 @@ const display::Ranges Ranges::merge(const display::Ranges& p_rawRanges)
     return finalRanges;
 }
 
-bool Ranges::overlapping(const display::Range& p_range1,
+bool ToRanges::overlapping(const display::Range& p_range1,
                          const display::Range& p_range2)
 {
     if (p_range1.first <= p_range2.first) {
@@ -89,7 +89,7 @@ bool Ranges::overlapping(const display::Range& p_range1,
     return p_range1.first <= p_range2.second;
 }
 
-void Ranges::combine(const display::Range& p_sourceRange,
+void ToRanges::combine(const display::Range& p_sourceRange,
                      display::Range* p_targetRange)
 {
     if (!p_targetRange) {
