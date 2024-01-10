@@ -2,7 +2,7 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  Lines.cpp
-/// @brief Function definitions for the Lines class
+/// @brief Definition of display::Lines class.
 ///
 #include "Lines.h"
 
@@ -16,22 +16,81 @@
 namespace csvvalidator {
 namespace display {
 
-static const std::string CELL_SEPARATOR = "|";
+void printFileTable(const data::display::Table& p_table, const unsigned char p_emptyCellFiller, const bool p_skipEmptyRow);
+void printSimpleTable(const data::display::Table& p_table);
 
-static const std::string cellSeparator(bool& p_previousCellWasEmpty,
-                                       const bool p_thisCellIsEmpty,
-                                       const unsigned char p_emptyCellFiller);
+Lines::Lines(const utils::ISettings& p_settings) :
+    m_settings(p_settings)
+{
+    LOG("Lines display created\n", utils::verbose);
+}
 
 void Lines::render(const data::display::Report& p_report) const
 {
+    const bool skipEmptyRow { m_settings.emptyLines() == utils::ISettings::EmptyLines::Skip };
+    const unsigned char emptyCellFiller { m_settings.emptyFields() };
     LOG("Rendering report\n\n", utils::verbose);
+    LOG(utils::INDENTATION + "Skip empty Row = " + std::string(skipEmptyRow ? "true" : "false") + "\n", utils::verbose);
+    LOG(utils::INDENTATION + "Skip empty Row = " + std::to_string(emptyCellFiller) + "\n", utils::verbose);
     printSimpleTable(p_report.m_info);
-    printFileTable(p_report.m_file);
+    printFileTable(p_report.m_file, emptyCellFiller, skipEmptyRow);
     printSimpleTable(p_report.m_errors);
     std::cout << "____\n";
 }
 
-void Lines::printSimpleTable(const data::display::Table& p_table) const
+const std::string cellSeparator(bool& p_previousCellWasEmpty,
+                                const bool p_thisCellIsEmpty,
+                                const unsigned char p_emptyCellFiller)
+{
+    std::string separator {};
+    if (!p_previousCellWasEmpty && !p_thisCellIsEmpty) {
+        separator = " " + utils::DISPLAY_CELL_SEPARATOR + " ";
+    }
+    if (!p_previousCellWasEmpty && p_thisCellIsEmpty) {
+        separator = " " + utils::DISPLAY_CELL_SEPARATOR;
+    }
+    if (p_previousCellWasEmpty && p_thisCellIsEmpty) {
+        separator = p_emptyCellFiller;
+    }
+    if (p_previousCellWasEmpty && !p_thisCellIsEmpty) {
+        separator = p_emptyCellFiller;
+        separator += utils::DISPLAY_CELL_SEPARATOR + " ";
+    }
+    p_previousCellWasEmpty = p_thisCellIsEmpty;
+    return separator;
+}
+
+void printFileTable(const data::display::Table& p_table,
+                    const unsigned char p_emptyCellFiller,
+                    const bool p_skipEmptyRow)
+{
+    const bool skipEmptyCell { p_emptyCellFiller == 0 };
+    if (!p_table.empty()) {
+        std::cout << "\n";
+    }
+    for (const data::display::Row& row : p_table) {
+        if (row.empty() && p_skipEmptyRow) {
+            continue;
+        }
+        bool previousCellWasEmpty { false };
+        bool firstCell { true };
+        for (const std::string& cell : row) {
+            bool thisCellIsEmpty = cell.empty();
+            if (thisCellIsEmpty && skipEmptyCell) {
+                continue;
+            }
+            if (firstCell) {
+                std::cout << cell;
+                firstCell = false;
+            } else {
+                std::cout << cellSeparator(previousCellWasEmpty, thisCellIsEmpty, p_emptyCellFiller) << cell;
+            }
+        }
+        std::cout << "\n";
+    }
+}
+
+void printSimpleTable(const data::display::Table& p_table)
 {
     // if (!p_table.empty()) {
     //     std::cout << "\n";
@@ -51,58 +110,6 @@ void Lines::printSimpleTable(const data::display::Table& p_table) const
         }
         std::cout << "\n";
     }
-}
-
-void Lines::printFileTable(const data::display::Table& p_table) const
-{
-    const bool skipEmptyRow { m_settings.emptyLines() == utils::ISettings::EmptyLines::Skip };
-    const unsigned char emptyCellFiller { m_settings.emptyFields() };
-    const bool skipEmptyCell { emptyCellFiller == 0 };
-    if (!p_table.empty()) {
-        std::cout << "\n";
-    }
-    for (const data::display::Row& row : p_table) {
-        if (row.empty() && skipEmptyRow) {
-            continue;
-        }
-        bool previousCellWasEmpty { false };
-        bool firstCell { true };
-        for (const std::string& cell : row) {
-            bool thisCellIsEmpty = cell.empty();
-            if (thisCellIsEmpty && skipEmptyCell) {
-                continue;
-            }
-            if (firstCell) {
-                std::cout << cell;
-                firstCell = false;
-            } else {
-                std::cout << cellSeparator(previousCellWasEmpty, thisCellIsEmpty, emptyCellFiller) << cell;
-            }
-        }
-        std::cout << "\n";
-    }
-}
-
-static const std::string cellSeparator(bool& p_previousCellWasEmpty,
-                                       const bool p_thisCellIsEmpty,
-                                       const unsigned char p_emptyCellFiller)
-{
-    std::string separator {};
-    if (!p_previousCellWasEmpty && !p_thisCellIsEmpty) {
-        separator = " " + CELL_SEPARATOR + " ";
-    }
-    if (!p_previousCellWasEmpty && p_thisCellIsEmpty) {
-        separator = " " + CELL_SEPARATOR;
-    }
-    if (p_previousCellWasEmpty && p_thisCellIsEmpty) {
-        separator = p_emptyCellFiller;
-    }
-    if (p_previousCellWasEmpty && !p_thisCellIsEmpty) {
-        separator = p_emptyCellFiller;
-        separator += CELL_SEPARATOR + " ";
-    }
-    p_previousCellWasEmpty = p_thisCellIsEmpty;
-    return separator;
 }
 
 } // namespace display

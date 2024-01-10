@@ -1,12 +1,11 @@
 ///
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
-/// @file  Utility.cpp
+/// @file  Utility.h
 /// @brief Definition of global constants and macros.
 ///
 /// Storage for magic numbers and values for either single and multiple use
 ///
-
 #pragma once
 
 #include <filesystem>
@@ -57,9 +56,9 @@ namespace utils {
 ///
 /// @brief Built-in default settings of the program.
 ///
-/// These default settings can be overridden by the permanent settings, stored
-/// by the user in the config file and the command-line arguments, specified
-/// when starting the program.
+/// These default settings can be overridden with the settings, stored by the
+/// user in the config file and the command-line arguments, specified when
+/// starting the program.
 ///
 inline const std::map<std::string, std::string> DEFAULT_SETTINGS {
     { "delimiter", ";" },
@@ -77,7 +76,7 @@ inline const std::map<std::string, std::string> DEFAULT_SETTINGS {
 ///
 /// This file stores the permanent user defined settings, which can temporary
 /// owervritten with the command-line arguments, specified when starting the
-/// propgram.
+/// program.
 ///
 const std::string INI_FILE_NAME { "csvvalidator.ini" };
 
@@ -175,6 +174,14 @@ const std::string DISPLAY_PROMPT_DUPLICATED_SIGN { "+" };
 const std::string DISPLAY_PROMT_CLOSE_SIGN { ">" };
 
 ///
+/// @brief Display cell separator.
+/// 
+/// This character separates the "cells" (aka display::Row elements) on the
+/// display.
+///
+const std::string DISPLAY_CELL_SEPARATOR = "|";
+
+///
 /// @brief INI comment signs.
 ///
 /// This characters can indicate the beginning of a comment in the .ini files.
@@ -198,6 +205,9 @@ const std::string INI_WHITESPACE = " \t\n";
 ///
 /// @brief Cosole output indentation.
 ///
+/// This string stores the number of spaces corresponding to the amount of
+/// indentation.
+///
 const std::string INDENTATION { "  " };
 
 ///
@@ -218,6 +228,9 @@ const std::set<std::string> NO_ANSWERS { "n", "N", "no", "No", "NO", "0", "false
 
 ///
 /// @brief Debug log verbosity.
+///
+/// When turned on (true), writes a detailed log on the screen of the steps
+/// performed by the program.
 ///
 inline bool verbose { false };
 
@@ -251,6 +264,12 @@ inline const std::filesystem::path getIniLocation(const std::string& p_fileName 
     return iniPath;
 }
 
+///
+/// @brief Check if the provided (ini) file is exists.
+///
+/// @param[in] p_iniFilePath : the path of the ini file
+/// @return true, if the provided file exists as a regular file
+///
 inline const bool iniFileExists(const std::filesystem::path& p_iniFilePath)
 {
     const std::filesystem::file_status status { std::filesystem::status(p_iniFilePath) };
@@ -259,6 +278,20 @@ inline const bool iniFileExists(const std::filesystem::path& p_iniFilePath)
         return false;
     }
     return true;
+}
+
+///
+/// @brief Display a question and get the answer
+/// 
+/// @param[in] p_text : the text of the question
+/// @return true, if the answer was yes
+/// 
+inline bool yesNoQuestion(const std::string& p_text)
+{
+    std::cout << p_text;
+    std::string answer {};
+    std::cin >> answer;
+    return utils::YES_ANSWERS.contains(answer);
 }
 
 } // namespace utils

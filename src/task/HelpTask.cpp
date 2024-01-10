@@ -4,8 +4,8 @@
 /// @file  HelpTask.cpp
 /// @brief Definition of HelpTask class
 ///
-
 #include "HelpTask.h"
+
 #include "../utils/Utility.h"
 
 #include <iostream>
@@ -14,13 +14,56 @@
 namespace csvvalidator {
 namespace task {
 
-static std::string aboutProgram();
-static std::string aboutStart();
-static std::string aboutSettings();
-static std::string aboutConfig();
-static std::string aboutHelp();
+static const std::string aboutProgram();
+static const std::string aboutStart();
+static const std::string aboutSettings();
+static const std::string aboutConfig();
+static const std::string aboutHelp();
 static bool isHelpCommand(const std::string& p_request);
 static bool isConfigCommand(const std::string& p_request);
+
+void printShortHelp()
+{
+    LOG("Printing short help\n\n", utils::verbose);
+    std::cout //
+        << "No file or command presented.\n"
+        << aboutProgram()
+        << aboutStart()
+        << "\n"
+        << aboutConfig()
+        << aboutHelp()
+        << "\n";
+}
+
+void printFullHelp()
+{
+    LOG("Printing full help\n\n", utils::verbose);
+    std::cout //
+        << aboutStart()
+        << aboutSettings()
+        << "\n"
+        << aboutConfig()
+        << aboutHelp()
+        << "\n";
+}
+
+void printConfigWriterHelp()
+{
+    LOG("Printing config writer help\n\n", utils::verbose);
+    std::cout //
+        << "\n"
+        << utils::INDENTATION + "The program can permanently store user's own settings in an .ini file.\n"
+        << utils::INDENTATION + "To use this function start the program with the  config  command and\n"
+        << utils::INDENTATION + "provide the settings to be store:\n"
+        << "\n"
+        << utils::INDENTATION + "\t> csv_validator.exe  config  [arguments: setting's name and value]\n"
+        << "\n"
+        << utils::INDENTATION + "Multiple arguments can be specified.\n"
+        << utils::INDENTATION + "The  config  command with no arguments creates a new .ini file with\n"
+        << utils::INDENTATION + "the default settings (or overwrites the existing one).\n"
+        << aboutSettings()
+        << "\n";
+}
 
 bool HelpTask::run()
 {
@@ -40,48 +83,17 @@ bool HelpTask::run()
     return false;
 }
 
-void HelpTask::printShortHelp() const
+static bool isHelpCommand(const std::string& p_request)
 {
-    LOG("Printing short help\n\n", utils::verbose);
-    std::cout << "No file or command presented.\n"
-              << aboutProgram()
-              << aboutStart()
-              << "\n"
-              << aboutConfig()
-              << aboutHelp()
-              << "\n";
+    return p_request.empty() || utils::CLI_COMMANDS_HELP.contains(p_request);
 }
 
-void HelpTask::printFullHelp() const
+static bool isConfigCommand(const std::string& p_request)
 {
-    LOG("Printing full help\n\n", utils::verbose);
-    std::cout //
-        << aboutStart()
-        << aboutSettings()
-        << "\n"
-        << aboutConfig()
-        << aboutHelp()
-        << "\n";
+    return utils::CLI_COMMANDS_CONFIG.contains(p_request);
 }
 
-void HelpTask::printConfigWriterHelp() const
-{
-    LOG("Printing config writer help\n\n", utils::verbose);
-    std::cout << "\n"
-              << utils::INDENTATION + "The program can permanently store user's own settings in an .ini file.\n"
-              << utils::INDENTATION + "To use this function start the program with the  config  command and\n"
-              << utils::INDENTATION + "provide the settings to be store:\n"
-              << "\n"
-              << utils::INDENTATION + "\t> csv_validator.exe  config  [arguments: setting's name and value]\n"
-              << "\n"
-              << utils::INDENTATION + "Multiple arguments can be specified.\n"
-              << utils::INDENTATION + "The  config  command with no arguments creates a new .ini file with\n"
-              << utils::INDENTATION + "the default settings (or overwrites the existing one).\n"
-              << aboutSettings()
-              << "\n";
-}
-
-std::string aboutProgram()
+static const std::string aboutProgram()
 {
     return "\n"
         + utils::INDENTATION + "This program can analyze the provided csv files, seeking for errors.\n"
@@ -90,7 +102,7 @@ std::string aboutProgram()
         + utils::INDENTATION + "identifies Label list in the first non empty row of the file!)\n";
 }
 
-std::string aboutStart()
+static const std::string aboutStart()
 {
     return "\n"
         + utils::INDENTATION + "To parse a file, start the program with a filename or a path:\n"
@@ -98,7 +110,7 @@ std::string aboutStart()
         + utils::INDENTATION + "\t>  csv_validator.exe  path/to/file  [settings]\n";
 }
 
-std::string aboutSettings()
+static const std::string aboutSettings()
 {
     return "\n"
         + utils::INDENTATION + "Settings:\n"
@@ -119,28 +131,18 @@ std::string aboutSettings()
         + "\n";
 }
 
-std::string aboutConfig()
+static const std::string aboutConfig()
 {
     return "\n"
         + utils::INDENTATION + "To store user's settings permanently, use the  config  command!\n"
         + "\n";
 }
 
-std::string aboutHelp()
+static const std::string aboutHelp()
 {
     return "\n"
         + utils::INDENTATION + "To get help, use the  help  command!\n"
         + "\n";
-}
-
-static bool isHelpCommand(const std::string& p_request)
-{
-    return p_request.empty() || utils::CLI_COMMANDS_HELP.contains(p_request);
-}
-
-bool isConfigCommand(const std::string& p_request)
-{
-    return utils::CLI_COMMANDS_CONFIG.contains(p_request);
 }
 
 } // namespace task

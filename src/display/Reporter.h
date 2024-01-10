@@ -21,10 +21,12 @@ namespace display {
 class Reporter : public IReporter
 {
 public:
-    explicit Reporter(const utils::ISettings& p_settings) :
-        m_settings(p_settings)
-    {
-    }
+    ///
+    /// @brief Constructor for Reporter class.
+    ///
+    /// @param[in] - p_settings (required) : a reference to the Settings class
+    ///
+    explicit Reporter(const utils::ISettings& p_settings);
 
     ///
     /// Convert csv::File and csv::Result to display::Report
@@ -36,14 +38,14 @@ public:
     const data::display::Report process(const data::csv::File& p_csvFile,
                                         const data::csv::Result& p_result) const final;
 
+private:
+    const utils::ISettings& m_settings;
+
     const data::display::Table addFileInfo(const data::csv::File& p_csvFile,
                                            const data::csv::Result& p_result) const;
     const data::display::Table addFileContent(const data::csv::File& p_csvFile) const;
     const data::display::Table addErrorList(const data::csv::Result& p_result) const;
     bool errorLogFilter(const auto& p_entry) const;
-
-private:
-    const utils::ISettings& m_settings;
 };
 
 } // namespace display

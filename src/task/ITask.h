@@ -1,8 +1,8 @@
 ///
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
-/// @file  CsvTask.h
-/// @brief Declaration of CsvTask class
+/// @file  ITask.h
+/// @brief Interface declaration for task classes
 ///
 
 #pragma once
@@ -10,6 +10,9 @@
 namespace csvvalidator {
 namespace task {
 
+///
+/// @brief Interface for task classes.
+/// 
 class ITask
 {
 public:

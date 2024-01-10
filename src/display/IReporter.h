@@ -2,7 +2,7 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  IReporter.h
-/// @brief Interface definition of the Reporter class
+/// @brief Interface declaration of the Reporter class
 ///
 
 #pragma once
@@ -14,6 +14,9 @@
 namespace csvvalidator {
 namespace display {
 
+///
+/// @brief Interface for display::Reporter class.
+///
 class IReporter
 {
 public:

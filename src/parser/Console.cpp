@@ -2,14 +2,13 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  Console.cpp
-/// @brief Functions for console parser
+/// @brief Definition of the parser::Console class.
 ///
-
 #include "Console.h"
+
 #include "../data/ConsoleArguments.h"
 #include "../utils/Utility.h"
 
-#include <iostream>
 #include <string>
 #include <vector>
 
@@ -18,24 +17,27 @@ namespace parser {
 
 typedef std::vector<std::string> StrVec;
 
-static inline bool hasKey(const data::console::Parameter& p_parameter);
-static inline bool isKey(const std::string& p_text);
-static inline void removeDashes(std::string* p_parameterKey);
-static void setVerbosity(StrVec* p_rawData);
+const StrVec convert(const int p_argc, const char* const p_argv[]);
+void extractVerbosity(StrVec* p_rawData);
+const std::string extractCommand(StrVec* p_rawData);
+const data::console::Parameters createParameters(const StrVec& p_rawData);
+inline bool hasKey(const data::console::Parameter& p_parameter);
+inline bool isKey(const std::string& p_text);
+inline void removeDashes(std::string* p_parameterKey);
 
 const data::console::Arguments Console::parse(const int p_argc,
                                               const char* const p_argv[])
 {
     LOG("Parsing console arguments...\n", utils::verbose);
-    StrVec rawData = Console::convert(p_argc, p_argv);
-    setVerbosity(&rawData);
+    StrVec rawData = convert(p_argc, p_argv);
+    extractVerbosity(&rawData);
     data::console::Arguments arguments {};
-    arguments.m_command    = getCommand(&rawData);
-    arguments.m_parameters = Console::createParameters(rawData);
+    arguments.m_command    = extractCommand(&rawData);
+    arguments.m_parameters = createParameters(rawData);
     return arguments;
 }
 
-const data::console::Parameters Console::createParameters(const StrVec& p_rawData)
+const data::console::Parameters createParameters(const StrVec& p_rawData)
 {
     data::console::Parameters parameters {};
     StrVec::const_iterator it = p_rawData.begin();
@@ -66,10 +68,10 @@ const data::console::Parameters Console::createParameters(const StrVec& p_rawDat
     return parameters;
 }
 
-const std::string Console::getCommand(StrVec* p_rawData)
+const std::string extractCommand(StrVec* p_rawData)
 {
     if (!p_rawData) {
-        LOG("Program logic error: nullptr as rawData @ getCommand\n", true);
+        LOG("Program logic error: nullptr as rawData @ extractCommand\n", true);
         return {};
     }
     if (p_rawData->empty()) {
@@ -81,7 +83,7 @@ const std::string Console::getCommand(StrVec* p_rawData)
     return command;
 }
 
-const StrVec Console::convert(const int p_argc, const char* const p_argv[])
+const StrVec convert(const int p_argc, const char* const p_argv[])
 {
     StrVec rawData;
     for (int i = 1; i < p_argc; ++i) {
@@ -90,12 +92,12 @@ const StrVec Console::convert(const int p_argc, const char* const p_argv[])
     return rawData;
 }
 
-static inline bool hasKey(const data::console::Parameter& p_parameter)
+inline bool hasKey(const data::console::Parameter& p_parameter)
 {
     return !p_parameter.first.empty();
 }
 
-static inline bool isKey(const std::string& p_text)
+inline bool isKey(const std::string& p_text)
 {
     return !p_text.empty() && *p_text.begin() == utils::CLI_KEY_MARKER;
 }
@@ -110,10 +112,10 @@ void removeDashes(std::string* p_parameterKey)
     key.erase(key.begin(), key.begin() + key.find_first_not_of(utils::CLI_KEY_MARKER));
 }
 
-static void setVerbosity(StrVec* p_rawData)
+void extractVerbosity(StrVec* p_rawData)
 {
     if (!p_rawData) {
-        LOG("Program logic error: nullptr as rawData @ setVerbosity()\n", true);
+        LOG("Program logic error: nullptr as rawData @ extractVerbosity()\n", true);
         return;
     }
     if (p_rawData->empty()) {

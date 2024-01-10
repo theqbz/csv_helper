@@ -4,7 +4,6 @@
 /// @file  CsvTask.h
 /// @brief Declaration of CsvTask class
 ///
-
 #pragma once
 
 #include "../display/IDisplay.h"
@@ -19,7 +18,7 @@ namespace csvvalidator {
 namespace task {
 
 ///
-/// @brief A Task to parse, analyze and present a csv file
+/// @brief A task to parse, analyze and a *csv* file and present the result.
 ///
 class CsvTask : public ITask
 {
@@ -51,7 +50,7 @@ public:
                      std::shared_ptr<display::IDisplay> p_display) noexcept;
 
     ///
-    /// Execute the task
+    /// @brief Execute the task
     ///
     /// @param (void)
     /// @return true, if the execution was successfull

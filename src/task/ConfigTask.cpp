@@ -4,8 +4,8 @@
 /// @file  ConfigTask.cpp
 /// @brief Definition of ConfigTask class
 ///
-
 #include "ConfigTask.h"
+
 #include "../data/SettingData.h"
 #include "../parser/IniFile.h"
 #include "../utils/FileHandler.h"
@@ -13,13 +13,33 @@
 
 #include <filesystem>
 #include <iosfwd>
-#include <iostream>
 #include <string>
 
 namespace csvvalidator {
 namespace task {
 
-static bool question(const std::string& p_text);
+void storeSettings(data::SettingData& p_settingsToStore);
+
+ConfigTask::ConfigTask(const data::SettingData& p_arguments) noexcept :
+    m_arguments(p_arguments)
+{
+    LOG("ConfigTask created\n", utils::verbose);
+}
+
+bool task::ConfigTask::run()
+{
+    LOG("ConfigTask running\n", utils::verbose);
+    data::SettingData settingsToStore { m_arguments };
+    if (m_arguments.empty()) {
+        LOG("No arguments to store to .ini file\n", utils::verbose);
+        if (!utils::yesNoQuestion("Would you like to create a _new_ config file with the default settings? ")) {
+            return true;
+        }
+        settingsToStore = data::SettingData(utils::DEFAULT_SETTINGS);
+    }
+    storeSettings(settingsToStore);
+    return true;
+}
 
 std::string convertToFileContent(const data::SettingData& p_settingData)
 {
@@ -30,8 +50,7 @@ std::string convertToFileContent(const data::SettingData& p_settingData)
     return fileContent;
 }
 
-void createNewIniFile(const data::SettingData& p_settings,
-                      const std::filesystem::path& p_iniPath)
+void createNewIniFile(const data::SettingData& p_settings, const std::filesystem::path& p_iniPath)
 {
     LOG("Creating new config file\n", true);
     std::ofstream newFile(p_iniPath);
@@ -39,16 +58,14 @@ void createNewIniFile(const data::SettingData& p_settings,
     newFile.close();
 }
 
-void updateExistingIniFile(const data::SettingData& p_settings,
-                           const std::filesystem::path& p_iniPath)
+void updateExistingIniFile(const data::SettingData& p_settings, const std::filesystem::path& p_iniPath)
 {
     utils::FileHandler file(p_iniPath);
     LOG("Update config file\n", true);
     file.get() << convertToFileContent(p_settings).c_str();
 }
 
-const data::SettingData mergeSettings(data::SettingData& p_newSettings,
-                                      data::SettingData& p_existingSettings)
+const data::SettingData mergeSettings(data::SettingData& p_newSettings, data::SettingData& p_existingSettings)
 {
     LOG("Previous setting:\n", utils::verbose);
     PRINT_SETTINGS(p_existingSettings, utils::verbose);
@@ -72,7 +89,7 @@ void storeSettings(data::SettingData& p_settingsToStore)
     data::SettingData existingIniContent {};
     if (iniFileExists) {
         utils::FileHandler file(iniPath);
-        existingIniContent = parser::IniFile::read(file.get()).m_content;
+        existingIniContent = parser::IniFile::parse(file.get()).m_content;
     }
     const data::SettingData newIniContent { mergeSettings(p_settingsToStore, existingIniContent) };
     if (iniFileExists) {
@@ -80,29 +97,6 @@ void storeSettings(data::SettingData& p_settingsToStore)
         return;
     }
     createNewIniFile(newIniContent, iniPath);
-}
-
-bool task::ConfigTask::run()
-{
-    LOG("ConfigTask running\n", utils::verbose);
-    data::SettingData settingsToStore { m_arguments };
-    if (m_arguments.empty()) {
-        LOG("No arguments to store to .ini file\n", utils::verbose);
-        if (!question("Would you like to create a _new_ config file with the default settings? ")) {
-            return true;
-        }
-        settingsToStore = data::SettingData(utils::DEFAULT_SETTINGS);
-    }
-    storeSettings(settingsToStore);
-    return true;
-}
-
-bool question(const std::string& p_text)
-{
-    std::cout << p_text;
-    std::string answer {};
-    std::cin >> answer;
-    return utils::YES_ANSWERS.contains(answer);
 }
 
 } // namespace task

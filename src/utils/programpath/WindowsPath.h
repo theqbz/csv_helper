@@ -2,9 +2,8 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  WindowsPath.h
-/// @brief Declaration of Windows version of Path class
+/// @brief Declaration of the Windows version of Path class
 ///
-
 #pragma once
 
 #include "../../utils/Utility.h"
@@ -17,9 +16,18 @@
 
 namespace csvvalidator::utils {
 
+///
+/// @brief The program property class.
+///
 class Program
 {
 public:
+    ///
+    /// @brief Get the absolute path to the program.
+    /// 
+    /// @param (void)
+    /// @return the path
+    /// 
     static std::filesystem::path absolutePath()
     {
         wchar_t path[MAX_PATH] {};

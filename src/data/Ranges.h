@@ -48,6 +48,8 @@ struct Ranges : public std::vector<Range>
     ///
     /// @brief Normalize all of the Ranges.
     ///
+    /// Make the start and end points of all the ranges in non-descending order.
+    ///
     void normalize()
     {
         for (Range& range : *this) {
@@ -55,6 +57,11 @@ struct Ranges : public std::vector<Range>
         }
     }
 
+    ///
+    /// @brief Short the ranges in non-descending order.
+    ///
+    /// The sort compares the starting points of the ranges.
+    ///
     inline void sort() { std::sort(this->begin(), this->end()); }
 };
 

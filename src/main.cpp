@@ -21,18 +21,28 @@
 
 #include <iostream>
 
+// #define DEBUG 1
+
 int main(int argc, const char* argv[])
 {
-    // std::cout << "Debug mode. Press ENTER to start!\n";
-    // std::cin.get();
-    std::cout << "* CsvValidator by QBZ * version: 1.0b\n";
+
+#ifdef DEBUG
+    std::cout << "Debug mode. Press ENTER to start!\n";
+    std::cin.get();
+#endif // DEBUG
+
+    std::cout << "* CsvValidator by QBZ * version: 1.0\n";
     csvvalidator::utils::setConfigPath(csvvalidator::utils::Program::absolutePath());
     csvvalidator::data::console::Arguments consoleArgs { csvvalidator::parser::Console::parse(argc, argv) };
     csvvalidator::data::ini::File inifile { csvvalidator::parser::IniFile::parse(csvvalidator::utils::INI_FILE_NAME) };
     csvvalidator::utils::Settings settings(consoleArgs.m_parameters, inifile.m_content);
-    csvvalidator::task::TaskFactory taskFactory(consoleArgs, settings);
+    csvvalidator::task::TaskFactory taskFactory(settings, consoleArgs);
     taskFactory.runTasks();
-    // std::cout << "\nEnd program. Press ENTER to exit!\n";
-    // std::cin.get();
+
+#ifdef DEBUG
+    std::cout << "\nEnd program. Press ENTER to exit!\n";
+    std::cin.get();
+#endif // DEBUG
+
     return 0;
 }

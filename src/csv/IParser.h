@@ -2,17 +2,20 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  IParser.h
-/// @brief Interface definition of Parser class
+/// @brief Interface declaration of Parser class
 ///
 
 #pragma once
 
-#include "../utils/IFileHandler.h"
 #include "../data/CsvData.h"
+#include "../utils/IFileHandler.h"
 
 namespace csvvalidator {
 namespace csv {
 
+///
+/// @brief Interface for csv::Parser class.
+/// 
 class IParser
 {
 public:

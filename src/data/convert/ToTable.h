@@ -2,7 +2,7 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  ToTable.h
-/// @brief Declarations of data::convert::ToTable class.
+/// @brief Declaration of data::convert::ToTable class.
 ///
 #pragma once
 
@@ -14,31 +14,32 @@
 namespace csvvalidator::data {
 namespace convert {
 
+///
+/// @brief Worker class to create data::display::Table from the content of a
+///        data::csv::File depending on data::Display::Ranges and other
+///        relevant settings.
+///
 class ToTable
 {
 public:
+    ///
+    /// @brief Creates a table from the content of a csv::File.
+    /// 
+    /// @param[in] - p_csvFile       : the parsed content of a *csv* file
+    /// @param[in] - p_ranges        : the ranges of line numbers to display
+    ///                                from the csv::File
+    /// @param[in] - p_labelPosition : setting for the location of the label in
+    ///                                the table
+    /// @param[in] - p_emptyLines    : setting for handling empty lines
+    /// @param[in] - p_tableOutput   : setting for table output
+    /// 
+    /// @return displayable data in a display::Table datastructure
+    ///
     static const data::display::Table get(const data::csv::File& p_csvFile,
                                           const data::display::Ranges& p_ranges,
                                           const utils::ISettings::LabelPosition& p_labelPosition,
                                           const utils::ISettings::EmptyLines& p_emptyLines,
                                           const bool p_tableOutput);
-
-    static const data::display::Row addLabels(const data::csv::Labels& p_labels,
-                                              const size_t p_lastLineNumber);
-    static const data::display::Row addLine(const data::csv::Record& p_record,
-                                            const size_t p_lastLineNumber);
-    static const std::string getRowHead(const size_t p_totalLineCount,
-                                        const std::string& p_currentLineSign);
-    static const std::string getRowHead(const size_t p_totalLineCount,
-                                        const size_t p_currentLineNumber);
-    static const std::string getPlaceholder(const std::string_view p_totalLineNumber,
-                                            const std::string_view p_currentLineNumber);
-    static const bool isEmptyRowAndSkipIt(const data::csv::RecordHead::ErrorState& p_recordState);
-    static inline const std::string getRecordPrompt(const data::csv::RecordHead& p_recordHead,
-                                                    const size_t p_lastLineNumber);
-    static const std::string getRecordState(const data::csv::RecordHead& p_recordHead);
-    static const std::string getFieldContent(const data::csv::Field& p_field);
-    static const bool isLabelInline();
 
     static utils::ISettings::LabelPosition s_labelPosition;
     static utils::ISettings::EmptyLines s_emptyLines;

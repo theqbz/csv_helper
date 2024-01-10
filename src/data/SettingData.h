@@ -4,7 +4,7 @@
 /// @file  SettingData.h
 /// @brief Declaradion of SettingData datastructure.
 ///
-/// SettingData datastructure stores the settings
+/// SettingData datastructure stores the program settings
 ///
 #pragma once
 

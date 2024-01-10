@@ -1,7 +1,7 @@
 ///
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
-/// @file  Analyzer.h
+/// @file  IAnalyzer.h
 /// @brief Interface declaration for Analyzer class
 ///
 
@@ -13,6 +13,9 @@
 namespace csvvalidator {
 namespace csv {
 
+///
+/// @brief Interface for csv::Analyzer class.
+///
 class IAnalyzer
 {
 public:

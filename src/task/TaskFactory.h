@@ -19,21 +19,38 @@
 namespace csvvalidator {
 namespace task {
 
+///
+/// @brief Task creator and executor class.
+///
 class TaskFactory
 {
 public:
     TaskFactory()                   = delete;
     TaskFactory(const TaskFactory&) = delete;
 
-    explicit TaskFactory(const data::console::Arguments& p_arguments,
-                         const utils::ISettings& p_settings) noexcept;
-    void init(const data::console::Arguments& p_arguments);
+    ///
+    /// @brief Constructor for TaskFactory.
+    /// Stores the program settings and creates tasks from arguments.
+    ///
+    /// @param[in] p_settings (required)  : a reference to Settings class
+    /// @param[in] p_arguments (required) : the parsed console arguments
+    ///
+    explicit TaskFactory(const utils::ISettings& p_settings,
+                         const data::console::Arguments& p_arguments) noexcept;
+
+    ///
+    /// @brief Run each task from the task list.
+    ///
+    /// @param (void)
+    /// @return true, if every task was successfull
+    ///
     bool runTasks();
 
 private:
     const utils::ISettings& m_settings;
     std::queue<std::shared_ptr<task::ITask>> m_tasks;
 
+    void init(const data::console::Arguments& p_arguments);
     void createHelpTask(const std::string p_command);
     void createConfigTask(const data::console::Arguments& p_arguments);
     void createSingleCsvTask(const std::string& p_fileName);

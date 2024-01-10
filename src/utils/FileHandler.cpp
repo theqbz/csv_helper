@@ -2,15 +2,13 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  FileHandler.cpp
-/// @brief Function definitions of the FileHandler class
+/// @brief Definition of the utils::fileHandler class
 ///
-
 #include "FileHandler.h"
+
 #include "Utility.h"
 
 #include <filesystem>
-#include <fstream>
-#include <iostream>
 #include <string>
 
 namespace csvvalidator {

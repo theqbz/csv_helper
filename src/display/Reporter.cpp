@@ -1,8 +1,8 @@
 ///
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
-/// @file  Reporter.h
-/// @brief Function definitions of the Reporter class
+/// @file  Reporter.cpp
+/// @brief Definition of the Reporter class
 ///
 #include "Reporter.h"
 
@@ -25,6 +25,11 @@ namespace display {
 static const std::vector<size_t> getErrorLineNumbers(const data::csv::Content& p_content);
 static const std::string getEntryType(const data::csv::ErrorEntry::Type& p_entryType);
 static const data::display::Row getErrorAndWarningReport(const size_t p_errorCounter, const size_t p_warningCounter);
+
+Reporter::Reporter(const utils::ISettings& p_settings) :
+    m_settings(p_settings)
+{
+}
 
 const data::display::Report Reporter::process(const data::csv::File& p_csvFile,
                                               const data::csv::Result& p_result) const
@@ -50,7 +55,7 @@ const data::display::Table Reporter::addFileInfo(const data::csv::File& p_csvFil
     table.push_back(Row({ "File: " + p_csvFile.m_fileName }));
     if (m_settings.errorLevel() < utils::ISettings::ErrorLevel::Error) {
         table.push_back(Row({ "This file contains " + std::to_string(p_result.m_emptyLineCount) + " empty lines" }));
-        //table.push_back(Row({ getErrorAndWarningReport(p_result.m_errorCount, p_result.m_warningCount) }));
+        // table.push_back(Row({ getErrorAndWarningReport(p_result.m_errorCount, p_result.m_warningCount) }));
     }
     return table;
 }
@@ -75,7 +80,7 @@ const data::display::Table Reporter::addErrorList(const data::csv::Result& p_res
 {
     typedef data::csv::ErrorEntry ErrorEntry;
     LOG(utils::INDENTATION + "Adding error list\n", utils::verbose);
-    data::display::Table table{};
+    data::display::Table table {};
     const data::csv::ErrorList errorLog { p_result.m_errorList };
     size_t errorCounter { 0 };
     size_t warningCounter { 0 };

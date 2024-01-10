@@ -20,6 +20,9 @@ namespace csv {
 ///
 /// @brief The state of a csv::Record.
 ///
+/// A RecordHead consists the errorState, the line number and the duplication
+/// state of the csv::Record.
+///
 struct RecordHead
 {
     ///
@@ -45,6 +48,8 @@ struct RecordHead
 ///
 /// @brief Descriptor for a value from a *csv file*.
 ///
+/// A Field consists the state and the content of the field.
+///
 struct Field
 {
     ///
@@ -66,6 +71,8 @@ struct Field
 ///
 /// @brief Container for fields from a record (row) of a *csv file*.
 ///
+/// Fields is the list of csv::Fields.
+///
 struct Fields : public std::vector<Field>
 { };
 
@@ -73,7 +80,7 @@ struct Fields : public std::vector<Field>
 /// @brief Container for a record (row) of a *csv file*.
 ///
 /// The Record consists a header and the content of the record,
-/// represent by a pair of < RecordHead, Fields >
+/// represent by a pair of < RecordHead, Fields >.
 ///
 struct Record : public std::pair<RecordHead, Fields>
 {
@@ -81,19 +88,26 @@ struct Record : public std::pair<RecordHead, Fields>
 };
 
 ///
-/// @brief Container for the records of a .csv file
+/// @brief Container for the records of a *csv file*
+///
+/// Content is the list of csv::Records.
 ///
 struct Content : public std::vector<Record>
 { };
 
 ///
-/// @brief Container for the labels of a .csv file
+/// @brief Container for the labels of a *csv file*.
+///
+/// Labels is a list of strings, which are the labels.
 ///
 struct Labels : public std::vector<std::string>
 { };
 
 ///
-/// @brief Container for a whole .csv file
+/// @brief Container for a whole *csv file*.
+/// 
+/// A *csv file* constists the name of the file, the list of Labels and the
+/// list of Records.
 ///
 struct File
 {

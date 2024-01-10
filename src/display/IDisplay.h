@@ -2,7 +2,7 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  IDisplay.h
-/// @brief Interface definition for Display classes
+/// @brief Interface declaration for Display classes
 ///
 
 #pragma once

@@ -2,7 +2,7 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  IFileHandler.h
-/// @brief Interface declaration of the FileHandler class
+/// @brief Interface feclaration of the utils::fileHandler class
 ///
 
 #pragma once

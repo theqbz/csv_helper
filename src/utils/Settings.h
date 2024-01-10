@@ -2,7 +2,7 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  Settings.h
-/// @brief Declaration of the settings class
+/// @brief Declaration of the utils::Settings class
 ///
 /// OPTION NAME     OPTION DETAILS
 /// -----------     --------------
@@ -31,13 +31,10 @@
 /// errorLevel      [ all | warning | error ]
 ///                 defines the verbosity of the error log
 ///
-
 #pragma once
 
 #include "../data/SettingData.h"
 #include "ISettings.h"
-
-#include <filesystem>
 
 namespace csvvalidator {
 namespace utils {
@@ -59,21 +56,12 @@ public:
     /// @param - consoleArguments : the ordered content of console args
     /// @param - iniFile          : the ordered content of records from .ini file
     ///
-    Settings(const data::SettingData& p_consoleArguments,
-             const data::SettingData& p_iniFile) :
-        m_consoleArguments(p_consoleArguments),
-        m_iniFile(p_iniFile)
-    {
-        init();
-    }
+    explicit Settings(const data::SettingData& p_consoleArguments,
+                      const data::SettingData& p_iniFile) noexcept;
 
     Settings(const Settings&) = delete;
     Settings(Settings&&)      = delete;
 
-    void init();
-
-    inline void iniFileLocation(const std::filesystem::path p_path) { m_iniFileLocation = p_path; }
-    inline const std::filesystem::path iniFileLocation() const { return m_iniFileLocation; }
     inline void delimiter(const unsigned char p_delimiter) { m_delimiter = p_delimiter; }
     inline const unsigned char delimiter() const { return m_delimiter; }
     inline void emptyLines(const EmptyLines& p_placeholder) { m_emptyLines = p_placeholder; }
@@ -92,7 +80,6 @@ public:
     inline const ErrorLevel errorLevel() const { return m_errorLevel; }
 
 private:
-    std::filesystem::path m_iniFileLocation;
     data::SettingData m_consoleArguments;
     data::SettingData m_iniFile;
     unsigned char m_delimiter;
@@ -104,6 +91,7 @@ private:
     bool m_tableOutput;
     ErrorLevel m_errorLevel;
 
+    void init();
     void storeSettings(const data::SettingData& p_tasks);
 };
 

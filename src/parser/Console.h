@@ -2,10 +2,8 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  Console.h
-/// @brief Declaration of the console argument parser class
+/// @brief Declaration of the parser::Console class.
 ///
-/// TODO:
-/// Must separate the file from settings!
 
 #pragma once
 
@@ -20,7 +18,7 @@ namespace parser {
 typedef std::vector<std::string> StrVec;
 
 ///
-/// @brief Parse the console arguments
+/// @brief Console argument parser
 ///
 class Console
 {
@@ -32,10 +30,8 @@ public:
     /// @param[in] - p_argv : an array of the console arguments
     /// @return console::Arguments datastructure
     ///
-    static const data::console::Arguments parse(const int p_argc, const char* const p_argv[]);
-    static const data::console::Parameters createParameters(const StrVec& p_rawData);
-    static const std::string getCommand(StrVec* p_rawData);
-    static const StrVec convert(const int p_argc, const char* const p_argv[]);
+    static const data::console::Arguments parse(const int p_argc,
+                                                const char* const p_argv[]);
 };
 
 } // namespace parser

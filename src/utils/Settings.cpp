@@ -2,24 +2,91 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  Settings.cpp
-/// @brief Definition of the Settings class and helper functions to store settings
+/// @brief Definition of the utils::Settings class and helper functions to
+///        store settings
 ///
-
 #include "Settings.h"
+
 #include "../data/SettingData.h"
 #include "../utils/Utility.h"
 
 #include <exception>
-#include <fstream>
 #include <iostream>
 #include <limits>
 #include <map>
 #include <set>
 #include <string>
-#include <utility>
 
 namespace csvvalidator {
 namespace utils {
+
+size_t convertToSizeT(const std::string& p_text);
+char convertToChar(const std::string& p_text);
+bool convertToBool(const std::string& p_text);
+ISettings::EmptyLines convertToEmptyLines(const std::string& p_text);
+ISettings::LabelPosition convertToLabelPosition(const std::string& p_text);
+ISettings::DiffDetectMode convertToDiffMode(const std::string& p_text);
+ISettings::ErrorLevel convertToErrorLevel(const std::string& p_text);
+
+Settings::Settings(const data::SettingData& p_consoleArguments, const data::SettingData& p_iniFile) noexcept :
+    m_consoleArguments(p_consoleArguments),
+    m_iniFile(p_iniFile)
+{
+    init();
+}
+
+void Settings::init()
+{
+    LOG("Storing settings\n", utils::verbose);
+    LOG("Defaults:\n", utils::verbose);
+    PRINT_SETTINGS(utils::DEFAULT_SETTINGS, utils::verbose);
+    LOG("From .ini file:\n", utils::verbose);
+    PRINT_SETTINGS(m_iniFile, utils::verbose);
+    LOG("From console args:\n", utils::verbose);
+    PRINT_SETTINGS(m_consoleArguments, utils::verbose);
+    data::SettingData settingsToStore {};
+    settingsToStore.merge(m_consoleArguments);
+    settingsToStore.merge(m_iniFile);
+    settingsToStore.merge(data::SettingData(utils::DEFAULT_SETTINGS));
+    storeSettings(settingsToStore);
+}
+
+void Settings::storeSettings(const data::SettingData& p_settingsData)
+{
+    typedef data::SettingData::const_iterator it;
+    if (it delimiter = p_settingsData.find("delimiter");
+        delimiter != p_settingsData.end()) {
+        m_delimiter = convertToChar(delimiter->second);
+    }
+    if (it error_lines = p_settingsData.find("errorLines");
+        error_lines != p_settingsData.end()) {
+        m_linesAroundErrors = convertToSizeT(error_lines->second);
+    }
+    if (it labels = p_settingsData.find("labels");
+        labels != p_settingsData.end()) {
+        m_labels = convertToLabelPosition(labels->second);
+    }
+    if (it empty_fields = p_settingsData.find("emptyFields");
+        empty_fields != p_settingsData.end()) {
+        m_emptyFields = convertToChar(empty_fields->second);
+    }
+    if (it empty_lines = p_settingsData.find("emptyLines");
+        empty_lines != p_settingsData.end()) {
+        m_emptyLines = convertToEmptyLines(empty_lines->second);
+    }
+    if (it table_output = p_settingsData.find("table");
+        table_output != p_settingsData.end()) {
+        m_tableOutput = convertToBool(table_output->second);
+    }
+    if (it diff_detect_mode = p_settingsData.find("diffMode");
+        diff_detect_mode != p_settingsData.end()) {
+        m_diff = convertToDiffMode(diff_detect_mode->second);
+    }
+    if (it error_level = p_settingsData.find("errorLevel");
+        error_level != p_settingsData.end()) {
+        m_errorLevel = convertToErrorLevel(error_level->second);
+    }
+}
 
 bool isNumber(const std::string& p_text)
 {
@@ -113,60 +180,6 @@ ISettings::ErrorLevel convertToErrorLevel(const std::string& p_text)
                   << "( Possible values: -errorLevel [ all | error ] )\n";
     }
     return ISettings::ErrorLevel::Error;
-}
-
-void Settings::init()
-{
-    LOG("Storing settings\n", utils::verbose);
-    LOG("Defaults:\n", utils::verbose);
-    PRINT_SETTINGS(utils::DEFAULT_SETTINGS, utils::verbose);
-    LOG("From .ini file:\n", utils::verbose);
-    PRINT_SETTINGS(m_iniFile, utils::verbose);
-    LOG("From console args:\n", utils::verbose);
-    PRINT_SETTINGS(m_consoleArguments, utils::verbose);
-
-    data::SettingData settingsToStore {};
-    settingsToStore.merge(m_consoleArguments);
-    settingsToStore.merge(m_iniFile);
-    settingsToStore.merge(data::SettingData(utils::DEFAULT_SETTINGS));
-    storeSettings(settingsToStore);
-}
-
-void Settings::storeSettings(const data::SettingData& p_settingsData)
-{
-    typedef data::SettingData::const_iterator it;
-    if (it delimiter = p_settingsData.find("delimiter");
-        delimiter != p_settingsData.end()) {
-        m_delimiter = convertToChar(delimiter->second);
-    }
-    if (it error_lines = p_settingsData.find("errorLines");
-        error_lines != p_settingsData.end()) {
-        m_linesAroundErrors = convertToSizeT(error_lines->second);
-    }
-    if (it labels = p_settingsData.find("labels");
-        labels != p_settingsData.end()) {
-        m_labels = convertToLabelPosition(labels->second);
-    }
-    if (it empty_fields = p_settingsData.find("emptyFields");
-        empty_fields != p_settingsData.end()) {
-        m_emptyFields = convertToChar(empty_fields->second);
-    }
-    if (it empty_lines = p_settingsData.find("emptyLines");
-        empty_lines != p_settingsData.end()) {
-        m_emptyLines = convertToEmptyLines(empty_lines->second);
-    }
-    if (it table_output = p_settingsData.find("table");
-        table_output != p_settingsData.end()) {
-        m_tableOutput = convertToBool(table_output->second);
-    }
-    if (it diff_detect_mode = p_settingsData.find("diffMode");
-        diff_detect_mode != p_settingsData.end()) {
-        m_diff = convertToDiffMode(diff_detect_mode->second);
-    }
-    if (it error_level = p_settingsData.find("errorLevel");
-        error_level != p_settingsData.end()) {
-        m_errorLevel = convertToErrorLevel(error_level->second);
-    }
 }
 
 } // namespace utils

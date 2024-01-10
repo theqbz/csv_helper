@@ -30,8 +30,8 @@ static bool isHelp(data::console::Parameters p_parameters);
 static bool isConfigCommand(const std::string& p_request);
 static bool isCsvFile(const std::filesystem::path& p_path);
 
-TaskFactory::TaskFactory(const data::console::Arguments& p_arguments,
-                         const utils::ISettings& p_settings) noexcept :
+TaskFactory::TaskFactory(const utils::ISettings& p_settings,
+                         const data::console::Arguments& p_arguments) noexcept :
     m_settings(p_settings)
 {
     init(p_arguments);

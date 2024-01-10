@@ -2,7 +2,7 @@
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
 /// @file  FileHandler.h
-/// @brief Declaration of the file handler class
+/// @brief Declaration of the utils::fileHandler class
 ///
 
 #pragma once

@@ -10,12 +10,22 @@
 #include "../utils/IFileHandler.h"
 #include "../utils/Utility.h"
 
-#include <string>
-#include <iosfwd>
 #include <fstream>
+#include <iosfwd>
+#include <string>
 
 namespace csvvalidator {
 namespace csv {
+
+const data::csv::File parse(std::fstream& p_file, const unsigned char p_delimiter);
+
+const data::csv::File Parser::process(utils::IFileHandler& p_csvFile)
+{
+    LOG("Parsing " + p_csvFile.fileName() + " file\n", utils::verbose);
+    data::csv::File csvFile { parse(p_csvFile.get(), m_settings.delimiter()) };
+    csvFile.m_fileName = p_csvFile.fileName();
+    return csvFile;
+}
 
 const std::string getLabel(const data::csv::Labels& p_labels,
                            const size_t p_fieldCounter)
@@ -70,8 +80,7 @@ const data::csv::Labels getLabels(const std::string& p_line,
     return labels;
 }
 
-const data::csv::File parse(std::fstream& p_file,
-                            const unsigned char p_delimiter)
+const data::csv::File parse(std::fstream& p_file, const unsigned char p_delimiter)
 {
     if (p_file.peek() == std::char_traits<char>::eof()) {
         LOG("File not exists @ csv Parser()\n", utils::verbose);
@@ -96,14 +105,6 @@ const data::csv::File parse(std::fstream& p_file,
     LOG(utils::INDENTATION + "label count = " + std::to_string(file.m_labels.size()) + "\n", utils::verbose);
     LOG(utils::INDENTATION + "content count = " + std::to_string(file.m_content.size()) + "\n", utils::verbose);
     return file;
-}
-
-const data::csv::File Parser::process(utils::IFileHandler& p_csvFile)
-{
-    LOG("Parsing " + p_csvFile.fileName() + " file\n", utils::verbose);
-    data::csv::File csvFile { parse(p_csvFile.get(), m_settings.delimiter()) };
-    csvFile.m_fileName = p_csvFile.fileName();
-    return csvFile;
 }
 
 } // namespace csv

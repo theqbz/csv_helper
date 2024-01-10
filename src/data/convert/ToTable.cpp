@@ -1,8 +1,8 @@
 ///
 /// CSV HELPER by QBZ
 /// ----------------------------------------------------------------------------
-/// @file  ToTable.h
-/// @brief Declarations of data::convert::ToTable class.
+/// @file  ToTable.cpp
+/// @brief Definition of data::convert::ToTable class and other worker functions.
 ///
 
 #include "ToTable.h"
@@ -18,7 +18,113 @@ namespace convert {
 utils::ISettings::LabelPosition ToTable::s_labelPosition = utils::ISettings::LabelPosition::Top;
 utils::ISettings::EmptyLines ToTable::s_emptyLines       = utils::ISettings::EmptyLines::Skip;
 bool ToTable::s_tableOutput                              = false;
-static const char LINE_NUMBER_SPACING                    = ' ';
+
+static const char LINE_NUMBER_SPACING = ' ';
+
+const bool isLabelInline()
+{
+    return !ToTable::s_tableOutput && ToTable::s_labelPosition == utils::ISettings::LabelPosition::Inline;
+}
+
+const std::string getFieldContent(const data::csv::Field& p_field)
+{
+    const bool labelInline = isLabelInline();
+    if (p_field.m_content.second.empty() && labelInline) {
+        return {};
+    }
+    return labelInline
+        ? p_field.m_content.first + ": " + p_field.m_content.second
+        : p_field.m_content.second;
+}
+
+const std::string getRecordState(const data::csv::RecordHead& p_recordHead)
+{
+    typedef data::csv::RecordHead RecordHead;
+    RecordHead::ErrorState state = p_recordHead.m_state;
+    std::string result {};
+    switch (state) {
+    case RecordHead::ErrorState::OK:
+        result = utils::DISPLAY_PROMPT_NEUTRAL_SIGN;
+        if (p_recordHead.m_duplicated) {
+            result = utils::DISPLAY_PROMPT_DUPLICATED_SIGN;
+        }
+        break;
+    case RecordHead::ErrorState::ERR:
+        result = utils::DISPLAY_PROMPT_ERROR_SIGN;
+        break;
+    case RecordHead::ErrorState::EMPTY:
+        result = utils::DISPLAY_PROMPT_NEUTRAL_SIGN;
+        if (p_recordHead.m_duplicated) {
+            result = utils::DISPLAY_PROMPT_DUPLICATED_SIGN;
+        }
+        break;
+    default:
+        LOG("@!> Program logic error: invalid RecordHead ErrorState\n", true);
+        result = "@!> Program logic error: invalid RecordHead ErrorState";
+        break;
+    }
+    return result;
+}
+
+const std::string getPlaceholder(const std::string_view p_totalLineNumber,
+                                 const std::string_view p_currentLineNumber)
+{
+    const size_t spaceAmount = p_totalLineNumber.length() - p_currentLineNumber.length();
+    std::string spaceing { "" };
+    return spaceing.insert(0, spaceAmount, LINE_NUMBER_SPACING);
+}
+
+const std::string getRowHead(const size_t p_totalLineCount,
+                             const std::string& p_currentLineSign)
+{
+    std::string_view totalLineCount { std::to_string(p_totalLineCount) };
+    return getPlaceholder(totalLineCount, p_currentLineSign)
+        + p_currentLineSign + "."
+        + utils::DISPLAY_PROMT_CLOSE_SIGN;
+}
+
+const std::string getRowHead(const size_t p_totalLineCount,
+                             const size_t p_currentLineNumber)
+{
+    return getRowHead(p_totalLineCount, std::to_string(p_currentLineNumber));
+}
+
+inline const std::string getRecordPrompt(const data::csv::RecordHead& p_recordHead,
+                                         const size_t p_lastLineNumber)
+{
+    return getRecordState(p_recordHead) + getRowHead(p_lastLineNumber, p_recordHead.m_fileLineNumber);
+}
+
+const bool isEmptyRowAndSkipIt(const data::csv::RecordHead::ErrorState& p_recordState)
+{
+    return p_recordState == data::csv::RecordHead::ErrorState::EMPTY
+        && ToTable::s_emptyLines == utils::ISettings::EmptyLines::Skip;
+}
+const data::display::Row addLine(const data::csv::Record& p_record,
+                                 const size_t p_lastLineNumber)
+{
+    if (isEmptyRowAndSkipIt(p_record.first.m_state)) {
+        return {};
+    }
+    data::display::Row row {};
+    row.push_back(getRecordPrompt(p_record.first, p_lastLineNumber));
+    for (const data::csv::Field& field : p_record.second) {
+        row.push_back(getFieldContent(field));
+    }
+    return row;
+}
+
+const data::display::Row addLabels(const data::csv::Labels& p_labels,
+                                   const size_t p_lastLineNumber)
+{
+    LOG(utils::INDENTATION + "Adding labels\n", utils::verbose);
+    data::display::Row labels {};
+    labels.push_back(" " + getRowHead(p_lastLineNumber, utils::DISPLAY_ROMPT_HEADER_SIGN));
+    for (const std::string& label : p_labels) {
+        labels.push_back(label);
+    }
+    return labels;
+}
 
 const data::display::Table ToTable::get(const data::csv::File& p_csvFile,
                                         const data::display::Ranges& p_ranges,
@@ -52,112 +158,6 @@ const data::display::Table ToTable::get(const data::csv::File& p_csvFile,
         }
     }
     return table;
-}
-
-const data::display::Row ToTable::addLabels(const data::csv::Labels& p_labels,
-                                            const size_t p_lastLineNumber)
-{
-    LOG(utils::INDENTATION + "Adding labels\n", utils::verbose);
-    data::display::Row labels {};
-    labels.push_back(" " + getRowHead(p_lastLineNumber, utils::DISPLAY_ROMPT_HEADER_SIGN));
-    for (const std::string& label : p_labels) {
-        labels.push_back(label);
-    }
-    return labels;
-}
-
-const data::display::Row ToTable::addLine(const data::csv::Record& p_record,
-                                          const size_t p_lastLineNumber)
-{
-    if (isEmptyRowAndSkipIt(p_record.first.m_state)) {
-        return {};
-    }
-    data::display::Row row {};
-    row.push_back(getRecordPrompt(p_record.first, p_lastLineNumber));
-    for (const data::csv::Field& field : p_record.second) {
-        row.push_back(getFieldContent(field));
-    }
-    return row;
-}
-
-const std::string ToTable::getRowHead(const size_t p_totalLineCount,
-                                      const std::string& p_currentLineSign)
-{
-    std::string_view totalLineCount { std::to_string(p_totalLineCount) };
-    return getPlaceholder(totalLineCount, p_currentLineSign)
-        + p_currentLineSign + "."
-        + utils::DISPLAY_PROMT_CLOSE_SIGN;
-}
-
-const std::string ToTable::getRowHead(const size_t p_totalLineCount,
-                                      const size_t p_currentLineNumber)
-{
-    return getRowHead(p_totalLineCount, std::to_string(p_currentLineNumber));
-}
-
-const std::string ToTable::getPlaceholder(const std::string_view p_totalLineNumber,
-                                          const std::string_view p_currentLineNumber)
-{
-    const size_t spaceAmount = p_totalLineNumber.length() - p_currentLineNumber.length();
-    std::string spaceing { "" };
-    return spaceing.insert(0, spaceAmount, LINE_NUMBER_SPACING);
-}
-
-const bool ToTable::isEmptyRowAndSkipIt(const data::csv::RecordHead::ErrorState& p_recordState)
-{
-    return p_recordState == data::csv::RecordHead::ErrorState::EMPTY
-        && s_emptyLines == utils::ISettings::EmptyLines::Skip;
-}
-
-inline const std::string ToTable::getRecordPrompt(const data::csv::RecordHead& p_recordHead,
-                                                  const size_t p_lastLineNumber)
-{
-    return getRecordState(p_recordHead) + getRowHead(p_lastLineNumber, p_recordHead.m_fileLineNumber);
-}
-
-const std::string ToTable::getRecordState(const data::csv::RecordHead& p_recordHead)
-{
-    typedef data::csv::RecordHead RecordHead;
-    RecordHead::ErrorState state = p_recordHead.m_state;
-    std::string result {};
-    switch (state) {
-    case RecordHead::ErrorState::OK:
-        result = utils::DISPLAY_PROMPT_NEUTRAL_SIGN;
-        if (p_recordHead.m_duplicated) {
-            result = utils::DISPLAY_PROMPT_DUPLICATED_SIGN;
-        }
-        break;
-    case RecordHead::ErrorState::ERR:
-        result = utils::DISPLAY_PROMPT_ERROR_SIGN;
-        break;
-    case RecordHead::ErrorState::EMPTY:
-        result = utils::DISPLAY_PROMPT_NEUTRAL_SIGN;
-        if (p_recordHead.m_duplicated) {
-            result = utils::DISPLAY_PROMPT_DUPLICATED_SIGN;
-        }
-        break;
-    default:
-        LOG("@!> Program logic error: invalid RecordHead ErrorState\n", true);
-        result = "@!> Program logic error: invalid RecordHead ErrorState";
-        break;
-    }
-    return result;
-}
-
-const std::string ToTable::getFieldContent(const data::csv::Field& p_field)
-{
-    const bool labelInline = isLabelInline();
-    if (p_field.m_content.second.empty() && labelInline) {
-        return {};
-    }
-    return labelInline
-        ? p_field.m_content.first + ": " + p_field.m_content.second
-        : p_field.m_content.second;
-}
-
-const bool ToTable::isLabelInline()
-{
-    return !s_tableOutput && s_labelPosition == utils::ISettings::LabelPosition::Inline;
 }
 
 } // namespace convert
