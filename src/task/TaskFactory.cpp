@@ -26,7 +26,7 @@ namespace csvvalidator {
 namespace task {
 
 static bool isHelpCommand(const std::string& p_command);
-static bool isHelp(data::console::Parameters p_parameters);
+static bool isHelp(const data::console::Parameters& p_parameters);
 static bool isConfigCommand(const std::string& p_request);
 static bool isCsvFile(const std::filesystem::path& p_path);
 
@@ -135,7 +135,7 @@ static bool isHelpCommand(const std::string& p_command)
     return p_command.empty() || utils::CLI_COMMANDS_HELP.contains(p_command);
 }
 
-static bool isHelp(data::console::Parameters p_parameters)
+static bool isHelp(const data::console::Parameters& p_parameters)
 {
     for (const std::string& helpFlag : utils::CLI_COMMANDS_HELP) {
         if (p_parameters.find(helpFlag) != p_parameters.end()) {

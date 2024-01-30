@@ -103,7 +103,7 @@ size_t convertToSizeT(const std::string& p_text)
     size_t result { 0ULL };
     try {
         result = stoull(p_text);
-    } catch (const std::exception&) {
+    } catch (...) {
         std::cout << "Error with argument, too large number! (" << p_text << ")\n"
                   << "The option will be set to 0\n";
         result = 0ULL;

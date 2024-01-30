@@ -19,6 +19,68 @@ size_t ToRanges::width      = 0;
 size_t ToRanges::lowerLimit = 0;
 size_t ToRanges::upperLimit = 0;
 
+const display::Ranges rawRanges(const std::vector<size_t>& p_lineNumbers);
+const display::Ranges merge(const display::Ranges& p_rawRanges);
+
+const display::Ranges ToRanges::get(const std::vector<size_t>& p_lineNumbers,
+                                    const size_t p_width,
+                                    const size_t p_lowerLimit,
+                                    const size_t p_upperLimit)
+{
+    LOG(utils::INDENTATION + "Getting error-ranges\n", utils::verbose);
+    width      = p_width;
+    lowerLimit = p_lowerLimit;
+    upperLimit = p_upperLimit;
+    display::Ranges raw_ranges { rawRanges(p_lineNumbers) };
+    LOG(utils::INDENTATION + "Raw ranges = " + std::to_string(raw_ranges.size()) + "\n", utils::verbose);
+    raw_ranges.normalize();
+    raw_ranges.sort();
+    const display::Ranges ranges { merge(raw_ranges) };
+    LOG(utils::INDENTATION + "Merged ranges = " + std::to_string(ranges.size()) + "\n", utils::verbose);
+    return ranges;
+}
+
+inline bool isMaxWidth()
+{
+    return ToRanges::width == std::numeric_limits<size_t>::max();
+}
+
+const size_t getLowerBound(const size_t p_middleOfTheRange)
+{
+    if (isMaxWidth()) {
+        return ToRanges::lowerLimit;
+    }
+    const size_t headroom { ToRanges::lowerLimit + ToRanges::width };
+    const bool outOfBound { p_middleOfTheRange < headroom };
+    return outOfBound ? ToRanges::lowerLimit : p_middleOfTheRange - ToRanges::width;
+}
+
+inline bool willOwerflow()
+{
+    return ToRanges::upperLimit < ToRanges::width;
+}
+
+const size_t getUpperBound(const size_t p_middleOfTheRange)
+{
+    if (isMaxWidth() || willOwerflow()) {
+        return ToRanges::upperLimit;
+    }
+    const size_t headroom { ToRanges::upperLimit - ToRanges::width };
+    const bool outOfBound { headroom < p_middleOfTheRange };
+    return outOfBound ? ToRanges::upperLimit : p_middleOfTheRange + ToRanges::width;
+}
+
+const display::Ranges rawRanges(const std::vector<size_t>& p_lineNumbers)
+{
+    LOG(utils::INDENTATION + "Getting raw ranges\n", utils::verbose);
+    data::display::Ranges ranges {};
+    for (const size_t& number : p_lineNumbers) {
+        data::display::Range range({ getLowerBound(number), getUpperBound(number) });
+        ranges.push_back(range);
+    }
+    return ranges;
+}
+
 void combine(const display::Range& p_sourceRange,
              display::Range* p_targetRange)
 {
@@ -46,67 +108,15 @@ bool overlapping(const display::Range& p_range1,
 const display::Ranges merge(const display::Ranges& p_rawRanges)
 {
     LOG(utils::INDENTATION + "Merging ranges\n", utils::verbose);
-    if (p_rawRanges.empty()) {
-        return {};
-    }
     display::Ranges finalRanges {};
-    for (auto currentRawRange = p_rawRanges.begin();
-         currentRawRange != p_rawRanges.end();
-         ++currentRawRange) {
-        if (finalRanges.empty() || !overlapping(finalRanges.back(), *currentRawRange)) {
-            finalRanges.push_back(*currentRawRange);
+    for (const display::Range& rawRange : p_rawRanges) {
+        if (finalRanges.empty() || !overlapping(finalRanges.back(), rawRange)) {
+            finalRanges.push_back(rawRange);
             continue;
         }
-        combine(*currentRawRange, &finalRanges.back());
+        combine(rawRange, &finalRanges.back());
     }
     return finalRanges;
-}
-
-const size_t lowerBound(const size_t p_initialNumber)
-{
-    if (ToRanges::width == std::numeric_limits<size_t>::max()) {
-        return ToRanges::lowerLimit;
-    }
-    return p_initialNumber < ToRanges::lowerLimit + ToRanges::width ? ToRanges::lowerLimit
-                                                                    : p_initialNumber - ToRanges::width;
-}
-
-const size_t upperBound(const size_t p_initialNumber)
-{
-    if (ToRanges::width == std::numeric_limits<size_t>::max() || ToRanges::upperLimit < ToRanges::width) {
-        return ToRanges::upperLimit;
-    }
-    return ToRanges::upperLimit - ToRanges::width < p_initialNumber ? ToRanges::upperLimit
-                                                                    : p_initialNumber + ToRanges::width;
-}
-
-const display::Ranges rawRanges(const std::vector<size_t>& p_lineNumbers)
-{
-    LOG(utils::INDENTATION + "Getting raw ranges\n", utils::verbose);
-    data::display::Ranges ranges {};
-    for (const size_t& number : p_lineNumbers) {
-        data::display::Range range({ lowerBound(number), upperBound(number) });
-        ranges.push_back(range);
-    }
-    return ranges;
-}
-
-const display::Ranges ToRanges::get(const std::vector<size_t>& p_lineNumbers,
-                                    const size_t p_width,
-                                    const size_t p_lowerLimit,
-                                    const size_t p_upperLimit)
-{
-    LOG(utils::INDENTATION + "Getting error-ranges\n", utils::verbose);
-    width      = p_width;
-    lowerLimit = p_lowerLimit;
-    upperLimit = p_upperLimit;
-    display::Ranges raw_ranges { rawRanges(p_lineNumbers) };
-    LOG(utils::INDENTATION + "Raw ranges = " + std::to_string(raw_ranges.size()) + "\n", utils::verbose);
-    raw_ranges.normalize();
-    raw_ranges.sort();
-    const display::Ranges ranges { merge(raw_ranges) };
-    LOG(utils::INDENTATION + "Merged ranges = " + std::to_string(ranges.size()) + "\n", utils::verbose);
-    return ranges;
 }
 
 } // namespace convert
